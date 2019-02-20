@@ -2088,7 +2088,7 @@ MonoBehaviour:
     pos: 0100000000000000
   - className: ItemData
     pos: 01000000ffffffff
-  testCount: 1
+  testCount: 0
   id: 0
 --- !u!114 &1076490068
 MonoBehaviour:
