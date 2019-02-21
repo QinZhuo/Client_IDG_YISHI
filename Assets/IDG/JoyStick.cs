@@ -25,6 +25,7 @@ namespace IDG.MobileInput
         public Action<Fixed2> EndMove;
         public bool moveToPointDownPos=false;
         public CanvasGroup group;
+        public bool useKey = false;
         public Fixed2 Direction()
         {
             return dir;
@@ -101,6 +102,15 @@ namespace IDG.MobileInput
         void Awake()
         {
             maxScale = backTransform.rect.width/2;
+            if (useKey)
+            {
+                group.alpha = 0;
+                group.blocksRaycasts = false;
+            }
+            else
+            {
+                group.blocksRaycasts = true;
+            }
         }
 
        

@@ -9,7 +9,7 @@ public class SkillJoyStick : JoyStick {
     public Image backImage;
     public SkillList skillList;
     // Use this for initialization
-    public bool useKey = false;
+    
     public KeyCode pcKey = KeyCode.Mouse0;
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class SkillJoyStick : JoyStick {
     }
     void PcControl()
     {
-        if (!useKey || onDrag) return;
+        if (!useKey || onDrag|| unityClient.client.localPlayer==null) return;
         isDown = Input.GetKey(pcKey);
 
         Vector3 pos =Input.mousePosition- unityClient.mainCamera.WorldToScreenPoint(unityClient.client.localPlayer.view.transform.position);
@@ -51,7 +51,7 @@ public class SkillJoyStick : JoyStick {
         {
             fillImage.fillAmount = (skill.timer / skill.time).ToFloat();
             backImage.enabled = fillImage.fillAmount > 0;
-            group.blocksRaycasts = fillImage.fillAmount <= 0;
+            if(!useKey)group.blocksRaycasts = fillImage.fillAmount <= 0;
         }
 
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 using IDG;
 using IDG.MobileInput;
 public class MoveJoyStick : JoyStick {
-    public bool useKey = false;
+    
     public KeyCode up=KeyCode.W;
     public KeyCode down=KeyCode.S;
     public KeyCode left=KeyCode.A;
