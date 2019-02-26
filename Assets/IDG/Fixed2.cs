@@ -90,14 +90,29 @@ namespace IDG
         public Fixed2 normalized
         {
 
-            get {
+            get
+            {
                 if (x == 0 && y == 0)
                 {
                     return new Fixed2();
                 }
+                FixedNumber n = ((x * x) + (y * y)).Sqrt();
+                //   Debug.Log("N" + ((x * x) + (y * y)).Sqrt());
+                return new Fixed2(x / n, y / n);
+
+            }
+        }
+        public FixedNumber magnitude
+        {
+
+            get {
+                if (x == 0 && y == 0)
+                {
+                    return FixedNumber.Zero;
+                }
                 FixedNumber n =((x *x) + (y * y)).Sqrt();
              //   Debug.Log("N" + ((x * x) + (y * y)).Sqrt());
-                return new Fixed2(x/n,y/n);
+                return n;
 
             }
         }

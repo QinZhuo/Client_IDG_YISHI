@@ -13,7 +13,11 @@ public class PlayerShow : NetObjectView<PlayerData> {
        // data.ClientId = clientId;
         anim.SetInteger("WeaponType", 1);
     }
-    
+    private new void Update()
+    {
+        base.Update();
+        anim.SetFloat("Speed", ((PlayerData)data).move_dir.magnitude.ToFloat());
+    }
     //float last;
 
 
@@ -51,10 +55,12 @@ public abstract class HealthData : NetData
 }
 public class PlayerData: HealthData
 {
-    
+    public FixedNumber move_speed = new FixedNumber(3);
+    public Fixed2 move_dir { get; private set; }
     public SkillList skillList;
     public override void Start()
     {
+       
         this.tag = "Player";
         skillList= AddCommponent<SkillList>();
         Shap = new CircleShap(new FixedNumber(0.5f), 8);
@@ -70,14 +76,14 @@ public class PlayerData: HealthData
     }
     protected override void FrameUpdate()
     {
-
-     //     Debug.LogError("move"+Input.GetKey(IDG.KeyNum.MoveKey) );
-       Fixed2 move =Input.GetKey(IDG.KeyNum.MoveKey) ? Input.GetJoyStickDirection(IDG.KeyNum.MoveKey):Fixed2.zero;
+     
+       //     Debug.LogError("move"+Input.GetKey(IDG.KeyNum.MoveKey) );
+         move_dir = Input.GetKey(IDG.KeyNum.MoveKey) ? Input.GetJoyStickDirection(IDG.KeyNum.MoveKey):Fixed2.zero;
    //     Debug.LogError("move"+move);
-        transform.Position += move * deltaTime;
-        if (move.x != 0 || move.y != 0)
+        transform.Position += move_dir * deltaTime* move_speed;
+        if (move_dir.x != 0 || move_dir.y != 0)
         {
-            transform.Rotation = move.ToRotation();
+            transform.Rotation = move_dir.ToRotation();
         }
       
   
