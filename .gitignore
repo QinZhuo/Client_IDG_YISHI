@@ -267,3 +267,6 @@ __pycache__/
 /IDG_Game_One.sln
 *.dll
 *.exe
+/Client_IDG_YISHI.sln
+/Client_IDG_YISHI.csproj
+/Assembly-CSharp.csproj

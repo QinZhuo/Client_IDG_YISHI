@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShowInfo : MonoBehaviour {
+public class FPS_Info : MonoBehaviour {
 	public float updateInterval = 0.5F;
     private double lastInterval;
     private int frames = 0;
