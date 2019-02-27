@@ -54,8 +54,7 @@ public abstract class HealthData : NetData
     }
 }
 public class PlayerData: HealthData
-{
-    public FixedNumber move_speed = new FixedNumber(3);
+{ 
     public Fixed2 move_dir { get; private set; }
     public SkillList skillList;
     public override void Start()
@@ -80,10 +79,11 @@ public class PlayerData: HealthData
        //     Debug.LogError("move"+Input.GetKey(IDG.KeyNum.MoveKey) );
          move_dir = Input.GetKey(IDG.KeyNum.MoveKey) ? Input.GetJoyStickDirection(IDG.KeyNum.MoveKey):Fixed2.zero;
    //     Debug.LogError("move"+move);
-        transform.Position += move_dir * deltaTime* move_speed;
+        transform.Position += move_dir * deltaTime;
         if (move_dir.x != 0 || move_dir.y != 0)
         {
-            transform.Rotation = move_dir.ToRotation();
+            Debug.Log(move_dir);
+            transform.Rotation = FixedNumber.Lerp(transform.Rotation, move_dir.ToRotation(),new FixedNumber(0.5f));
         }
       
   
