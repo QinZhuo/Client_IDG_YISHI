@@ -24,8 +24,9 @@ public class FightClientForUnity3D : MonoBehaviour {
         client = new FSClient();
    
         client.unityClient = this;
-        client.Connect("127.0.0.1", 12345,10);
-
+      //   client.Connect("127.0.0.1", 12345,10);
+        client.Connect("120.77.41.90", 12345,10);
+      //  client.Connect("172.16.252.231", 12345,10);
         // foreach (JoyStick joyStick in joySticks)
         // {
         //     InputCenter.Instance.AddJoyStick(joyStick.frameKey,joyStick.GetInfo());

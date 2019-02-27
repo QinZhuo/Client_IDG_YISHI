@@ -2030,7 +2030,6 @@ GameObject:
   - component: {fileID: 1076490063}
   - component: {fileID: 1076490064}
   - component: {fileID: 1076490065}
-  - component: {fileID: 1076490066}
   - component: {fileID: 1076490067}
   - component: {fileID: 1076490068}
   m_Layer: 0
@@ -2133,18 +2132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unityClient: {fileID: 1076490064}
---- !u!114 &1076490066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1076490062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cb782bd19874484e9f70a4debca6c61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateInterval: 0.5
 --- !u!114 &1076490067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2623,6 +2610,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1167154762}
   - component: {fileID: 1167154763}
+  - component: {fileID: 1167154764}
+  - component: {fileID: 1167154765}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2679,6 +2668,30 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1167154764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167154761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb782bd19874484e9f70a4debca6c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateInterval: 0.5
+--- !u!114 &1167154765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167154761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca36772ba4b384546be20b91af6424f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ip: 120.77.41.90
 --- !u!114 &1195287704 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114412996162894692, guid: f47473d59bfc8df45ac289d29fc97d30,
