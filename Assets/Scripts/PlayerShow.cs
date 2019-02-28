@@ -9,6 +9,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
     public Animator anim;
     private new void Start()
     {
+         
         base.Start();
        // data.ClientId = clientId;
         anim.SetInteger("WeaponType", 1);
@@ -55,7 +56,7 @@ public abstract class HealthData : NetData
 }
 public class PlayerData: HealthData
 {
-    public FixedNumber move_speed = new FixedNumber(3);
+    protected FixedNumber move_speed = new FixedNumber(3);
     public Fixed2 move_dir { get; private set; }
     public SkillList skillList;
     public override void Start()
