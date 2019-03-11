@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class FightClientForUnity3D : MonoBehaviour {
     
     public FSClient client;
+    public string serverIp;
     //public static FightClientForUnity3D instance;
     public List<JoyStick> joySticks;
     public Camera mainCamera;
@@ -25,7 +26,7 @@ public class FightClientForUnity3D : MonoBehaviour {
    
         client.unityClient = this;
       //   client.Connect("127.0.0.1", 12345,10);
-        client.Connect("120.77.41.90", 12345,10);
+        client.Connect(serverIp, 12345,10);
       //  client.Connect("172.16.252.231", 12345,10);
         // foreach (JoyStick joyStick in joySticks)
         // {
