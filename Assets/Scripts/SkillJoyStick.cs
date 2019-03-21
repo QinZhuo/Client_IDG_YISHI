@@ -23,6 +23,8 @@ public class SkillJoyStick : JoyStick {
 
         PcControl();
         SkillMask();
+        ;
+      
     }
     void PcControl()
     {

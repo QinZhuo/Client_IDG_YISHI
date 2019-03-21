@@ -84,7 +84,7 @@ public class PlayerData: HealthData
         if (move_dir.x != 0 || move_dir.y != 0)
         {
             
-            transform.Rotation = FixedNumber.Lerp(transform.Rotation, move_dir.ToRotation(),new FixedNumber(0.5f));
+            transform.Rotation = FixedNumber.RotationLerp(transform.Rotation, move_dir.ToRotation(),new FixedNumber(0.5f));
         }
       
   

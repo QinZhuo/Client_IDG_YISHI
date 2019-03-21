@@ -53,14 +53,18 @@ public class FightClientForUnity3D : MonoBehaviour {
         // Debug.Log("(-5, 99)" + v2.x * v2.x + "," + v2.y * v2.y);
         //  Debug.Log("normalized"+v2.normalized);
       
-
+        // for (FixedNumber i = FixedNumber.Zero; i < new FixedNumber(360); i+=new FixedNumber(0.1f))
+        // {
+        //     Debug.LogError(i+"du to direction= "+(new Vector3(0,360,0)- i.ToUnityRotation().eulerAngles));
+        // }
+        FixedNumber.RotationLerp(FixedNumber.Zero,new FixedNumber(150),new FixedNumber(1));
     }
 	
 
   
     
 	// Update is called once per frame
-	void Update () {
+     private void FixedUpdate() {
        
        if (client.MessageList.Count > 0)
        {

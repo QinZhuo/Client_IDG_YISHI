@@ -137,6 +137,7 @@ namespace IDG
 
         public override byte getByte()
         {
+            
             index += lastOffset;
             lastOffset = 1;
             return bytes[index];

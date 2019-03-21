@@ -151,12 +151,12 @@ namespace IDG.FSClient
         /// 解析消息并进行消息分发
         /// </summary>
         /// <param name="protocol">要解析的消息</param>
-        public void ParseMessage(ProtocolBase protocol)
+        public void ParseMessage(ProtocolBase protocol,int deep=0)
         {
-            byte t = protocol.getByte();
+            var t = (MessageType)protocol.getByte();
   //          Debug.Log("parseMessage" + t);
             //Debug.Log(DateTime.Now.ToString() + ":" + DateTime.Now.Millisecond+"MessageType: " + (MessageType)t);
-            switch ((MessageType)t)
+            switch (t)
             {
 
                 case MessageType.Init:
@@ -167,21 +167,37 @@ namespace IDG.FSClient
                 case MessageType.Frame:
                     inputCenter.ReceiveStep(protocol);
                     break;
+                case MessageType.RandomSeed:
+                    random=new IDG.FSClient.Random((ushort)protocol.getInt32());
+                    Debug.LogError("randomSeedTest "+random.next()) ;
+                    break;
+
+                case MessageType.end:
+                    break;
                 default:
                     Debug.LogError("消息解析错误 未解析类型" + t);
                     return;
             }
+            if(t!=MessageType.end&&deep<5){
+                ParseMessage(protocol,deep+1);
+                Debug.LogError("继续解析"+deep);
+            }else
+            {
+                  Debug.LogError("解析结束" );
+            }
             if (protocol.Length > 0)
             {
-                Debug.Log("剩余未解析" + protocol.Length);
+                Debug.LogError("剩余未解析" + protocol.Length);
                 //ParseMessage(protocol);
             }
         }
     }
-    public enum MessageType : byte
+   public enum MessageType : byte
     {
-        Init = 0,
-        Frame = 1,
-        ClientReady = 2,
+        Init =11,
+        Frame = 12,
+        ClientReady=13,
+        RandomSeed=14,
+        end=200,
     }
 }

@@ -74,14 +74,19 @@ namespace IDG
                 return new FixedNumber();
             }
             FixedNumber sin = this.normalized.y;
+            FixedNumber result=FixedNumber.Zero;
             if (this.x >= 0)
             {
-                return MathFixed.Asin(sin)/MathFixed.PI*180;
+                result= MathFixed.Asin(sin)/MathFixed.PI*180;
             }
             else
             {
-                return MathFixed.Asin(-sin) / MathFixed.PI * 180+180;
+                result= MathFixed.Asin(-sin) / MathFixed.PI * 180+180;
             }
+            // if(result==0){
+            //     Debug.LogError("this.normalized "+this.normalized+" MathFixed.Asin(sin) "+MathFixed.Asin(sin));
+            // }
+            return result;
         }
         public static Fixed2 Parse(FixedNumber ratio)
         {
@@ -98,7 +103,10 @@ namespace IDG
                 }
                 FixedNumber n = ((x * x) + (y * y)).Sqrt();
                 //   Debug.Log("N" + ((x * x) + (y * y)).Sqrt());
-                return new Fixed2(x / n, y / n);
+                var result=new Fixed2(x / n, y / n);
+                result.x= FixedNumber.Range(result.x,-1,1);
+                result.y= FixedNumber.Range(result.y,-1,1);
+                return result;
 
             }
         }

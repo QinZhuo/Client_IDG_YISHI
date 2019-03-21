@@ -55,6 +55,14 @@ namespace IDG
         {
             return a + (b - a) * t;
         }
+
+        public static FixedNumber RotationLerp(FixedNumber a, FixedNumber b, FixedNumber t)
+        {
+           
+            var offset1=b-a;
+            var offset2=b-(a+360);
+            return a+t*(offset1.Abs()<offset2.Abs()?offset1:offset2);
+        }
         public FixedNumber Abs()
         {
            
@@ -64,6 +72,15 @@ namespace IDG
         {
             return FixedNumber.Sqrt(this);
         }
+
+        public static FixedNumber Range(FixedNumber n, int min, int max)
+        {
+            if(n<min)n=new FixedNumber(min);
+            if(n>max)n=new FixedNumber(max);
+            return n;
+        }
+
+     
         //******************* +  **************************
         public static FixedNumber operator +(FixedNumber p1, FixedNumber p2)
         {

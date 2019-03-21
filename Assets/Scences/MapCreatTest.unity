@@ -233,6 +233,7 @@ Transform:
   m_Children:
   - {fileID: 1317719059}
   - {fileID: 1083159385}
+  - {fileID: 1475957650}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -263,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e55d83a865588478ea39d85d5d29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serverIp: 
   joySticks: []
   mainCamera: {fileID: 1317719058}
 --- !u!1 &1083159384
@@ -305,6 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9676cb4fa73967046b676bb23760efdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapView: {fileID: 1475957651}
 --- !u!1 &1317719055
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,3 +388,44 @@ Transform:
   m_Father: {fileID: 990416006}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1475957649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1475957650}
+  - component: {fileID: 1475957651}
+  m_Layer: 0
+  m_Name: MapViewer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1475957650
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1475957649}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 990416006}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1475957651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1475957649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60aa81e1733323a4597cb4016d2bdaa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapPrefabList: {fileID: 11400000, guid: f5a9c627df19b0b408c3544fc4675b7e, type: 2}

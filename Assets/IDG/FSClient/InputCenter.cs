@@ -89,7 +89,9 @@ namespace IDG.FSClient {
             for (int i = 0; i < length; i++)
             {
                 //解析各个玩家输入
-                _m_inputs[i].ReceiveStep(protocol);
+                if(protocol.getBoolean()){
+                    _m_inputs[i].ReceiveStep(protocol);
+                }
                 
             }
            

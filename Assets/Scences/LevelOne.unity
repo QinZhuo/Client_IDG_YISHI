@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e55d83a865588478ea39d85d5d29aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverIp: 39.96.185.108
+  serverIp: 127.0.0.1
   joySticks:
   - {fileID: 194174640}
   - {fileID: 835995798}
