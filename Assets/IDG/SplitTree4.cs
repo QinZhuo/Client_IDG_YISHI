@@ -134,7 +134,7 @@ namespace IDG
         {
             objs = new List<NetData>(SplitSize+1);
             //size = MaxSize;
-            border = new Tree4Border(new Fixed2(0,0), new FixedNumber(MaxSize));
+            border = new Tree4Border(new Fixed2(0,0), new Fixed(MaxSize));
             brother = new Tree4Brother();
             collisonInfo = new CollisonInfo();
             depth = 0;
@@ -362,13 +362,13 @@ namespace IDG
         /// <summary>
         /// 正方形边长
         /// </summary>
-        public FixedNumber size;
+        public Fixed size;
         /// <summary>
         /// 中心点位置
         /// </summary>
         public Fixed2 center;
 
-        public Tree4Border(Fixed2 center,FixedNumber size)
+        public Tree4Border(Fixed2 center,Fixed size)
         {
             this.center = center;
             this.size = size;

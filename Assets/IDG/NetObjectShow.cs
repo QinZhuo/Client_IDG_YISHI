@@ -115,14 +115,14 @@ namespace IDG.FSClient
                 return client.inputCenter.IsLocalId(clientId);
             }
         }
-        public FixedNumber Width
+        public Fixed Width
         {
             get
             {
                 return Shap.width;
             }
         }
-        public FixedNumber Height
+        public Fixed Height
         {
             get
             {
@@ -188,7 +188,7 @@ namespace IDG.FSClient
         {
             // UnityEngine.Debug.Log("Exit触发");
         }
-        public void Reset(Fixed2 position,FixedNumber rotation)
+        public void Reset(Fixed2 position,Fixed rotation)
         {
            transform.Reset(position,rotation);
 
@@ -237,7 +237,7 @@ namespace IDG.FSClient
                 
             }
         }
-        public FixedNumber deltaTime
+        public Fixed deltaTime
         {
             get
             {

@@ -8,25 +8,25 @@ namespace IDG.FSClient
 {
     public class GunBase:ItemBase
     {   
-        protected FixedNumber firingInterval;
-        protected FixedNumber lastTime;
+        protected Fixed firingInterval;
+        protected Fixed lastTime;
        // protected GunSetting gunSetting;
-        protected FixedNumber timer;
+        protected Fixed timer;
         public void Init(float firingRate,NetData User)
         {
-            this.firingInterval = new FixedNumber(1/firingRate);
-            lastTime = FixedNumber.Zero;
+            this.firingInterval = new Fixed(1/firingRate);
+            lastTime = Fixed.Zero;
            // gunSetting = DataManager.Instance.gunManager.gun;
             this.user = User;
-            timer = FixedNumber.Zero;
+            timer = Fixed.Zero;
         }
-        public void Fire(NetData user, FixedNumber rotation)
+        public void Fire(NetData user, Fixed rotation)
         {
             var t =  user.client.inputCenter.Time - lastTime;
             if (t > 0.1f)
             {
              
-                FixedNumber rote =new FixedNumber(0);
+                Fixed rote =new Fixed(0);
                 
                 lastTime = user.client.inputCenter.Time;
                 ShootBullet(user.transform.Position,rotation+ rote);
@@ -36,7 +36,7 @@ namespace IDG.FSClient
 
             }
         }
-        protected virtual void ShootBullet(Fixed2 position, FixedNumber rotation)
+        protected virtual void ShootBullet(Fixed2 position, Fixed rotation)
         {
             Bullet data = new Bullet();
             data.user = this.user;

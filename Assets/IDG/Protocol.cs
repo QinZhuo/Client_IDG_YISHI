@@ -19,7 +19,7 @@ namespace IDG
         public abstract void push(Byte uint8);
       
         public abstract void push(Boolean boolean);
-        public abstract void push(FixedNumber ratio);
+        public abstract void push(Fixed ratio);
         public abstract void push(Fixed2 v2);
 
         public abstract void push(String str);
@@ -32,7 +32,7 @@ namespace IDG
         public abstract UInt16 getUInt16();
         public abstract Byte getByte();
         public abstract Boolean getBoolean();
-        public abstract FixedNumber getRatio();
+        public abstract Fixed getRatio();
         public abstract Fixed2 getV2();
         public abstract String getString();
         public abstract Byte[] getLastBytes();
@@ -73,9 +73,9 @@ namespace IDG
             return BitConverter.ToInt64(bytes, index);
         }
 
-        public override FixedNumber getRatio()
+        public override Fixed getRatio()
         {
-            FixedNumber r = new FixedNumber();
+            Fixed r = new Fixed();
             r.SetValue(getInt64());
             return r;
         }
@@ -153,7 +153,7 @@ namespace IDG
             byteList.AddRange(tempBytes);
         }
 
-        public override void push(FixedNumber ratio)
+        public override void push(Fixed ratio)
         {
             push(ratio.GetValue());
           
@@ -166,7 +166,7 @@ namespace IDG
 
         public override Fixed2 getV2()
         {
-            FixedNumber r1 = getRatio(), r2 = getRatio();
+            Fixed r1 = getRatio(), r2 = getRatio();
             return new Fixed2(r1, r2);
         }
 

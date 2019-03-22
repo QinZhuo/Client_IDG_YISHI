@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class MapCreator : MonoBehaviour {
-	GridMapCreator creator;
+	
 	public MapView mapView;
-	public GridMap map;
+	protected GridMap map;
 	// Use this for initialization
+	private void Awake() {
+		mapView=GetComponent<MapView>();
+	}
 	[ContextMenu("randomMap")]
 	public void RandomMap () {
 		map=new GridMap();
@@ -24,16 +27,14 @@ public class MapCreator : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
-		if(map!=null)
-		map.GizmoShow();
+		if(map!=null){
+			//map.GizmoShow();
+		}
+	
 	}
 }
 
 
-public class GridMapCreator
-{
-	
-} 
 
 
 
@@ -52,11 +53,18 @@ public class GridMap
 	public static int[][] directions;
 	public int width;
 	public int height;
+	public Func<int,int,int> RandomRange;
 	public List<Room> rooms;
 	public Color[] colors;
-	public void Init(int width,int height){
+	public void Init(int width,int height,Func<int,int,int> randomRangeFuc=null){
 		this.height=(height/2)*2+1;
 		this.width=(width/2)*2+1;
+		if(randomRangeFuc!=null){
+			RandomRange=randomRangeFuc;
+		}else
+		{
+			RandomRange=UnityEngine.Random.Range;
+		}
 		nodes=new Tile[this.width,this.height];
 		directions=new int[4][];
 		directions[0]=new int[]{1,0};
@@ -65,6 +73,7 @@ public class GridMap
 		directions[3]=new int[]{0,-1};
 		rooms=new List<Room>();
 		colors=new Color[10];
+		
 		for (int i = 0; i < colors.Length; i++)
 		{
 			colors[i]=ColorTool.RandomColorHSV();
@@ -198,10 +207,10 @@ public class GridMap
 	public void RandomConnect(int num){
 		for (int i = 0; i < num; i++)
 		{
-			var room1=rooms[ Random.Range(0,rooms.Count-1)];
-			var room2=rooms[Random.Range(0,rooms.Count-1)];
+			var room1=rooms[RandomRange(0,rooms.Count-1)];
+			var room2=rooms[RandomRange(0,rooms.Count-1)];
 			while(rooms.Count>2&&room1==room2){
-				room2=rooms[Random.Range(0,rooms.Count-1)];
+				room2=rooms[RandomRange(0,rooms.Count-1)];
 			}
 			room1.Connect(room2);
 		}
@@ -376,7 +385,7 @@ public class Room
 	// }
 
 	public Tile RandomCanOpenDoor(){
-		return canOpenDoor[Random.Range(0,canOpenDoor.Count-1)];
+		return canOpenDoor[map.RandomRange(0,canOpenDoor.Count-1)];
 	}
 	public bool FindRoad(Tile a,Tile b){
 	
@@ -433,10 +442,10 @@ public class Room
 		return this;
 	}
 	public static Room RandomRoom(int size,GridMap map){
-		var r=new Room().Init(Random.Range(1,map.width-size-1),
-								Random.Range(1,map.height-size-1),
-								Random.Range(size/2,size),
-								Random.Range(size/2,size),
+		var r=new Room().Init(map.RandomRange(1,map.width-size-1),
+								map.RandomRange(1,map.height-size-1),
+								map.RandomRange(size/2,size),
+								map.RandomRange(size/2,size),
 								map
 								);
 		
@@ -631,7 +640,7 @@ public class ColorTool{
 	/// <param name="v">明度</param>
 	/// <returns></returns>
 	public static Color RandomColorHSV(float s=0.7f,float v=1){
-		return Color.HSVToRGB(Random.Range(0,1f),s,v);
+		return Color.HSVToRGB(UnityEngine.Random.Range(0,1f),s,v);
 	}
 }
 

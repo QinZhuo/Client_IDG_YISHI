@@ -20,7 +20,7 @@ namespace IDG.FSClient {
         /// <summary>
         /// 当前游戏时间 帧*帧间隔
         /// </summary>
-        protected FixedNumber _time;
+        protected Fixed _time;
         /// <summary>
         /// 帧同步客户端
         /// </summary>
@@ -34,7 +34,7 @@ namespace IDG.FSClient {
         /// 每帧调用函数
         /// </summary>
         public Action frameUpdate;
-        public FixedNumber Time
+        public Fixed Time
         {
             get { return _time; }
         }

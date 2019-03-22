@@ -111,7 +111,7 @@ public class FightSceneInit : MonoBehaviour {
             if (data != null)
             {
                 data.Init(unityClient.client);
-                data.transform.Reset(new IDG.Fixed2(dataInfo.pos[0], dataInfo.pos[1]),FixedNumber.Zero);
+                data.transform.Reset(new IDG.Fixed2(dataInfo.pos[0], dataInfo.pos[1]),Fixed.Zero);
                 unityClient.client.objectManager.Instantiate(data);
                 //if (dataInfo.values != null)
                 //{

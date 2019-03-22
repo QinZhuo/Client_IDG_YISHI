@@ -17,5 +17,9 @@ namespace IDG.FSClient{
         public int Range(int max){
             return next()%max;
         }
+
+         public int Range(int min, int max){
+            return min+next()%max;
+        }
     }
 }

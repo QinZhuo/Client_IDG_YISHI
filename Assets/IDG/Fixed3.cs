@@ -10,17 +10,17 @@ namespace IDG
     /// </summary>
     public struct Fixed3
     {
-        public FixedNumber x
+        public Fixed x
         {
             get;
             private set;
         }
-        public FixedNumber y
+        public Fixed y
         {
             get;
             private set;
         }
-        public FixedNumber z
+        public Fixed z
         {
             get;
             private set;
@@ -34,20 +34,20 @@ namespace IDG
         //}
         public Fixed3(int x=0, int y=0,int z=0)
         {
-            this.x = new FixedNumber(x);
-            this.y = new FixedNumber(y);
-            this.z = new FixedNumber(z);
+            this.x = new Fixed(x);
+            this.y = new Fixed(y);
+            this.z = new Fixed(z);
 
         }
         public Fixed3(float x, float y,float z)
         {
 
-            this.x = new FixedNumber(x);
-            this.y = new FixedNumber(y);
-            this.z = new FixedNumber(z);
+            this.x = new Fixed(x);
+            this.y = new Fixed(y);
+            this.z = new Fixed(z);
 
         }
-        public Fixed3(FixedNumber x, FixedNumber y ,FixedNumber z)
+        public Fixed3(Fixed x, Fixed y ,Fixed z)
         {
             this.x = x;
             this.y = y;
@@ -86,11 +86,11 @@ namespace IDG
         //{
 
         //}
-        public FixedNumber Dot(Fixed3 b)
+        public Fixed Dot(Fixed3 b)
         {
             return Dot(this, b);
         }
-        public static FixedNumber Dot(Fixed3 a,Fixed3 b)
+        public static Fixed Dot(Fixed3 a,Fixed3 b)
         {
             return a.x*b.x+b.y*a.y;
         }

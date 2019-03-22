@@ -14,12 +14,12 @@ namespace IDG
         /// <summary>
         /// sin值对应表
         /// </summary>
-        protected static readonly List<FixedNumber> _m_SinTab = new List<FixedNumber>();
-        public static readonly FixedNumber PI = new FixedNumber(3.14159265f);
-        protected static FixedNumber GetSinTab(FixedNumber r)
+        protected static readonly List<Fixed> _m_SinTab = new List<Fixed>();
+        public static readonly Fixed PI = new Fixed(3.14159265f);
+        protected static Fixed GetSinTab(Fixed r)
         {
             
-            FixedNumber i =new FixedNumber( r.ToInt());
+            Fixed i =new Fixed( r.ToInt());
             //UnityEngine.Debug.Log(i.ToInt());
             if (i.ToInt() == _m_SinTab.Count-1)
             {
@@ -28,11 +28,11 @@ namespace IDG
             else
             {
                // UnityEngine.Debug.Log(i.ToInt()+":"+ _m_SinTab[i.ToInt()]+":"+ Ratio.Lerp(_m_SinTab[i.ToInt()], _m_SinTab[(i + 1).ToInt()], r - i));
-                return FixedNumber.Lerp(_m_SinTab[(int)i.ToInt()], _m_SinTab[(int)(i+1).ToInt()], r - i);
+                return Fixed.Lerp(_m_SinTab[(int)i.ToInt()], _m_SinTab[(int)(i+1).ToInt()], r - i);
             }
             
         }
-        public static FixedNumber GetAsinTab(FixedNumber sin)
+        public static Fixed GetAsinTab(Fixed sin)
         {
             MathFixed math = Instance;
             //UnityEngine.Debug.Log("GetAsinTab");
@@ -43,16 +43,16 @@ namespace IDG
                 {
                     if (i == _m_SinTab.Count-1)
                     {
-                        return new FixedNumber(i) / (tabCount / 4) * (PI / 2);
+                        return new Fixed(i) / (tabCount / 4) * (PI / 2);
                     }
                     else
                     {
                         //return new Ratio(i);
-                        return FixedNumber.Lerp(new FixedNumber(i), new FixedNumber(i + 1), (sin-_m_SinTab[i])/(_m_SinTab[i+1] - _m_SinTab[i])) / (tabCount / 4) * (PI / 2);
+                        return Fixed.Lerp(new Fixed(i), new Fixed(i + 1), (sin-_m_SinTab[i])/(_m_SinTab[i+1] - _m_SinTab[i])) / (tabCount / 4) * (PI / 2);
                     }
                 }
             }
-            return new FixedNumber();
+            return new Fixed();
         }
         protected static MathFixed Instance
         {
@@ -72,39 +72,39 @@ namespace IDG
             if (_m_instance == null)
             {
                 
-                _m_SinTab.Add(new FixedNumber(0f));//0
-                _m_SinTab.Add(new FixedNumber(0.08715f));
-                _m_SinTab.Add(new FixedNumber(0.17364f));
-                _m_SinTab.Add(new FixedNumber(0.25881f));
-                _m_SinTab.Add(new FixedNumber(0.34202f));//20
-                _m_SinTab.Add(new FixedNumber(0.42261f));
-                _m_SinTab.Add(new FixedNumber(0.5f));
+                _m_SinTab.Add(new Fixed(0f));//0
+                _m_SinTab.Add(new Fixed(0.08715f));
+                _m_SinTab.Add(new Fixed(0.17364f));
+                _m_SinTab.Add(new Fixed(0.25881f));
+                _m_SinTab.Add(new Fixed(0.34202f));//20
+                _m_SinTab.Add(new Fixed(0.42261f));
+                _m_SinTab.Add(new Fixed(0.5f));
 
-                _m_SinTab.Add(new FixedNumber(0.57357f));//35
-                _m_SinTab.Add(new FixedNumber(0.64278f));
-                _m_SinTab.Add(new FixedNumber(0.70710f));
-                _m_SinTab.Add(new FixedNumber(0.76604f));
-                _m_SinTab.Add(new FixedNumber(0.81915f));//55
-                _m_SinTab.Add(new FixedNumber(0.86602f));//60
+                _m_SinTab.Add(new Fixed(0.57357f));//35
+                _m_SinTab.Add(new Fixed(0.64278f));
+                _m_SinTab.Add(new Fixed(0.70710f));
+                _m_SinTab.Add(new Fixed(0.76604f));
+                _m_SinTab.Add(new Fixed(0.81915f));//55
+                _m_SinTab.Add(new Fixed(0.86602f));//60
 
-                _m_SinTab.Add(new FixedNumber(0.90630f));
-                _m_SinTab.Add(new FixedNumber(0.93969f));
-                _m_SinTab.Add(new FixedNumber(0.96592f));
-                _m_SinTab.Add(new FixedNumber(0.98480f));//80
-                _m_SinTab.Add(new FixedNumber(0.99619f));
+                _m_SinTab.Add(new Fixed(0.90630f));
+                _m_SinTab.Add(new Fixed(0.93969f));
+                _m_SinTab.Add(new Fixed(0.96592f));
+                _m_SinTab.Add(new Fixed(0.98480f));//80
+                _m_SinTab.Add(new Fixed(0.99619f));
 
-                _m_SinTab.Add(new FixedNumber(1f));
+                _m_SinTab.Add(new Fixed(1f));
                
                
             }
         }
-        public static FixedNumber PiToAngel(FixedNumber pi)
+        public static Fixed PiToAngel(Fixed pi)
         {
             return pi / PI * 180;
         }
-        public static FixedNumber Asin(FixedNumber sin)
+        public static Fixed Asin(Fixed sin)
         {
-            if (sin < -1 || sin > 1) { return new FixedNumber(); }
+            if (sin < -1 || sin > 1) { return new Fixed(); }
             if (sin >= 0)
             {
                 return GetAsinTab(sin);
@@ -114,12 +114,12 @@ namespace IDG
                 return -GetAsinTab(-sin);
             }
         }
-        public static FixedNumber Sin(FixedNumber r)
+        public static Fixed Sin(Fixed r)
         {
            
             MathFixed math= Instance;
             //int tabCount = SinTab.Count*4;
-            FixedNumber result=new FixedNumber();
+            Fixed result=new Fixed();
             r = (r * tabCount / 2 / PI);
             //int n = r.ToInt();
             while (r < 0)
@@ -136,40 +136,40 @@ namespace IDG
             }
             else if (r > tabCount / 4 && r < tabCount / 2)       // PI/2 ~ PI
             {
-                r -= new FixedNumber(tabCount / 4);
-                result = GetSinTab(new FixedNumber(tabCount / 4) - r);
+                r -= new Fixed(tabCount / 4);
+                result = GetSinTab(new Fixed(tabCount / 4) - r);
             }
             else if (r >= tabCount / 2 && r < 3 * tabCount / 4)    // PI ~ 3/4*PI
             {
-                r -= new FixedNumber(tabCount / 2);
+                r -= new Fixed(tabCount / 2);
                 result = -GetSinTab(r);
             }
             else if (r >= 3 * tabCount / 4 && r < tabCount)      // 3/4*PI ~ 2*PI
             {
-                r = new FixedNumber(tabCount) - r;
+                r = new Fixed(tabCount) - r;
                 result = -GetSinTab(r);
             }
             
             return result;
         }
-        public static FixedNumber Abs(FixedNumber ratio)
+        public static Fixed Abs(Fixed ratio)
         {
-            return FixedNumber.Abs( ratio);
+            return Fixed.Abs( ratio);
         }
-        public static FixedNumber Sqrt(FixedNumber r)
+        public static Fixed Sqrt(Fixed r)
         {
-            return FixedNumber.Sqrt(r);
+            return Fixed.Sqrt(r);
         }
         
-        public static FixedNumber Cos(FixedNumber r)
+        public static Fixed Cos(Fixed r)
         {
             return Sin(r + PI / 2);
         }
-        public static FixedNumber SinAngle(FixedNumber angle)
+        public static Fixed SinAngle(Fixed angle)
         {
             return Sin(angle / 180 * PI);
         }
-        public static FixedNumber CosAngle(FixedNumber angle)
+        public static Fixed CosAngle(Fixed angle)
         {
             return Cos(angle / 180 * PI);
         }

@@ -11,8 +11,8 @@ namespace IDG
     [System.Serializable]
     public struct Fixed2
     {
-        public FixedNumber x;
-        public FixedNumber y;
+        public Fixed x;
+        public Fixed y;
        // public static float rotateOffset = 2 * Mathf.PI / 360;
 
         //public V3()
@@ -26,11 +26,11 @@ namespace IDG
         public Fixed2(float x, float y)
         {
 
-            this.x = new FixedNumber(x);
-            this.y = new FixedNumber(y);
+            this.x = new Fixed(x);
+            this.y = new Fixed(y);
 
         }
-        public Fixed2(FixedNumber x, FixedNumber y)
+        public Fixed2(Fixed x, Fixed y)
         {
             this.x = x;
             this.y = y;
@@ -40,7 +40,7 @@ namespace IDG
         {
             return new Vector3(x.ToFloat(), 0, y.ToFloat());
         }
-        public static Fixed2 GetV2(FixedNumber x, FixedNumber y)
+        public static Fixed2 GetV2(Fixed x, Fixed y)
         {
             return new Fixed2(x, y);
         }
@@ -52,14 +52,14 @@ namespace IDG
         {
             return new Fixed2(a.x - b.x, a.y - b.y);
         }
-        public static Fixed2 operator *(Fixed2 a, FixedNumber b)
+        public static Fixed2 operator *(Fixed2 a, Fixed b)
         {
             return new Fixed2(a.x * b, a.y * b);
         }
-        public Fixed2 Rotate(FixedNumber value)
+        public Fixed2 Rotate(Fixed value)
         {
             
-            FixedNumber tx, ty;
+            Fixed tx, ty;
             tx = MathFixed.CosAngle(value) * x - y * MathFixed.SinAngle(value);
             ty = MathFixed.CosAngle(value) * y + x * MathFixed.SinAngle(value);
            // Debug.Log("f:" + f + "sin90" + Mathf.Sin(90) + "cos90" + (Math.Cos(90)));
@@ -67,14 +67,14 @@ namespace IDG
             return new Fixed2(tx, ty);
         }
         
-        public FixedNumber ToRotation()
+        public Fixed ToRotation()
         {
             if (x == 0 && y == 0)
             {
-                return new FixedNumber();
+                return new Fixed();
             }
-            FixedNumber sin = this.normalized.y;
-            FixedNumber result=FixedNumber.Zero;
+            Fixed sin = this.normalized.y;
+            Fixed result=Fixed.Zero;
             if (this.x >= 0)
             {
                 result= MathFixed.Asin(sin)/MathFixed.PI*180;
@@ -88,7 +88,7 @@ namespace IDG
             // }
             return result;
         }
-        public static Fixed2 Parse(FixedNumber ratio)
+        public static Fixed2 Parse(Fixed ratio)
         {
             return new Fixed2(MathFixed.CosAngle(ratio), MathFixed.SinAngle(ratio) );
         }
@@ -101,24 +101,24 @@ namespace IDG
                 {
                     return new Fixed2();
                 }
-                FixedNumber n = ((x * x) + (y * y)).Sqrt();
+                Fixed n = ((x * x) + (y * y)).Sqrt();
                 //   Debug.Log("N" + ((x * x) + (y * y)).Sqrt());
                 var result=new Fixed2(x / n, y / n);
-                result.x= FixedNumber.Range(result.x,-1,1);
-                result.y= FixedNumber.Range(result.y,-1,1);
+                result.x= Fixed.Range(result.x,-1,1);
+                result.y= Fixed.Range(result.y,-1,1);
                 return result;
 
             }
         }
-        public FixedNumber magnitude
+        public Fixed magnitude
         {
 
             get {
                 if (x == 0 && y == 0)
                 {
-                    return FixedNumber.Zero;
+                    return Fixed.Zero;
                 }
-                FixedNumber n =((x *x) + (y * y)).Sqrt();
+                Fixed n =((x *x) + (y * y)).Sqrt();
              //   Debug.Log("N" + ((x * x) + (y * y)).Sqrt());
                 return n;
 
@@ -137,11 +137,11 @@ namespace IDG
         //{
 
         //}
-        public FixedNumber Dot(Fixed2 b)
+        public Fixed Dot(Fixed2 b)
         {
             return Dot(this, b);
         }
-        public static FixedNumber Dot(Fixed2 a,Fixed2 b)
+        public static Fixed Dot(Fixed2 a,Fixed2 b)
         {
             return a.x*b.x+b.y*a.y;
         }
@@ -152,7 +152,7 @@ namespace IDG
         }
         public static Fixed3 operator *(Fixed2 a, Fixed2 b)
         {
-            return new Fixed3(new FixedNumber(),new FixedNumber(),  a.x * b.y - a.y * b.x);
+            return new Fixed3(new Fixed(),new Fixed(),  a.x * b.y - a.y * b.x);
         }
         public static bool operator ==(Fixed2 a, Fixed2 b)
         {

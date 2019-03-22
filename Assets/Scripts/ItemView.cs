@@ -19,7 +19,7 @@ public class ItemData : NetData
     }
     public override void Start()
     {
-        Shap = new BoxShap(new FixedNumber(1), new FixedNumber(1));
+        Shap = new BoxShap(new Fixed(1), new Fixed(1));
     }
     protected override void FrameUpdate()
     {

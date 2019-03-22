@@ -17,7 +17,7 @@ public class SkillJoyStick : JoyStick {
     public FightClientForUnity3D unityClient;
     void Start () {
        
-
+        unityClient=GetComponentInParent<FightClientForUnity3D>();
     }
 	void Update () {
 

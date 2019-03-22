@@ -54,7 +54,11 @@ public class MapView : MonoBehaviour {
 						var view= TileView.Parse(map.GetNeighborEqualString(x,y,TileType.room,TileType.canOpenDoor));
 						var prefab=mapPrefabList.GetPrefab(TileType.room,view.key);
 						viewObjs.Add(Instantiate(prefab,new Vector3(x,1,y),Quaternion.Euler(0,-view.rotation*90,0),transform));
-				
+						foreach (var dir in map[x,y].openDir)
+						{
+							var door=mapPrefabList.GetPrefab(TileType.room,"door");
+							viewObjs.Add(Instantiate(door,new Vector3(x,1,y),Quaternion.Euler(0,-(int)dir*90,0),transform));
+						}
 					}
 				}
 			}

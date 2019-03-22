@@ -5,8 +5,14 @@ using IDG;
 using System.Net.Sockets;
 using System;
 using System.Linq;
+
+
 namespace IDG.FSClient
 {
+    public interface IGameManager {
+        void Init(FSClient client);
+        
+    }
     /// <summary>
     /// 【帧同步客户端】负责与【帧同步服务器】连接
     /// </summary>
@@ -15,7 +21,7 @@ namespace IDG.FSClient
         /// <summary>
         /// 帧同步时间间隔
         /// </summary>
-        public readonly static FixedNumber deltaTime = new FixedNumber(0.1f);
+        public readonly static Fixed deltaTime = new Fixed(0.1f);
         
         /// <summary>
         /// 服务器连接
@@ -52,6 +58,7 @@ namespace IDG.FSClient
         public ShapPhysics physics;
         public object unityClient;
         public IDG.FSClient.Random random;
+        public List<IGameManager> gameManagers;
         private Queue<ProtocolBase> _messageList=new Queue<ProtocolBase>();
         /// <summary>
         /// 连接服务器函数
@@ -59,7 +66,7 @@ namespace IDG.FSClient
         /// <param name="serverIP">服务器IP地址</param>
         /// <param name="serverPort">服务器端口</param>
         /// <param name="maxUserCount">最大玩家数</param>
-        public void Connect(string serverIP,int serverPort,int maxUserCount)
+        public void Connect(string serverIP,int serverPort,int maxUserCount,params IGameManager[] managers)
         {
             _serverCon = new Connection();
             ServerCon.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -72,6 +79,8 @@ namespace IDG.FSClient
             physics =new ShapPhysics();
             physics.Init();
             random =new IDG.FSClient.Random(20190220);
+            gameManagers=new List<IGameManager>();
+            gameManagers.AddRange(managers);
         }
         Dictionary<Connection, byte[]> lastBytesList = new Dictionary<Connection, byte[]>();
         /// <summary>
@@ -161,7 +170,8 @@ namespace IDG.FSClient
 
                 case MessageType.Init:
                     ServerCon.clientId = protocol.getByte();
-                
+
+                   
                     Debug.Log("clientID:" + ServerCon.clientId);
                     break;
                 case MessageType.Frame:
@@ -169,7 +179,11 @@ namespace IDG.FSClient
                     break;
                 case MessageType.RandomSeed:
                     random=new IDG.FSClient.Random((ushort)protocol.getInt32());
-                    Debug.LogError("randomSeedTest "+random.next()) ;
+                //    Debug.LogError("randomSeedTest "+random.next()) ;
+                    foreach (var m in gameManagers)
+                    {
+                        m.Init(this);
+                    }
                     break;
 
                 case MessageType.end:
@@ -180,10 +194,10 @@ namespace IDG.FSClient
             }
             if(t!=MessageType.end&&deep<5){
                 ParseMessage(protocol,deep+1);
-                Debug.LogError("继续解析"+deep);
+           //     Debug.LogError("继续解析"+deep);
             }else
             {
-                  Debug.LogError("解析结束" );
+             //     Debug.LogError("解析结束" );
             }
             if (protocol.Length > 0)
             {

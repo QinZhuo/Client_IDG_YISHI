@@ -15,18 +15,21 @@ public class FightClientForUnity3D : MonoBehaviour {
     //public static FightClientForUnity3D instance;
     public List<JoyStick> joySticks;
     public Camera mainCamera;
+
+    
     // public static FightClientForUnity3D Instance
     // {
     //     get { return instance; }
     // }
     // Use this for initialization
     void Awake () {
-        
+        joySticks=new List<JoyStick>();
+        joySticks.AddRange(GetComponentsInChildren<JoyStick>());
         client = new FSClient();
    
         client.unityClient = this;
       //   client.Connect("127.0.0.1", 12345,10);
-        client.Connect(serverIp, 12345,10);
+        client.Connect(serverIp, 12345,10,GetComponentsInChildren<IGameManager>());
       //  client.Connect("172.16.252.231", 12345,10);
         // foreach (JoyStick joyStick in joySticks)
         // {
@@ -57,7 +60,7 @@ public class FightClientForUnity3D : MonoBehaviour {
         // {
         //     Debug.LogError(i+"du to direction= "+(new Vector3(0,360,0)- i.ToUnityRotation().eulerAngles));
         // }
-        FixedNumber.RotationLerp(FixedNumber.Zero,new FixedNumber(150),new FixedNumber(1));
+        //Fixed.RotationLerp(Fixed.Zero,new Fixed(150),new Fixed(1));
     }
 	
 

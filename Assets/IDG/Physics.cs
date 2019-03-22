@@ -169,9 +169,9 @@ namespace IDG
 
         public static bool BoxCheck(ShapBase objA, ShapBase objB)
         {
-            if (FixedNumber.Abs((objA.position.x - objB.position.x)) < (objA.width + objB.width) / 2
+            if (Fixed.Abs((objA.position.x - objB.position.x)) < (objA.width + objB.width) / 2
                 &&
-                FixedNumber.Abs((objA.position.y - objB.position.y)) < (objA.height + objB.height) / 2
+                Fixed.Abs((objA.position.y - objB.position.y)) < (objA.height + objB.height) / 2
                 )
             {
                 return true;
@@ -262,12 +262,12 @@ namespace IDG
     [System.Serializable]
     public class ShapBase
     {
-        private FixedNumber left;
-        private FixedNumber right;
-        private FixedNumber up;
-        private FixedNumber down;
-        public FixedNumber height;// { get { return Ratio.AbsMax(up,down); } }
-        public FixedNumber width;// { get { return Ratio.AbsMax(left, right); } }
+        private Fixed left;
+        private Fixed right;
+        private Fixed up;
+        private Fixed down;
+        public Fixed height;// { get { return Ratio.AbsMax(up,down); } }
+        public Fixed width;// { get { return Ratio.AbsMax(left, right); } }
         protected Fixed2[] _points;
         public NetData data;
         public Fixed2 position { get { if (data != null) { return data.transform.Position; } else { return _position; } }
@@ -276,7 +276,7 @@ namespace IDG
                 _position = value;
             }
         }
-        public FixedNumber rotation { get { if (data != null) { return data.transform.Rotation; } else { return new FixedNumber(); } } }
+        public Fixed rotation { get { if (data != null) { return data.transform.Rotation; } else { return new Fixed(); } } }
         protected Fixed2 _position=Fixed2.zero;
         
         public ShapBase()
@@ -341,8 +341,8 @@ namespace IDG
                     up = _points[i].Rotate(rotation).y;
                 }
             }
-            width = FixedNumber.Max(FixedNumber.Abs( left), FixedNumber.Abs(right)) * 2;
-            height = FixedNumber.Max(FixedNumber.Abs(up), FixedNumber.Abs(down)) * 2;
+            width = Fixed.Max(Fixed.Abs( left), Fixed.Abs(right)) * 2;
+            height = Fixed.Max(Fixed.Abs(up), Fixed.Abs(down)) * 2;
         }
         /// <summary>
         /// 给定两个凸体 给定迭代方向 该函数返回这两个凸体明可夫斯基差形状中的一个点
@@ -352,7 +352,7 @@ namespace IDG
         public Fixed2 Support(Fixed2 direction)
         {
             int index = 0;
-            FixedNumber maxDot, t;
+            Fixed maxDot, t;
             Fixed2 p;
             p = GetPoint(index);
             maxDot = Fixed2.Dot(p, direction);

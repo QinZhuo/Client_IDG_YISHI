@@ -10,8 +10,8 @@ namespace IDG
     {
         private Fixed2 _position=new Fixed2();
         private Fixed2 _lastPos=new Fixed2();
-        private FixedNumber _lastRota = new FixedNumber();
-        private FixedNumber _rotation = new FixedNumber();
+        private Fixed _lastRota = new Fixed();
+        private Fixed _rotation = new Fixed();
         private NetData data;
    
         public void Init(NetData data){
@@ -48,7 +48,7 @@ namespace IDG
                 return Fixed2.Parse(_rotation);
             }
         }
-        public FixedNumber Rotation
+        public Fixed Rotation
         {
             get
             {
@@ -69,7 +69,7 @@ namespace IDG
                
             }
         }
-        public void Reset(Fixed2 position,FixedNumber rotation)
+        public void Reset(Fixed2 position,Fixed rotation)
         {
             _position = position;
             _rotation = rotation;

@@ -10,8 +10,8 @@ class SkillShoots:SkillBase
     public override void Init()
     {
         key = KeyNum.Skill1;
-        time = new FixedNumber(0.7f);
-        timer = new FixedNumber(0);
+        time = new Fixed(0.7f);
+        timer = new Fixed(0);
     }
    
            
@@ -25,7 +25,7 @@ class SkillShoots:SkillBase
             ShootBullet(data.transform.Position,  data.Input.GetJoyStickDirection(key).ToRotation() + i);
         }
     }
-    protected void ShootBullet(Fixed2 position, FixedNumber rotation)
+    protected void ShootBullet(Fixed2 position, Fixed rotation)
     {
         Bullet bullet = new Bullet();
         bullet.user = data;
@@ -41,8 +41,8 @@ class SkillRay:SkillBase{
     public override void Init()
     {
         key = KeyNum.Skill1;
-        time = new FixedNumber(0.7f);
-        timer = new FixedNumber(0);
+        time = new Fixed(0.7f);
+        timer = new Fixed(0);
         gun = new GunBase();
         ray = new RayShap(Fixed2.zero);
         gun.Init(20, data);
@@ -61,14 +61,14 @@ class SkillRay:SkillBase{
     protected void ShootBullet(Fixed2 position, Fixed2 direction)
     {
         UnityEngine.Debug.DrawRay(position.ToVector3(), direction.ToVector3()*10, UnityEngine.Color.red,0.1f);
-        var others = data.client.physics.OverlapShap(ray.ResetDirection(position, direction, new FixedNumber(10)));
+        var others = data.client.physics.OverlapShap(ray.ResetDirection(position, direction, new Fixed(10)));
         foreach (var other in others)
         {
             if (other != data)
             {
                 if(other is HealthData)
                 {
-                    (other as HealthData).GetHurt(new FixedNumber(10));
+                    (other as HealthData).GetHurt(new Fixed(10));
                 }
             }
         }
@@ -87,8 +87,8 @@ class SkillGun:SkillBase
     public override void Init()
     {
         key = KeyNum.Skill1;
-        time = new FixedNumber(0.7f);
-        timer = new FixedNumber(0);
+        time = new Fixed(0.7f);
+        timer = new Fixed(0);
         gun = new GunBase();
         ray = new RayShap(Fixed2.zero);
         gun.Init(20, data);
@@ -107,14 +107,14 @@ class SkillGun:SkillBase
     protected void ShootBullet(Fixed2 position, Fixed2 direction)
     {
         UnityEngine.Debug.DrawRay(position.ToVector3(), direction.ToVector3()*10, UnityEngine.Color.red,0.1f);
-        var others = data.client.physics.OverlapShap(ray.ResetDirection(position, direction, new FixedNumber(10)));
+        var others = data.client.physics.OverlapShap(ray.ResetDirection(position, direction, new Fixed(10)));
         foreach (var other in others)
         {
             if (other != data)
             {
                 if(other is HealthData)
                 {
-                    (other as HealthData).GetHurt(new FixedNumber(10));
+                    (other as HealthData).GetHurt(new Fixed(10));
                 }
             }
         }

@@ -32,9 +32,9 @@ public class PlayerShow : NetObjectView<PlayerData> {
 }
 public abstract class HealthData : NetData
 {
-    protected FixedNumber _m_Hp=new FixedNumber(100);
+    protected Fixed _m_Hp=new Fixed(100);
     protected bool isDead=false;
-    public virtual void GetHurt(FixedNumber atk)
+    public virtual void GetHurt(Fixed atk)
     {
         if (!isDead)
         {
@@ -55,7 +55,7 @@ public abstract class HealthData : NetData
 }
 public class PlayerData: HealthData
 {
-    public FixedNumber move_speed = new FixedNumber(3);
+    public Fixed move_speed = new Fixed(3);
     public Fixed2 move_dir { get; private set; }
     public SkillList skillList;
     public override void Start()
@@ -63,7 +63,7 @@ public class PlayerData: HealthData
        
         this.tag = "Player";
         skillList= AddCommponent<SkillList>();
-        Shap = new CircleShap(new FixedNumber(0.5f), 8);
+        Shap = new CircleShap(new Fixed(0.5f), 8);
         rigibody.useCheck=true;
         
      
@@ -84,7 +84,7 @@ public class PlayerData: HealthData
         if (move_dir.x != 0 || move_dir.y != 0)
         {
             
-            transform.Rotation = FixedNumber.RotationLerp(transform.Rotation, move_dir.ToRotation(),new FixedNumber(0.5f));
+            transform.Rotation = Fixed.RotationLerp(transform.Rotation, move_dir.ToRotation(),new Fixed(0.5f));
         }
       
   

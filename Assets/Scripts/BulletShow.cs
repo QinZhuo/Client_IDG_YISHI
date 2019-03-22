@@ -20,7 +20,7 @@ public class BulletShow : NetObjectView<Bullet> {
 public class Bullet : NetData
 {
     public NetData user;
-    public FixedNumber startTime;
+    public Fixed startTime;
     public override void Init(FSClient client)
     {
         base.Init(client);
@@ -30,7 +30,7 @@ public class Bullet : NetData
     }
     public override void Start()
     {
-        Shap = new BoxShap(new FixedNumber(2), new FixedNumber(0.3f));
+        Shap = new BoxShap(new Fixed(2), new Fixed(0.3f));
     }
     protected override void FrameUpdate()
     {
@@ -57,7 +57,7 @@ public class Bullet : NetData
         {
             UnityEngine.Debug.Log("Enter触发Bullet！！！！");
              client.objectManager.Destory(this.view);
-            (other as HealthData).GetHurt(new FixedNumber(10));
+            (other as HealthData).GetHurt(new Fixed(10));
         }
     }
     public override void OnPhysicsCheckExit(NetData other)

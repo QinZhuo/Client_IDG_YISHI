@@ -5,14 +5,14 @@ namespace IDG
 {
     public class CircleShap : ShapBase
     {
-        public CircleShap(FixedNumber r, int num)
+        public CircleShap(Fixed r, int num)
         {
 
-            FixedNumber t360 = new FixedNumber(360);
-            FixedNumber tmp = t360 / num;
+            Fixed t360 = new Fixed(360);
+            Fixed tmp = t360 / num;
             Fixed2[] v2s = new Fixed2[num];
             int i = 0;
-            for (FixedNumber tr = new FixedNumber(0); tr < t360 && i < num; tr += tmp, i++)
+            for (Fixed tr = new Fixed(0); tr < t360 && i < num; tr += tmp, i++)
             {
                 v2s[i] = Fixed2.Parse(tr) * r;
             }
@@ -23,7 +23,7 @@ namespace IDG
     public class BoxShap : ShapBase
     {
 
-        public BoxShap(FixedNumber x, FixedNumber y)
+        public BoxShap(Fixed x, Fixed y)
         {
             Fixed2[] v2s = new Fixed2[4];
             v2s[0] = new Fixed2(x / 2, y / 2);
@@ -35,13 +35,13 @@ namespace IDG
     }
     public class RayShap : ShapBase
     {
-        public static RayShap GetRay(Fixed2 origin, Fixed2 direction,FixedNumber length)
+        public static RayShap GetRay(Fixed2 origin, Fixed2 direction,Fixed length)
         {
             var shap = new RayShap(direction.normalized*length);
             shap._position = origin;
             return shap;
         }
-        public RayShap ResetDirection(Fixed2 origin, Fixed2 direction,FixedNumber length)
+        public RayShap ResetDirection(Fixed2 origin, Fixed2 direction,Fixed length)
         {
             position = origin;
             _points[1] = direction * length;

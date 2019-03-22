@@ -8,8 +8,8 @@ using IDG.FSClient;
 public class SkillBase:ComponentBase
 {
     public KeyNum key;
-    public FixedNumber timer;
-    public FixedNumber time;
+    public Fixed timer;
+    public Fixed time;
     public virtual void UseOver()
     {
         timer = time;

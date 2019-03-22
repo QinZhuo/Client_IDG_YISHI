@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e444b7d19420140b7aa5c008785c92, type: 3}
+  m_Name: Wall
+  m_EditorClassIdentifier: 
+  nullPrefab: {fileID: 1217484672488560, guid: 33199cac874e77b449c5a24222448bc2, type: 2}
+  viewLists:
+  - type: 1
+    prefabs:
+    - key: 1010
+      prefab: {fileID: 1651401815949180, guid: 9ff9575e170f2544297ad22e2279a949, type: 2}
+    - key: 1100
+      prefab: {fileID: 1991278171530436, guid: 6bc96880f58bee840bb09535adf94499, type: 2}
+    - key: 1110
+      prefab: {fileID: 1756461531618974, guid: ee10eaed45188f647b4645cfada3f4c5, type: 2}
+    - key: 1111
+      prefab: {fileID: 1320236931409110, guid: a526f508cc790754380a4ac1c7998b5e, type: 2}
+  - type: 2
+    prefabs:
+    - key: 1111
+      prefab: {fileID: 1885624957129202, guid: 04f70fab8c8eee34a87ea8b810ef80fc, type: 2}
+    - key: 1110
+      prefab: {fileID: 1228861701482178, guid: 069584c1643e8a24fb399a1da0e2dc5c, type: 2}
+    - key: 1100
+      prefab: {fileID: 1528103276164406, guid: 76664c806c3c06d40921898757410f7f, type: 2}
+    - key: 1010
+      prefab: {fileID: 1948783797805758, guid: 7813fe6aabe46c84f962f0b804cf3224, type: 2}
+    - key: door
+      prefab: {fileID: 1592682881982184, guid: d20e269ffd314f64dbf854db3264dc30, type: 2}
+  - type: 2
+    prefabs: []
