@@ -18,7 +18,7 @@ namespace IDG.FSClient
     /// <typeparam name="T">该物体对应的数据类实现</typeparam>
     abstract public class NetObjectView<T> : View where T:NetData,new()
     {
-      
+        public bool showGizmo=true;
         /// <summary>
         /// 数据类对象
         /// </summary>
@@ -66,13 +66,18 @@ namespace IDG.FSClient
         /// </summary>
         private void OnDrawGizmos()
         {
-            if (data==null||data.Shap == null) return;
+            if (data==null||data.Shap == null||!showGizmo) return;
             Gizmos.color = Color.white;
-            Gizmos.DrawWireCube(data.Shap.position.ToVector3(), new Vector3(data.Width.ToFloat(), 0, data.Height.ToFloat()));
-            for (int i = 0; i < data.Shap.PointsCount; i++)
+           // Gizmos.DrawWireCube(data.Shap.position.ToVector3(), new Vector3(data.Width.ToFloat(), 0, data.Height.ToFloat()));
+             Gizmos.color = Color.blue;
+            int i;
+            for ( i = 0; i < data.Shap.PointsCount-1; i++)
             {
-                Gizmos.DrawCube((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(), Vector3.one * 0.1f);
+                Gizmos.DrawSphere((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(),0.1f);
+                  Gizmos.DrawLine((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(),(data.Shap.GetPoint(i+1) + data.transform.Position).ToVector3());
             }
+            if(i<data.Shap.PointsCount)
+            Gizmos.DrawSphere((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(),0.1f);
         }
         
         //public void InitClient(){

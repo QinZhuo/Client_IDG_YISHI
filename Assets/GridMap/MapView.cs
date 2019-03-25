@@ -9,7 +9,7 @@ public class MapView : MonoBehaviour {
 	public MapPrefabList mapPrefabList;
 	
 	
-
+	
 	
 	
 	[ContextMenu("ClearTile")]
@@ -28,9 +28,6 @@ public class MapView : MonoBehaviour {
 	
 	// Use this for initialization
 	public void ShowMap(GridMap map){
-		
-	
-	
 		Clear();
 		for (int x = 0; x < map.width; x++)
 		{
@@ -39,7 +36,18 @@ public class MapView : MonoBehaviour {
 				if(map[x,y].type==TileType.road){
 					var view= TileView.Parse(map.GetNeighborEqualString(x,y,TileType.road));
 					var prefab=mapPrefabList.GetPrefab(map[x,y].type,view.key);
-					viewObjs.Add(Instantiate(prefab,new Vector3(x,1,y),Quaternion.Euler(0,-view.rotation*90,0),transform));
+					var obj=Instantiate(prefab,new Vector3(x,1,y),Quaternion.Euler(0,-view.rotation*90,0),transform);
+					viewObjs.Add(obj);
+					if(map.CreatTileCallBack!=null){
+						var shapInfo=obj.GetComponent<ShapsInfo>();
+						if(shapInfo!=null){
+							var shaps=shapInfo.shaps;
+							for (int i = 0; i < shaps.Length; i++)
+							{
+								map.CreatTileCallBack(obj.transform,shaps[i].points);
+							}
+						}
+					}
 				}
 			}
 		}

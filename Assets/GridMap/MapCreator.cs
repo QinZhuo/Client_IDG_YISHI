@@ -40,6 +40,7 @@ public class MapCreator : MonoBehaviour {
 
 public class GridMap
 {
+	public Action<Transform,Vector2[]> CreatTileCallBack;
 	public Tile this[int x,int y]{
 		get{
 			if(InMap(x,y)){

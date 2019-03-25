@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4099679399747804}
+  - component: {fileID: 114824617090627798}
   m_Layer: 0
   m_Name: wall_1100
   m_TagString: Untagged
@@ -50,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991278171530436}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.909, y: 0, z: 0}
+  m_LocalPosition: {x: -1.59, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4789061611259852}
@@ -111,3 +112,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1163985112465006}
   m_Mesh: {fileID: 4300000, guid: e0306fae1fd270044a58a3bb35525eca, type: 3}
+--- !u!114 &114824617090627798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991278171530436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 064ca1f220ed24d41925a951d5fb93ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaps:
+  - points:
+    - {x: 0.5, y: -0.3}
+    - {x: -0.3, y: -0.3}
+  - points:
+    - {x: -0.3, y: 0.5}
+    - {x: -0.3, y: -0.3}

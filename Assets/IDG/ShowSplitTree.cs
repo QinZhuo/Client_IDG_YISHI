@@ -6,7 +6,9 @@ namespace IDG
 {
     public class ShowSplitTree : MonoBehaviour
     {
+        
         public FightClientForUnity3D unityClient;
+        public bool showSplitTree=true;
         // Use this for initialization
         void Start()
         {
@@ -18,11 +20,12 @@ namespace IDG
         {
 
         }
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             if (!enabled) return;
             //Gizmos.DrawCube(new Vector3(), new Vector3(100, 1, 100));
             //return;
+            
             if (unityClient.client!=null&&unityClient.client.physics.tree != null)
             {
                 Tree4 node;// = ShapPhysics.tree;
@@ -50,20 +53,33 @@ namespace IDG
                     {
                         c = colors[i];
                     }
-                    Gizmos.color = c;
-                    Gizmos.DrawWireCube(node.border.center.ToVector3(), new Vector3(size, (Tree4.MaxDepth - node.depth) * 10, size));
-                    c.a = 0.2f * (1f * node.objs.Count / Tree4.SplitSize);
-                    Gizmos.color = c;
-                    Gizmos.DrawCube(node.border.center.ToVector3(), new Vector3(size, (Tree4.MaxDepth - node.depth) * 10, size));
-                     Gizmos.color = Color.black;
-
+                    if(showSplitTree){
+                        Gizmos.color = c;
+                        Gizmos.DrawWireCube(node.border.center.ToVector3(), new Vector3(size, (Tree4.MaxDepth - node.depth) * 10, size));
+                        c.a = 0.2f * (1f * node.objs.Count / Tree4.SplitSize);
+                        Gizmos.color = c;
+                        Gizmos.DrawCube(node.border.center.ToVector3(), new Vector3(size, (Tree4.MaxDepth - node.depth) * 10, size));
+                        Gizmos.color = Color.black;
+                    }
                     
                    
                     c.a = 0.3f;
                     Gizmos.color = c;
                     foreach (var item in node.objs)
                     {
+                        if(showSplitTree)
                         Gizmos.DrawSphere(item.transform.Position.ToVector3() + Vector3.up * (i + 2), 1);
+
+                      
+                        for (int index = 0; index < item.Shap.PointsCount-1; index++)
+                        {
+                            var ponit=item.Shap.GetPoint(index);
+                            Gizmos.DrawLine((item.transform.Position+ponit).ToVector3(),(item.transform.Position+item.Shap.GetPoint(index+1)).ToVector3());
+                             Gizmos.DrawSphere((item.transform.Position+ponit).ToVector3(), 0.05f);
+                           
+                        }
+                       
+                        
                     }
                     if (node.child != null)
                     {

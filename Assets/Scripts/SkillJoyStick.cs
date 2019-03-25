@@ -7,7 +7,7 @@ using IDG.MobileInput;
 public class SkillJoyStick : JoyStick {
     public Image fillImage;
     public Image backImage;
-    public SkillList skillList;
+    public SkillSystem skillList;
     // Use this for initialization
     
     public KeyCode pcKey = KeyCode.Mouse0;
@@ -60,9 +60,9 @@ public class SkillJoyStick : JoyStick {
 
     SkillBase GetSkill(KeyNum key)
     {
-        if (skillList!=null&&skillList.skillTable[key].Count > 0)
+        if (skillList!=null)
         {
-            return skillList.skillTable[key][0];
+            return skillList.GetCurrentSkill(key);
         }
         return null;
     }

@@ -57,13 +57,13 @@ public class PlayerData: HealthData
 {
     public Fixed move_speed = new Fixed(3);
     public Fixed2 move_dir { get; private set; }
-    public SkillList skillList;
+    public SkillSystem skillList;
     public override void Start()
     {
        
         this.tag = "Player";
-        skillList= AddCommponent<SkillList>();
-        Shap = new CircleShap(new Fixed(0.5f), 8);
+        skillList= AddCommponent<SkillSystem>();
+        Shap = new CircleShap(new Fixed(0.25f), 8);
         rigibody.useCheck=true;
         
      

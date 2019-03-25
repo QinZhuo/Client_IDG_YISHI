@@ -1,8 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using IDG.FSClient;
 namespace IDG
 {
+   
+    public class ShapData:NetData{
+        public void SetShap(Vector2[] points){
+            var ps=new Fixed2[points.Length];
+            for (int i = 0; i < ps.Length; i++)
+            {
+                ps[i]=points[i].ToFixed2();
+            } 
+            Shap=new ShapBase( ps);
+          //  Debug.LogError("shap count "+points.Length);
+        }
+        public override void Start()
+        {
+        
+        
+            rigibody.useCheck=false;
+        }
+        protected override void FrameUpdate()
+        {
+        
+            
+    
+        }
+
+        public override string PrefabPath()
+        {
+            return  "Prefabs/ShapView";
+        }
+    }
     public class CircleShap : ShapBase
     {
         public CircleShap(Fixed r, int num)

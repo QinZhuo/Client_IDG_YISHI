@@ -2,13 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using IDG;
+
 
 using System.Runtime.Serialization;
 
 
 namespace IDG
 {
+    public static class FixedExtend{
+        public static IDG.Fixed ToFixed(this Int32 i){
+            return new IDG.Fixed(i);
+        }
+        public static IDG.Fixed ToFixed(this float f){
+            return new IDG.Fixed(f);
+        }
+        public static IDG.Fixed2 ToFixed2(this UnityEngine.Vector2 v2){
+            return new IDG.Fixed2(v2.x,v2.y);
+        }
+        public static IDG.Fixed ToFixedRotation(this UnityEngine.Quaternion rotation){
+            return -rotation.eulerAngles.y.ToFixed();
+        }
+        
+    }
     /// <summary>
     /// 定点数 使用Int64实现
     /// </summary>
