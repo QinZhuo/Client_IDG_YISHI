@@ -13,7 +13,7 @@ public class MapCreator : MonoBehaviour {
 	[ContextMenu("randomMap")]
 	public void RandomMap () {
 		map=new GridMap();
-		map.Init(30,30);
+		map.Init(30,30,3);
 		map.RandomRoom();
 		map.PrimConnect();
 		//map.RandomConnect(2);
@@ -54,12 +54,14 @@ public class GridMap
 	public static int[][] directions;
 	public int width;
 	public int height;
+	public float mapScale;
 	public Func<int,int,int> RandomRange;
 	public List<Room> rooms;
 	public Color[] colors;
-	public void Init(int width,int height,Func<int,int,int> randomRangeFuc=null){
+	public void Init(int width,int height,float mapScale,Func<int,int,int> randomRangeFuc=null){
 		this.height=(height/2)*2+1;
 		this.width=(width/2)*2+1;
+		this.mapScale=mapScale;
 		if(randomRangeFuc!=null){
 			RandomRange=randomRangeFuc;
 		}else

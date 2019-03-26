@@ -5,6 +5,8 @@ using IDG.FSClient;
 using IDG;
 public class RandomMapCreator : MapCreator,IGameManager{
 	FSClient client;
+	
+	public float mapScale;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,7 +15,7 @@ public class RandomMapCreator : MapCreator,IGameManager{
 		this.client=client;
 		map=new GridMap();
 		map.CreatTileCallBack=CreateShap;
-		map.Init(30,30,client.random.Range);
+		map.Init(30,30,mapScale,client.random.Range);
 		map.RandomRoom();
 		
 		map.PrimConnect();
@@ -29,9 +31,11 @@ public class RandomMapCreator : MapCreator,IGameManager{
 		
 			shap.transform.Position= new IDG.Fixed2(trans.position.x,trans.position.z);
 			shap.transform.Rotation=trans.rotation.ToFixedRotation();
-				shap.SetShap(points);
+			shap.transform.Scale=Fixed2.one*3.ToFixed();
+			shap.SetShap(points);
+			
 			client.objectManager.Instantiate(shap);
-			Debug.LogError("CreatMap "+trans.rotation.ToFixedRotation());
+		//	Debug.LogError("CreatMap "+trans.rotation.ToFixedRotation());
            
 	}
 }

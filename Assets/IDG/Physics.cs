@@ -270,7 +270,7 @@ namespace IDG
         public Fixed width;// { get { return Ratio.AbsMax(left, right); } }
         protected Fixed2[] _points;
         public NetData data;
-        public Fixed2 position { get { if (data != null) { return data.transform.Position; } else { return _position; } }
+        public Fixed2 position { get { if (data != null) { return data.transform.PhysicsPosition; } else { return _position; } }
             set
             {
                 _position = value;
@@ -288,10 +288,16 @@ namespace IDG
             _points = points;
             ResetSize();
         }
-    
+        private Fixed2 SetScale(Fixed2 point){
+            if(data!=null){
+            return new Fixed2(point.x*data.transform.Scale.x,point.y*data.transform.Scale.y) ;
+            }else{
+                return point;
+            }
+        }
         public Fixed2 GetPoint(int index)
         {
-            return _points[index].Rotate(rotation);
+            return SetScale(_points[index]).Rotate(rotation);
         }
         public Fixed2[] GetPoints()
         {
@@ -318,27 +324,28 @@ namespace IDG
         /// </summary>
         public void ResetSize()
         {
-            left = _points[0].Rotate(rotation).x;
-            right = _points[0].Rotate(rotation).x;
-            up = _points[0].Rotate(rotation).y;
-            down = _points[0].Rotate(rotation).y;
+            left =GetPoint(0).x;
+            right = GetPoint(0).x;
+            up = GetPoint(0).y;
+            down =GetPoint(0).y;
             for (int i = 0; i < _points.Length; i++)
             {
-                if (_points[i].Rotate(rotation).x < left)
+                var point=GetPoint(i);
+                if (point.x < left)
                 {
-                    left = _points[i].Rotate(rotation).x;
+                    left = point.x;
                 }
-                if (_points[i].Rotate(rotation).x > right)
+                if (point.x > right)
                 {
-                    right = _points[i].Rotate(rotation).x;
+                    right = point.x;
                 }
-                if (_points[i].Rotate(rotation).y < down)
+                if (point.y < down)
                 {
-                    down = _points[i].Rotate(rotation).y;
+                    down = point.y;
                 }
-                if (_points[i].Rotate(rotation).y > up)
+                if (point.y > up)
                 {
-                    up = _points[i].Rotate(rotation).y;
+                    up = point.y;
                 }
             }
             width = Fixed.Max(Fixed.Abs( left), Fixed.Abs(right)) * 2;

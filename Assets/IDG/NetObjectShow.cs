@@ -166,7 +166,7 @@ namespace IDG.FSClient
             rigibody.Init(OnPhysicsCheckEnter,OnPhysicsCheckStay,OnPhysicsCheckExit);
             transform=new TransformComponent();
             transform.Init(this);
-            Debug.Log(name+"init");
+       //     Debug.Log(name+"init");
         }
         public T AddCommponent<T>() where T :IDG.ComponentBase ,new()
         {
@@ -231,6 +231,7 @@ namespace IDG.FSClient
                     
                     _shap = value;
                     _shap.data = this;
+                    _shap.ResetSize();
                     client.physics.Add(this);
                     
                 }

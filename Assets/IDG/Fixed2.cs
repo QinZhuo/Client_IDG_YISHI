@@ -22,7 +22,7 @@ namespace IDG
         //    this.z = new Ratio(0);
         //}
         
-        
+        public static Fixed2 one=new Fixed2(1,1);
         public Fixed2(float x, float y)
         {
 
@@ -36,9 +36,9 @@ namespace IDG
             this.y = y;
 
         }
-        public Vector3 ToVector3()
+        public Vector3 ToVector3(int yValue=0)
         {
-            return new Vector3(x.ToFloat(), 0, y.ToFloat());
+            return new Vector3(x.ToFloat(),yValue, y.ToFloat());
         }
         public static Fixed2 GetV2(Fixed x, Fixed y)
         {

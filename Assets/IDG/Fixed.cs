@@ -38,6 +38,7 @@ namespace IDG
         /// 0
         /// </summary>
         public static Fixed Zero = new Fixed(0);
+        //public static Fixed one=new Fixed(1);
         internal Int64 m_Bits;
 
         public Fixed(int x)

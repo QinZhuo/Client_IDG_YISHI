@@ -13,15 +13,35 @@ namespace IDG
         private Fixed _lastRota = new Fixed();
         private Fixed _rotation = new Fixed();
         private NetData data;
+
+        private Fixed2 _scale=Fixed2.one;
    
         public void Init(NetData data){
             this.data=data;
+        }
+        public Fixed2 Scale{
+            get{
+                return _scale;
+            }set{
+                if(value!=_scale){
+                    _scale=value;
+                    if( data.Shap!=null){
+                    data.Shap.ResetSize();
+                    Tree4.Move(data);
+                    }
+                }
+            }
+        }
+        public Fixed2 PhysicsPosition{
+            get{
+                return _position;
+            }
         }
         public Fixed2 Position
         {
             get
             {
-                return _position;
+                return _lastPos;
             }
             set
             {
