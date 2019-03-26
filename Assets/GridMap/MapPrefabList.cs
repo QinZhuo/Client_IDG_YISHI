@@ -27,6 +27,9 @@ public class MapPrefabList : ScriptableObject {
 		var prefab= GetList(type).GetPrefab(key);
 		if(prefab==null){
 			prefab=nullPrefab;
+			if(key!="door"){
+				Debug.LogWarning("类型"+type+"中不存在的key["+key+"]");
+			}
 		}
 		return prefab;
 	}
@@ -37,6 +40,7 @@ public class MapPrefabList : ScriptableObject {
 				return item;
 			}
 		}
+		Debug.LogWarning("不存在的TileType["+type+"]");
 		return new ViewList();
 	}
 }

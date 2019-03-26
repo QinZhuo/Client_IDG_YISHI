@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapView : MonoBehaviour {
 //	public GameObject[] tileView;
-	GridMap map;
+
 	List<GameObject> viewObjs;
 	public MapPrefabList mapPrefabList;
 	
@@ -26,6 +26,41 @@ public class MapView : MonoBehaviour {
 		}
 	}
 	
+	public void CreateTile(GridMap map,int x,int y,TileType type,TileView view){
+		
+		var prefab=mapPrefabList.GetPrefab(type,view.key);
+	
+		var obj=Instantiate(prefab,new Vector3(x*map.mapScale,1,y*map.mapScale),Quaternion.Euler(0,-view.rotation*90,0),transform);
+		viewObjs.Add(obj);
+		obj.transform.localScale=Vector3.one*map.mapScale;
+		if(type==TileType.room){
+		foreach (var dir in map[x,y].openDir)
+		{
+			var door=mapPrefabList.GetPrefab(type,"door");
+			var doorObj= Instantiate(door,new Vector3(x*map.mapScale,1,y*map.mapScale),Quaternion.Euler(0,-(int)dir*90,0),transform);
+			doorObj.transform.localScale=Vector3.one*map.mapScale;
+			viewObjs.Add(doorObj);
+			
+		}
+		}
+		if(map.CreatTileCallBack!=null){
+			var shapInfo=obj.GetComponent<ShapsInfo>();
+			if(shapInfo!=null){
+				var shaps=shapInfo.shaps;
+				
+				for (int i = 0; i < shaps.Length; i++)
+				{
+					var points=new Vector2[shaps[i].points.Length];
+					for (int pi = 0; pi < points.Length; pi++)
+					{
+						points[pi]=shaps[i].points[pi]*map.mapScale;
+					}
+					map.CreatTileCallBack(obj.transform,shaps[i].points);
+				}
+			}
+		}
+	}
+
 	// Use this for initialization
 	public void ShowMap(GridMap map){
 		Clear();
@@ -35,27 +70,8 @@ public class MapView : MonoBehaviour {
 			{
 				if(map[x,y].type==TileType.road){
 					var view= TileView.Parse(map.GetNeighborEqualString(x,y,TileType.road));
-					var prefab=mapPrefabList.GetPrefab(map[x,y].type,view.key);
-					var obj=Instantiate(prefab,new Vector3(x*map.mapScale,1,y*map.mapScale),Quaternion.Euler(0,-view.rotation*90,0),transform);
-					viewObjs.Add(obj);
-					obj.transform.localScale=Vector3.one*map.mapScale;
-				
-					if(map.CreatTileCallBack!=null){
-						var shapInfo=obj.GetComponent<ShapsInfo>();
-						if(shapInfo!=null){
-							var shaps=shapInfo.shaps;
-							
-							for (int i = 0; i < shaps.Length; i++)
-							{
-								var points=new Vector2[shaps[i].points.Length];
-								for (int pi = 0; pi < points.Length; pi++)
-								{
-									points[pi]=shaps[i].points[pi]*map.mapScale;
-								}
-								map.CreatTileCallBack(obj.transform,shaps[i].points);
-							}
-						}
-					}
+					CreateTile(map,x,y,TileType.road,view);
+					
 				}
 			}
 		}
@@ -68,15 +84,7 @@ public class MapView : MonoBehaviour {
 				{
 					if(map[x,y].type==TileType.room||map[x,y].type==TileType.canOpenDoor){
 						var view= TileView.Parse(map.GetNeighborEqualString(x,y,TileType.room,TileType.canOpenDoor));
-						var prefab=mapPrefabList.GetPrefab(TileType.room,view.key);
-						var obj=Instantiate(prefab,new Vector3(x*map.mapScale,1,y*map.mapScale),Quaternion.Euler(0,-view.rotation*90,0),transform);
-						viewObjs.Add(obj);
-						obj.transform.localScale=Vector3.one*map.mapScale;
-						foreach (var dir in map[x,y].openDir)
-						{
-							var door=mapPrefabList.GetPrefab(TileType.room,"door");
-							viewObjs.Add(Instantiate(door,new Vector3(x,1,y),Quaternion.Euler(0,-(int)dir*90,0),transform));
-						}
+						CreateTile(map,x,y,TileType.room,view);
 					}
 				}
 			}

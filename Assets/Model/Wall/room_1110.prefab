@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4917898488636610}
+  - component: {fileID: 114079213841151140}
   m_Layer: 0
   m_Name: room_1110
   m_TagString: Untagged
@@ -63,7 +64,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1228861701482178}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.669, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4092031914702574}
@@ -111,3 +112,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1311359416979314}
   m_Mesh: {fileID: 4300000, guid: 331e3072cbb4f3d4d861ef9262e04b80, type: 3}
+--- !u!114 &114079213841151140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1228861701482178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 064ca1f220ed24d41925a951d5fb93ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaps:
+  - points:
+    - {x: 0.5, y: -0.5}
+    - {x: -0.5, y: -0.5}

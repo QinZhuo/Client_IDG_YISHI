@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4131498675005428}
+  - component: {fileID: 114298296770363274}
   m_Layer: 0
   m_Name: wall_1110
   m_TagString: Untagged
@@ -111,3 +112,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254300580864126}
   m_Mesh: {fileID: 4300000, guid: abbfe87e2e9aa8f429e4a49a78512a96, type: 3}
+--- !u!114 &114298296770363274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756461531618974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 064ca1f220ed24d41925a951d5fb93ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaps:
+  - points:
+    - {x: 0.5, y: -0.3}
+    - {x: -0.5, y: -0.3}

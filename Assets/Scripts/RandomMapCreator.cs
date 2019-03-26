@@ -31,7 +31,7 @@ public class RandomMapCreator : MapCreator,IGameManager{
 		
 			shap.transform.Position= new IDG.Fixed2(trans.position.x,trans.position.z);
 			shap.transform.Rotation=trans.rotation.ToFixedRotation();
-			shap.transform.Scale=Fixed2.one*3.ToFixed();
+			shap.transform.Scale=Fixed2.one*mapScale.ToFixed();
 			shap.SetShap(points);
 			
 			client.objectManager.Instantiate(shap);
