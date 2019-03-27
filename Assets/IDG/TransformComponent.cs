@@ -12,6 +12,10 @@ namespace IDG
         private Fixed2 _lastPos=new Fixed2();
         private Fixed _lastRota = new Fixed();
         private Fixed _rotation = new Fixed();
+
+        public void LookAt(Fixed2 target){
+            Rotation= (target-Position).ToRotation();
+        }
         private NetData data;
 
         private Fixed2 _scale=Fixed2.one;
@@ -92,6 +96,7 @@ namespace IDG
         public void Reset(Fixed2 position,Fixed rotation)
         {
             _position = position;
+            _lastPos=position;
             _rotation = rotation;
         }
         public void PhysicsEffect()

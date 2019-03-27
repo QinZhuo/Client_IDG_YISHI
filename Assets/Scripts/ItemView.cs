@@ -44,7 +44,7 @@ public class ItemData : NetData
             //var gun = new GunBase();
             //gun.Init(20, this);
             //(other as PlayerData).AddGun(gun);
-           (other as PlayerData).skillList.AddSkill(ItemManager.GetSkill((SkillId)client.random.Range(3)));
+           (other as PlayerData).skillList.AddSkill(ItemManager.GetSkill((SkillId)client.random.Range(2)));
 
         }
     }

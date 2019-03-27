@@ -85,7 +85,7 @@ namespace IDG.FSClient {
             
             
             _m_serverStep++;
-            Debug.Log("分布解析:" + protocol.Length);
+        //    Debug.Log("分布解析:" + protocol.Length);
             for (int i = 0; i < length; i++)
             {
                 //解析各个玩家输入

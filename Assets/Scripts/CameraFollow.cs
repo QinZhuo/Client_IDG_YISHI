@@ -5,6 +5,11 @@ using IDG.FSClient;
 using IDG;
 public class CameraFollow : MonoBehaviour,IGameManager
 {
+    public int InitLayer{
+        get{
+            return 100;
+        }
+    }
     public FSClient client;
     private TransformComponent target;
     public Vector3 offset;

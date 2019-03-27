@@ -11,11 +11,11 @@ namespace IDG
     /// </summary>
     public class Tree4
     {
-        public static int MaxSize = 100;
+        public static int MaxSize = 200;
         /// <summary>
         /// 四叉树最大深度
         /// </summary>
-        public static int MaxDepth=5;
+        public static int MaxDepth=10;
         /// <summary>
         /// 空间中物体数多余该值时进行空间分割
         /// </summary>
@@ -157,10 +157,10 @@ namespace IDG
             }
             //Debug.Log(1);
         }
-        public void Add(NetData obj)
+        public bool Add(NetData obj)
         {
-            if (!IsIn(obj.Shap)) return;
-            if (objs.Contains(obj)) return;
+            if (!IsIn(obj.Shap)) return false;
+            if (objs.Contains(obj)) return true;
             if (child == null)
             {
                 Link(obj);
@@ -168,10 +168,11 @@ namespace IDG
                 {
                     Split();
                 } 
+                return true;
             }
             else
             {
-                child.Add(obj);
+                return child.Add(obj);
             }
         }
         private void Link(NetData obj)
@@ -282,12 +283,16 @@ namespace IDG
         /// 向子节点添加对象
         /// </summary>
         /// <param name="obj">添加的对象</param>
-        public void Add(NetData obj)
+        public bool Add(NetData obj)
         {
+            bool flag=false;
             for (int i = 0; i < 4; i++)
             {
-                trees[i].Add(obj);
+                 if(trees[i].Add(obj)){
+                     flag=true;
+                 }
             }
+            return flag;
         }
         
     }

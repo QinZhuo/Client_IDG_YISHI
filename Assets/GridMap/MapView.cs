@@ -8,7 +8,7 @@ public class MapView : MonoBehaviour {
 	List<GameObject> viewObjs;
 	public MapPrefabList mapPrefabList;
 	
-	
+	public float viewHeight;
 	
 	
 	
@@ -30,14 +30,14 @@ public class MapView : MonoBehaviour {
 		
 		var prefab=mapPrefabList.GetPrefab(type,view.key);
 	
-		var obj=Instantiate(prefab,new Vector3(x*map.mapScale,1,y*map.mapScale),Quaternion.Euler(0,-view.rotation*90,0),transform);
+		var obj=Instantiate(prefab,new Vector3(x*map.mapScale,viewHeight,y*map.mapScale),Quaternion.Euler(0,-view.rotation*90,0),transform);
 		viewObjs.Add(obj);
 		obj.transform.localScale=Vector3.one*map.mapScale;
 		if(type==TileType.room){
 		foreach (var dir in map[x,y].openDir)
 		{
 			var door=mapPrefabList.GetPrefab(type,"door");
-			var doorObj= Instantiate(door,new Vector3(x*map.mapScale,1,y*map.mapScale),Quaternion.Euler(0,-(int)dir*90,0),transform);
+			var doorObj= Instantiate(door,new Vector3(x*map.mapScale,viewHeight,y*map.mapScale),Quaternion.Euler(0,-(int)dir*90,0),transform);
 			doorObj.transform.localScale=Vector3.one*map.mapScale;
 			viewObjs.Add(doorObj);
 			

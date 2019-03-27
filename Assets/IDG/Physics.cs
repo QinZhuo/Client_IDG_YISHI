@@ -96,7 +96,10 @@ namespace IDG
         public void Add(NetData obj)
         {
             shaps.Add(obj);
-            tree.Add(obj);
+            
+            if(!tree.Add(obj)){
+                UnityEngine.Debug.LogWarning("四叉树添加物体失败"+obj.name);
+            }
         }
         /// <summary>
         /// 移除对象

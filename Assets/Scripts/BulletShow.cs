@@ -6,7 +6,6 @@ using IDG.FSClient;
 public class BulletShow : NetObjectView<Bullet> {
     public static int id=0;
 
-    
 
   
  
@@ -56,8 +55,12 @@ public class Bullet : NetData
         if (other is HealthData && other != user)
         {
             UnityEngine.Debug.Log("Enter触发Bullet！！！！");
-             client.objectManager.Destory(this.view);
+            
             (other as HealthData).GetHurt(new Fixed(10));
+        }
+        if(!(other is Bullet)){
+             client.objectManager.Destory(this.view);
+              UnityEngine.Debug.Log("destoy Bullet");
         }
     }
     public override void OnPhysicsCheckExit(NetData other)

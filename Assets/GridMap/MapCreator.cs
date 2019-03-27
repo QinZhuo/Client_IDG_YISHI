@@ -26,9 +26,19 @@ public class MapCreator : MonoBehaviour {
 		
 	}
 
-	private void OnDrawGizmos() {
+	 private void OnDrawGizmosSelected() {
 		if(map!=null){
 			//map.GizmoShow();
+			for (int i = 0; i < map.width; i++)
+			{
+				for (int j = 0; j < map.height; j++)
+				{
+					Gizmos.color=Color.red;
+					if(map[i,j].use){
+					Gizmos.DrawCube(new Vector3(i,0,j),Vector3.one);
+					}
+				}
+			}
 		}
 	
 	}
@@ -90,11 +100,23 @@ public class GridMap
 		}
 		
 	}
+	public Tile GetRandomTile(TileType type){
+		for (int i = 0; i < 50; i++)
+		{
+			var tile=nodes[ RandomRange(0,width),RandomRange(0,height)];
+			if(tile.type!=TileType.none&&!tile.use){
+				tile.use=true;
+				return tile;
+			}
+		}
+		Debug.LogError("寻找随机Tile出错");
+		return null;
+	}
 	public void RandomRoom(){
 		for (int i = 0; i <10; i++)
 		{
 			int checkNum=0;
-			while(!AddRoom(Room.RandomRoom(10,this))&&checkNum<20){checkNum++;};
+			while(!AddRoom(Room.RandomRoom(4,this))&&checkNum<20){checkNum++;};
 		}
 	}
 	
@@ -544,6 +566,8 @@ public class Room
 public class Tile{
 	public int x;
 	public int y;
+
+	public bool use=false;
 
 	public TileType type;
 

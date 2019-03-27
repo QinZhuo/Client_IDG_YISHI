@@ -11,6 +11,7 @@ namespace IDG.FSClient
 {
     public interface IGameManager {
         void Init(FSClient client);
+        int InitLayer{get;}
         
     }
     /// <summary>
@@ -59,6 +60,16 @@ namespace IDG.FSClient
         public object unityClient;
         public IDG.FSClient.Random random;
         public List<IGameManager> gameManagers;
+        public T GetManager<T>() where T:class,IGameManager
+        {
+            foreach (var manager in gameManagers)
+            {
+                if(manager is T){
+                    return manager as T;
+                }
+            }
+            return null;
+        }
         private Queue<ProtocolBase> _messageList=new Queue<ProtocolBase>();
         /// <summary>
         /// 连接服务器函数
@@ -81,6 +92,8 @@ namespace IDG.FSClient
             random =new IDG.FSClient.Random(20190220);
             gameManagers=new List<IGameManager>();
             gameManagers.AddRange(managers);
+            gameManagers.Sort((a,b)=>{if(a.InitLayer>b.InitLayer){return 1;}else{ return -1;}});
+           
         }
         Dictionary<Connection, byte[]> lastBytesList = new Dictionary<Connection, byte[]>();
         /// <summary>
@@ -94,7 +107,7 @@ namespace IDG.FSClient
                
                 int length= con.socket.EndReceive(ar);
             con.length += length;
-            Debug.Log("receive: "+length);
+        //    Debug.Log("receive: "+length);
             //  Debug.Log(DateTime.Now.ToString()+":"+DateTime.Now.Millisecond+ "receive:" + length);
             ProcessData(con);
             con.socket.BeginReceive(con.readBuff, con.length, con.BuffRemain, SocketFlags.None, ReceiveCallBack, con);

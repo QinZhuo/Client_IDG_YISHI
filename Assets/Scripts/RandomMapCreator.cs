@@ -5,7 +5,11 @@ using IDG.FSClient;
 using IDG;
 public class RandomMapCreator : MapCreator,IGameManager{
 	FSClient client;
-	
+	 public int InitLayer{
+        get{
+            return 99;
+        }
+    }
 	public float mapScale;
 	// Use this for initialization
 	void Start () {
@@ -22,6 +26,11 @@ public class RandomMapCreator : MapCreator,IGameManager{
 		//map.RandomConnect(2);
 		mapView.ShowMap(map);
 	
+	}
+	
+	public Fixed2 GetRandomPos(){
+		var tile= map.GetRandomTile(TileType.room);
+		return new Fixed2(tile.x*mapScale,tile.y*mapScale);
 	}
 	// Update is called once per frame
 	void CreateShap (Transform trans,Vector2[] points) {

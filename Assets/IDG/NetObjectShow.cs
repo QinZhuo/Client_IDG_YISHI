@@ -6,7 +6,20 @@ namespace IDG.FSClient
 {
     abstract public class View:MonoBehaviour
     {
-        public NetData data;
+        private NetData _data;
+        public NetData data{
+            get{
+                return _data;
+            }
+            set{
+                _data=value;
+                Init();
+            }
+        }
+        
+        public void Init(){
+            transform.position=data.transform.Position.ToVector3();
+        }
         public virtual System.Type GetDataType()
         {
             return null;
@@ -23,13 +36,8 @@ namespace IDG.FSClient
         /// 数据类对象
         /// </summary>
         
-
-        protected void Start()
-        {
-            //net.Position = new V2(transform.position.x, transform.position.z);
-            // net.Rotation =new Ratio( transform.rotation.y);
-            //Debug.Log("net.Input.framUpdate += FrameUpdate;");
-        }
+        
+      
     
         ///// <summary>
         ///// 初始化碰撞体信息
@@ -43,6 +51,8 @@ namespace IDG.FSClient
         //        data.Shap= collider2D.GetShap();
         //    }
         //}
+
+    
         /// <summary>
         /// 显示位置与网络位置进行差值同步
         /// </summary>
@@ -112,6 +122,8 @@ namespace IDG.FSClient
         public List<ComponentBase> comList;
 
         public FSClient client;
+
+        public System.Action initCall;
      
         public bool IsLocalPlayer
         {
@@ -166,6 +178,7 @@ namespace IDG.FSClient
             rigibody.Init(OnPhysicsCheckEnter,OnPhysicsCheckStay,OnPhysicsCheckExit);
             transform=new TransformComponent();
             transform.Init(this);
+            
        //     Debug.Log(name+"init");
         }
         public T AddCommponent<T>() where T :IDG.ComponentBase ,new()

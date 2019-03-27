@@ -1278,6 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f9e622ee0cb1542abc68fb13f3b572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showGizmo: 1
 --- !u!114 &854169223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,6 +1761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unityClient: {fileID: 1076490064}
+  showSplitTree: 1
 --- !u!114 &1076490067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1934,6 +1936,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b0e098e2bff8f4f94209c3c336ce9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 3
+  item: 30
+  enemy: 10
 --- !u!114 &1079948944 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114412996162894692, guid: f47473d59bfc8df45ac289d29fc97d30,
@@ -3469,10 +3474,6 @@ Prefab:
     - target: {fileID: 1005683047325624, guid: f47473d59bfc8df45ac289d29fc97d30, type: 2}
       propertyPath: m_Name
       value: Zombie (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1005683047325624, guid: f47473d59bfc8df45ac289d29fc97d30, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f47473d59bfc8df45ac289d29fc97d30, type: 2}

@@ -29,7 +29,8 @@ namespace IDG.FSClient
                 Fixed rote =new Fixed(0);
                 
                 lastTime = user.client.inputCenter.Time;
-                ShootBullet(user.transform.Position,rotation+ rote);
+                ShootBullet(user.transform.Position+user.transform.forward,rotation+ rote);
+              
             }
             else
             {

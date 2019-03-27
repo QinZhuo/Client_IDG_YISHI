@@ -19,6 +19,8 @@ namespace IDG.FSClient
             var view =obj.GetComponent<View>();
             view.data = data;
             data.view = view;
+
+          
             return obj;
         }
         //public GameObject Instantiate<T>(NetData data) where T:NetData,new()

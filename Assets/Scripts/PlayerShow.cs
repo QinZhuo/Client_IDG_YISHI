@@ -7,9 +7,9 @@ public class PlayerShow : NetObjectView<PlayerData> {
     // public NetInfo net;
    // public int clientId = -1;
     public Animator anim;
-    private new void Start()
+    private void Start()
     {
-        base.Start();
+ 
        // data.ClientId = clientId;
         anim.SetInteger("WeaponType", 1);
     }
@@ -58,6 +58,7 @@ public class PlayerData: HealthData
     public Fixed move_speed = new Fixed(3);
     public Fixed2 move_dir { get; private set; }
     public SkillSystem skillList;
+    public bool moveCtrRot=true;
     public override void Start()
     {
        
@@ -83,16 +84,17 @@ public class PlayerData: HealthData
         transform.Position += move_dir * deltaTime* move_speed;
         if (move_dir.x != 0 || move_dir.y != 0)
         {
-            
+            if(moveCtrRot)
             transform.Rotation = Fixed.RotationLerp(transform.Rotation, move_dir.ToRotation(),new Fixed(0.5f));
         }
+        
       
   
     }
 
     public override string PrefabPath()
     {
-        return "Prefabs/Player";
+        return "Prefabs/Player"+client.random.Range(2);
     }
 }
 

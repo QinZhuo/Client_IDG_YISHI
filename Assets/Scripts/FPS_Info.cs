@@ -9,7 +9,7 @@ public class FPS_Info : MonoBehaviour {
     private float fps;
     void Start()
     {
-       //  Application.targetFrameRate = 90;
+        //Application.targetFrameRate = 90;
         lastInterval = Time.realtimeSinceStartup;
         frames = 0;
     }
