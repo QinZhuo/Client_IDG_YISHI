@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using IDG.FSClient;
 using IDG;
 public class RandomMapCreator : MapCreator,IGameManager{
-	FSClient client;
+ 	FSClient client;
 	 public int InitLayer{
         get{
             return 99;
@@ -15,7 +14,7 @@ public class RandomMapCreator : MapCreator,IGameManager{
 	void Start () {
 		
 	}
-	public void Init(FSClient client){
+	public void Init(FSClient  client){
 		this.client=client;
 		map=new GridMap();
 		map.CreatTileCallBack=CreateShap;

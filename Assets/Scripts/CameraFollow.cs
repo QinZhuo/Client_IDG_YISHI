@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using IDG.FSClient;
+using IDG ;
 using IDG;
 public class CameraFollow : MonoBehaviour,IGameManager
 {
@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour,IGameManager
         offset=transform.localPosition;
     }
     // Start is called before the first frame update
-    public void Init(FSClient client){
+    public void Init(FSClient  client){
 		this.client=client;
 	}
     // Update is called once per frame

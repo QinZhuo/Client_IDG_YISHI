@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IDG;
-using IDG.FSClient;
 public class ZombieShow : NetObjectView<ZombieData> {
     
 }
@@ -21,6 +20,7 @@ public class ZombieData : HealthData
         findShap = new CircleShap(5.ToFixed(), 10);
         // gun = new GunBase();
          rigibody.useCheck=true;
+         base.Start();
         // gun.Init(2, this);
     }
     protected override void FrameUpdate()
@@ -40,7 +40,7 @@ public class ZombieData : HealthData
             CheckTimer=20.ToFixed();
         }else
         {
-            CheckTimer-=FSClient.deltaTime;
+            CheckTimer-= FSClient.deltaTime;
         }
         if(player!=null){
             transform.LookAt(player.transform.Position);

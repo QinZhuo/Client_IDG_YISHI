@@ -35,6 +35,15 @@ namespace VoxelRender
 		
 		
 	}
+	public static class V3Extend{
+		public static V3 ToV3(this Vector3 vector3){
+			var v3=new V3();
+			v3.x=(int)vector3.x;
+			v3.y=(int)vector3.y;
+			v3.z=(int)vector3.z;
+			return v3;
+		}
+	}
 	[System.Serializable]
 	public struct V3{
 		public int x;

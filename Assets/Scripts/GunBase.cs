@@ -4,7 +4,7 @@ using UnityEngine;
 
 using IDG;
 
-namespace IDG.FSClient
+namespace IDG 
 {
     public class GunBase:ItemBase
     {   

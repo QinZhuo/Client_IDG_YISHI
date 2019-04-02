@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using VoxelRender;
+namespace VoxelRender
+{
+	
+
 [CustomEditor(typeof(VoxelRenderer))]
 public class VoxelRendererEditor : Editor{
     VoxelRenderer _renderer;
@@ -24,6 +27,7 @@ public class VoxelRendererEditor : Editor{
     }
 	float defaultBoneCircle=0.05f;
 	int selectId=0;
+	
 	public string[] selectNames={"渲染信息","编辑数据"};
     public override void OnInspectorGUI(){
        
@@ -32,14 +36,20 @@ public class VoxelRendererEditor : Editor{
 		selectId  = GUILayout.Toolbar(selectId, selectNames);
 	
 		if(selectId==1){
-			EditorGUILayout.ObjectField("指定根骨骼",renderer.renderRoot,typeof(Transform));
+			renderer.GridSize=EditorGUILayout.FloatField("体素渲染大小",renderer.GridSize);
+			renderer.boneRoot=EditorGUILayout.ObjectField("指定根骨骼",renderer.boneRoot,typeof(Transform))as Transform;
 			if(GUILayout.Button("加载.vox文件")){
 				LoadVoxFileWindows();
 			}
-			if(renderer.boneR){
+			if(renderer.boneRoot!=null){
+				renderer.minBoneLen=EditorGUILayout.FloatField("骨骼检索最小长度",renderer.minBoneLen);
+				if(GUILayout.Button("获取骨骼")){
+					renderer.GetBones();
+				}
 				if(GUILayout.Button("绑定骨骼")){
 					renderer.Bind();
 				}
+			
 				if(GUILayout.Button(renderer.ShowVoxelWeight?"关闭权重显示":"打开权重显示")){
 					renderer.ShowVoxelWeight=!renderer.ShowVoxelWeight;
 				}
@@ -52,37 +62,37 @@ public class VoxelRendererEditor : Editor{
 			if(renderer.ShowVoxelWeight){
 				renderer.ShowVoxelWeight=false;
 			}
+			GUILayout.Label("体素渲染大小 : "+(renderer.GridSize));
 			GUILayout.Label("体素数目 : "+(voxelData.voxels.Count));
-			GUILayout.Label("是否绑骨 : "+(renderer.renderRoot!=null));
+			GUILayout.Label("是否绑骨 : "+(renderer.boneRoot!=null));
+			
 		}
         
     }
 	private void OnSceneGUI() {
 		if(selectId==1){
 			Handles.color=Color.white;
-			DrawBones(renderer.boneR);
+		
 			DrawBoneCircle();
 		}
 	}
-	void DrawBones(Transform boneRoot){
-		for (int i = 0; i < boneRoot.childCount; i++)
-		{
-			var bone=boneRoot.GetChild(i);
-			Handles.DrawLine(boneRoot.position,bone.position);
-			DrawBones(bone);
-		}
-	}
+	
 
 	void DrawBoneCircle(){
-		if(renderer.boneCircle==null||renderer.boneCircle.Length<=0){
-			renderer.boneCircle=new float[ renderer.bones.Length];
-		}
-		for (int i = 0; i < renderer.bones.Length; i++)
+		if(renderer.bones==null)return;
+		for (int i = 0; i < renderer.bones.Count; i++)
 		{
-			Handles.color=Color.HSVToRGB(i*1f/ renderer.bones.Length,0.7f,1);
+			if(renderer.bones.Contains(renderer.bones[i].parent)){
+				Handles.color=Color.white;
+				Handles.DrawLine(renderer.bones[i].position,renderer.bones[i].parent.position);
+			}
+			
+			Handles.color=Color.HSVToRGB(i*1f/ renderer.bones.Count,0.7f,1);
 			var bone=renderer.bones[i];
-			renderer.boneCircle[i]=Handles.RadiusHandle(Quaternion.identity,bone.position,renderer.boneCircle[i]!=0?renderer.boneCircle[i]:defaultBoneCircle);
+			Handles.RadiusHandle(Quaternion.identity,bone.position,defaultBoneCircle);
+			
 		}
+	
 	}
 		
 
@@ -140,17 +150,17 @@ public class VoxelRendererEditor : Editor{
 		return newMat;
 	}
 
-    public V3 Vector3ToV3(Vector3 vector3){
-		var v=VoxelRenderer.Fixed(vector3);
+    public V3 Vector3ToV3(Vector3 vector3,float GridSize){
+		var v=VoxelRenderManager.Fixed(vector3,GridSize);
 		var v3=new V3();
-		v3.x=(int)(v.x/ VoxelRenderer.GridSize+0.5f);
-		v3.y=(int)(v.y/VoxelRenderer.GridSize+0.5f);
-		v3.z=(int)(v.z/VoxelRenderer.GridSize+0.5f);
+		v3.x=(int)(v.x/GridSize+0.5f);
+		v3.y=(int)(v.y/GridSize+0.5f);
+		v3.z=(int)(v.z/GridSize+0.5f);
 		return v3;
 	}
 
 	Texture2D newText=null;
-	public void ParseMeshRendererToVoxel(){
+	public void ParseMeshRendererToVoxel(float GridSize){
 
 		var mesh=MeshMerge();
 		
@@ -161,7 +171,7 @@ public class VoxelRendererEditor : Editor{
 		for (int i = 0; i < vertices.Length; i++)
 		{
 
-			var v=Vector3ToV3(vertices[i]- normals[i]*VoxelRenderer.GridSize/2);
+			var v=Vector3ToV3(vertices[i]- normals[i]*GridSize/2,GridSize);
 			if(!colors.ContainsKey(v)){
 				var uv=new int[]{(int)(mesh.uv[i].x*newText.width),(int)(mesh.uv[i].y*newText.height)};
 				colors.Add(v,newText.GetPixel(uv[0],uv[1]));
@@ -243,4 +253,5 @@ public class VoxelRendererEditor : Editor{
 		Debug.Log("End MergeMesh vertexCount "+newMesh.vertexCount);
 		return newMesh;
 	}
+}
 }

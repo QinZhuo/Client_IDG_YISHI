@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IDG;
-using IDG.FSClient;
+using IDG ;
 public class BulletShow : NetObjectView<Bullet> {
     public static int id=0;
 
@@ -20,7 +20,7 @@ public class Bullet : NetData
 {
     public NetData user;
     public Fixed startTime;
-    public override void Init(FSClient client)
+    public override void Init(FSClient  client)
     {
         base.Init(client);
         rigibody.useCheckCallBack = true;
@@ -30,6 +30,7 @@ public class Bullet : NetData
     public override void Start()
     {
         Shap = new BoxShap(new Fixed(2), new Fixed(0.3f));
+        base.Start();
     }
     protected override void FrameUpdate()
     {
