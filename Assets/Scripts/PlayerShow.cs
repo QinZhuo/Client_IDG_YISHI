@@ -8,17 +8,46 @@ public class PlayerShow : NetObjectView<PlayerData> {
     // public NetInfo net;
    // public int clientId = -1;
     public Animator anim;
+    public Transform leftHand;
+    public Transform rightHand;
     private void Start()
     {
        
        
     }
     private void ChangeSkillAnim(SkillId id){
-        var animOverride=new AnimatorOverrideController(anim.runtimeAnimatorController);
-            var animation=GameViewAssetManager.instance.skillAssets.GetSkillAssets(id).animation;
-        animOverride ["Skill"]=animation;
-        anim.runtimeAnimatorController=animOverride;
+        var animation=GameViewAssetManager.instance.skillAssets.GetSkillAssets(id).animation;
+        ChangeAnim("Skill",animation);
       //  Debug.LogError("更改动画 "+animation.name);
+    }
+
+    protected void ChangeAnim(string nameArry,params AnimationClip[] anims){
+        var animOverride=anim.runtimeAnimatorController as AnimatorOverrideController;
+        if(animOverride==null){
+            animOverride=new AnimatorOverrideController();
+            animOverride.runtimeAnimatorController=anim.runtimeAnimatorController;
+        }
+        string[] animNames=nameArry.Split('|');
+        for (int i = 0; i < animNames.Length; i++)
+        {
+             animOverride[animNames[i]]=anims[i];
+        }
+        anim.runtimeAnimatorController=animOverride;
+    }
+    protected void ChangeWeapon(WeaponId id){
+        var weaponAssets=GameViewAssetManager.instance.weaponAssets.GetWeaponAssets(id);
+        var weaponPrefab=weaponAssets.ItemPrefab;
+        if(weaponPrefab!=null){
+           
+            var obj=Instantiate(weaponPrefab);
+            obj.transform.SetParent(rightHand);
+            obj.transform.localPosition=Vector3.zero;
+            obj.transform.localRotation=Quaternion.identity;
+        }else
+        {
+             Debug.LogWarning("WeaponId "+id+" itemPrefab Is Null");
+        }
+        ChangeAnim("Idle|Walk",weaponAssets.idleAnim,weaponAssets.animation);
     }
     //float last;
     protected override void OnStart(){
@@ -26,6 +55,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
        (data as PlayerData).SetAnimFloat=anim.SetFloat;
                // data.ClientId = clientId;
         (data as PlayerData).skillList.changeSkill=ChangeSkillAnim;
+        (data as PlayerData).weaponSystem.changeWeapon=ChangeWeapon;
     }
     
 	// public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime){
@@ -90,7 +120,7 @@ public class PlayerData: HealthData
     public Fixed move_speed = new Fixed(3);
     public Fixed2 move_dir { get; private set; }
     public SkillSystem skillList;
-   
+    public WeaponSystem weaponSystem;
     public AnimStatus status;
     public System.Action<string> SetAnimTrigger;
     public System.Action<string,float> SetAnimFloat;
@@ -100,16 +130,16 @@ public class PlayerData: HealthData
         
         this.tag = "Player";
         skillList= AddCommponent<SkillSystem>();
+        weaponSystem= AddCommponent<WeaponSystem>();
         Shap = new CircleShap(new Fixed(0.25f), 8);
         rigibody.useCheck=true;
-        
-     
         if (IsLocalPlayer)
         {
             client.localPlayer = this;
             Debug.Log("client.localPlayer");
         }
         base.Start();
+         weaponSystem.AddWeapon(WeaponId.无战斗);
     }
     protected override void FrameUpdate()
     {
