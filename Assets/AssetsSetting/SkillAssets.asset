@@ -24,3 +24,9 @@ MonoBehaviour:
     uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
     animation: {fileID: 7400000, guid: 501c54f0f9c76cf4d96cbabe13658b29, type: 3}
     ItemPrefab: {fileID: 0}
+  - skillId: 4
+    skillname: 
+    skillInfo: 
+    uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+    animation: {fileID: 7400000, guid: 87d38271a92e10f458f547e38776d3a1, type: 3}
+    ItemPrefab: {fileID: 0}

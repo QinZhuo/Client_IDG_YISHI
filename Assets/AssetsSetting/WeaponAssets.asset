@@ -18,19 +18,19 @@ MonoBehaviour:
     uiIcon: {fileID: 0}
     idleAnim: {fileID: 7400000, guid: ec989a5cfcbb8b140ab13103e0171969, type: 3}
     animation: {fileID: 7400000, guid: b20735dd980273a419c9df0ba1443da9, type: 3}
-    ItemPrefab: {fileID: 0}
+    ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
+      type: 2}
   - WeaponId: 1
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
     idleAnim: {fileID: 7400000, guid: b4c43d46112e54a449203e7bb9f1bf86, type: 3}
-    animation: {fileID: 7400000, guid: 893d0efc3f505eb47a67d62fd2760729, type: 3}
+    animation: {fileID: 7400000, guid: df993fc5f6360c248a632d6f4622355a, type: 3}
     ItemPrefab: {fileID: 0}
-  - WeaponId: 0
+  - WeaponId: 2
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
     idleAnim: {fileID: 7400000, guid: 854c497d2e79725419ab4dacad400815, type: 3}
     animation: {fileID: 7400000, guid: 032ded14aace03649a5de35da5936bbd, type: 3}
-    ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
-      type: 2}
+    ItemPrefab: {fileID: 0}
