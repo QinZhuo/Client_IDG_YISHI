@@ -38,7 +38,7 @@ public class Weapon_sword:WeaponBase
 {
     public override void Init(){
         base.Init();
-        defalutSkillId=SkillId.挥砍;
+        defalutSkillId=SkillId.swordAttack;
     }
 }
 

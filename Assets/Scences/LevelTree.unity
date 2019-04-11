@@ -351,6 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateInterval: 0.5
+  color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &137886523
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +981,7 @@ Prefab:
     - target: {fileID: 114519894754395196, guid: 40e102dcf397c634f86a945759aab5ff,
         type: 2}
       propertyPath: useKey
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 40e102dcf397c634f86a945759aab5ff, type: 2}

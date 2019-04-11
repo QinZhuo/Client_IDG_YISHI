@@ -48,7 +48,13 @@ public class PlayerCreater : MonoBehaviour,IGameManager {
                 var Titem = new SkillItem();
                 item=Titem;
                 Titem.Init(client);
-                Titem.skillId=(SkillId)client.random.Range(0,2);
+                if(client.random.Range(0,100)<50){
+                    Titem.skillId=SkillId.拳击右直;
+                }else
+                {
+                     Titem.skillId=SkillId.拳击左直;
+                }
+                
             }else
             {
                 var Titem = new WeaponItem();
@@ -76,15 +82,20 @@ public class PlayerCreater : MonoBehaviour,IGameManager {
            
             
 
-            if(map!=null){
+            
                 
-                  var item = new ZombieData();
+           var item = new ZombieData();
                   
-                    item.Init(client);
-                     item.transform.Position = map.GetRandomPos();
-                    client.objectManager.Instantiate(item);
-                    
+            item.Init(client);
+                if(map){
+                item.transform.Position = map.GetRandomPos();
+            }else
+            {
+                item.transform.Position=new Fixed2( client.random.Range(0,20),client.random.Range(0,20));
             }
+            client.objectManager.Instantiate(item);
+                    
+            
            
           
         }

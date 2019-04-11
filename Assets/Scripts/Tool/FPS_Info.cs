@@ -7,16 +7,20 @@ public class FPS_Info : MonoBehaviour {
     private double lastInterval;
     private int frames = 0;
     private float fps;
+    public Color color;
+    GUIStyle style=new GUIStyle();
     void Start()
     {
         //Application.targetFrameRate = 90;
         lastInterval = Time.realtimeSinceStartup;
         frames = 0;
+        style.fontSize=40;
+        style.normal.textColor=color;
     }
     void OnGUI()
     {
-        GUIStyle style=new GUIStyle();
-        style.fontSize=40;
+        
+        
         GUILayout.Label("FPS: " + fps.ToString("f2"),style);
     }
     void Update()

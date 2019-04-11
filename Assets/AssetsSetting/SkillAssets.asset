@@ -12,21 +12,117 @@ MonoBehaviour:
   m_Name: SkillAssets
   m_EditorClassIdentifier: 
   skills:
-  - skillId: 0
-    skillname: 
+  - skillname: 
     skillInfo: 
     uiIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     animation: {fileID: 7400000, guid: 0ae0bbd3bcad45d40a063a319d70a468, type: 3}
     ItemPrefab: {fileID: 0}
-  - skillId: 1
-    skillname: 
+    skillData:
+      trigger: 0
+      type: 0
+      nextNodes:
+      - trigger: 2
+        type: 1
+        nextNodes: []
+        boolParams: 
+        intParams: 
+      - trigger: 1
+        type: 2
+        nextNodes: []
+        boolParams: 00
+        intParams: 
+      - trigger: 4
+        type: 2
+        nextNodes: []
+        boolParams: 01
+        intParams: 
+      - trigger: 3
+        type: 3
+        nextNodes:
+        - trigger: 5
+          type: 5
+          nextNodes: []
+          boolParams: 
+          intParams: 0a0000000a0000000a000000
+        boolParams: 
+        intParams: 
+      boolParams: 
+      intParams: 
+      skillId: 100
+      key: 2
+  - skillname: 
     skillInfo: 
     uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
     animation: {fileID: 7400000, guid: 501c54f0f9c76cf4d96cbabe13658b29, type: 3}
     ItemPrefab: {fileID: 0}
-  - skillId: 4
-    skillname: 
+    skillData:
+      trigger: 2
+      type: 0
+      nextNodes:
+      - trigger: 2
+        type: 1
+        nextNodes: []
+        boolParams: 
+        intParams: 
+      - trigger: 1
+        type: 2
+        nextNodes: []
+        boolParams: 00
+        intParams: 
+      - trigger: 4
+        type: 2
+        nextNodes: []
+        boolParams: 01
+        intParams: 
+      - trigger: 3
+        type: 3
+        nextNodes:
+        - trigger: 5
+          type: 5
+          nextNodes: []
+          boolParams: 
+          intParams: 0a0000000a0000000a000000
+        boolParams: 
+        intParams: 
+      boolParams: 
+      intParams: 
+      skillId: 101
+      key: 2
+  - skillname: 
     skillInfo: 
     uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
     animation: {fileID: 7400000, guid: 87d38271a92e10f458f547e38776d3a1, type: 3}
     ItemPrefab: {fileID: 0}
+    skillData:
+      trigger: 2
+      type: 0
+      nextNodes:
+      - trigger: 2
+        type: 1
+        nextNodes: []
+        boolParams: 
+        intParams: 
+      - trigger: 1
+        type: 2
+        nextNodes: []
+        boolParams: 00
+        intParams: 
+      - trigger: 4
+        type: 2
+        nextNodes: []
+        boolParams: 01
+        intParams: 
+      - trigger: 3
+        type: 3
+        nextNodes:
+        - trigger: 5
+          type: 5
+          nextNodes: []
+          boolParams: 
+          intParams: 0a0000001400000014000000
+        boolParams: 
+        intParams: 04000000
+      boolParams: 
+      intParams: 
+      skillId: 104
+      key: 2

@@ -7,7 +7,7 @@ using IDG.MobileInput;
 public class SkillJoyStick : JoyStick {
     public Image fillImage;
     public Image backImage;
-    public SkillSystem skillList;
+    public SkillAction skillList;
     // Use this for initialization
     
     public KeyCode pcKey = KeyCode.Mouse0;
@@ -51,7 +51,7 @@ public class SkillJoyStick : JoyStick {
 
         if (skill != null)
         {
-            fillImage.fillAmount = (skill.timer / skill.time).ToFloat();
+            fillImage.fillAmount = (skill.timer / skill.skillData.coolDownTime).ToFloat();
             backImage.enabled = fillImage.fillAmount > 0;
             if(!useKey)group.blocksRaycasts = fillImage.fillAmount <= 0;
         }

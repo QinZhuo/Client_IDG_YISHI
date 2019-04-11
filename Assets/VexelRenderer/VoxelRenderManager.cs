@@ -109,7 +109,7 @@ public class VoxelRenderManager{
 			};
 
 	public static Mesh CreateViewMesh(int colorIndex){
-		var uv= new Vector2((colorIndex ) / 256f, 0.5f);
+		var uv= new Vector2((colorIndex ) / 256f,0f);
 		Vector2[] uvs = new Vector2[] {
 			uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv,uv
 		};

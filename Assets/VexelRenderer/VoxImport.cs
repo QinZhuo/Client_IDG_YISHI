@@ -98,10 +98,10 @@ namespace VoxelRender
 			for (int i = 0; i < 256; i++)
 			{
 				var colorInfo=new ColorInfo();
-				colorInfo.r=(float)reader.ReadByte()/256;
-				colorInfo.g=(float)reader.ReadByte()/256;
-				colorInfo.b=(float)reader.ReadByte()/256;
-				colorInfo.a=(float)reader.ReadByte()/256;
+				colorInfo.r=(float)reader.ReadByte()/255f;
+				colorInfo.g=(float)reader.ReadByte()/255f;
+				colorInfo.b=(float)reader.ReadByte()/255f;
+				colorInfo.a=(float)reader.ReadByte()/255f;
 				voxelData.colors.Add(colorInfo);
 			
 			}

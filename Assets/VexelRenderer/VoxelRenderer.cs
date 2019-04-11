@@ -44,6 +44,11 @@ public class VoxelRenderer : MonoBehaviour {
 				Gizmos.DrawCube(voxels[i].position,Vector3.one*GridSize);
 			}
 		}
+		foreach (var v in voxelData.voxels)
+		{
+			Gizmos.color=voxelData.colors[v.colorIndex].ToColor();
+			Gizmos.DrawCube(v.pos.ToVector3()*GridSize,Vector3.one*GridSize);
+		}
 	}
 
 	public void InitRender(){

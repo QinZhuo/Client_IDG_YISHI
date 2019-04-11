@@ -9,6 +9,7 @@ public class ItemView : NetObjectView<ItemData> {
         if(data is SkillItem){
             var skillItem=data as SkillItem;
             var skillAssets=  GameViewAssetManager.instance.skillAssets.GetSkillAssets(skillItem.skillId);
+         
             renderer.sprite=skillAssets.uiIcon;
       
         }else if(data is WeaponItem)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using IDG;
 namespace VoxelRender
 {
 	
@@ -40,6 +41,11 @@ public class VoxelRendererEditor : Editor{
 			renderer.boneRoot=EditorGUILayout.ObjectField("指定根骨骼",renderer.boneRoot,typeof(Transform))as Transform;
 			if(GUILayout.Button("加载.vox文件")){
 				LoadVoxFileWindows();
+			}
+			if(GUILayout.Button("加载.voxData文件")){
+				LoadVoxelData();
+				renderer.InitRender();
+				Debug.LogError("加载完成");
 			}
 			if(renderer.boneRoot!=null){
 				renderer.minBoneLen=EditorGUILayout.FloatField("骨骼检索最小长度",renderer.minBoneLen);
@@ -109,14 +115,16 @@ public class VoxelRendererEditor : Editor{
 			Debug.LogError("【VoxelRenderer】体素数目过大 "+voxelData.voxels.Count+"超过"+maxVoxelCount+" 中止生成显示块");
 			return;
 	    }
-        SaveVoxelData();
+        //SaveVoxelData();
     }
 
     void SaveVoxelData(){
-        IDGData.SerialData("Assets/Model/VoxelModelData/"+renderer.name+".voxData",voxelData);
+        IDG.DataFile.SerializeToFile("Assets/Model/VoxelModelData/"+renderer.name+".voxData",voxelData);
     }
+
     void LoadVoxelData(){
-        voxelData=IDGData.DeserialData<VoxelData>("Assets/Model/VoxelModelData/"+renderer.name+".voxData");
+       IDG.DataFile.Instance.DeserializeToData("Assets/Model/VoxelModelData/"+renderer.name+".voxData", voxelData);
+
     }
     void LoadMatrial(){
          renderer.material=AssetDatabase.LoadAssetAtPath("Assets/Model/VoxelModelData/"+renderer.name+"_vr.mat", typeof(Material)) as Material;

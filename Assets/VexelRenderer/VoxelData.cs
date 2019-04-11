@@ -10,7 +10,7 @@ namespace VoxelRender
 	
 
 	[System.Serializable]
-	public class VoxelData{
+	public class VoxelData:IDG.ISerializable {
 		// 序列化数据
 		public V3 size;
 
@@ -18,6 +18,32 @@ namespace VoxelRender
 		// public string texturePath;
 		public List<VoxelInfo> voxels=new List<VoxelInfo>();
 		public List<ColorInfo> colors=new List<ColorInfo>();
+		public void Serialize(IDG.ByteProtocol protocol){
+			protocol.push(voxels.Count);
+			foreach (var v in voxels)
+			{
+				v.Serialize(protocol);
+			}
+			protocol.push(colors.Count);
+				foreach (var c in colors)
+			{
+				c.Serialize(protocol);
+			}
+		}
+		public void Deserialize(IDG.ByteProtocol protocol){
+			voxels=new List<VoxelInfo>();
+			var len=protocol.getInt32();
+			for (int i = 0; i < len; i++)
+			{
+				voxels.Add(new VoxelInfo().Deserialize(protocol));
+			}
+			colors=new List<ColorInfo>();
+			len=protocol.getInt32();
+			for (int i = 0; i < len; i++)
+			{
+				colors.Add(new ColorInfo().Deserialize(protocol));
+			}
+		}
 
 		public void SetSceneScale(int x,int y,int z){
 			size.x=x;
@@ -84,12 +110,37 @@ namespace VoxelRender
 		public Color ToColor(){
 			return new Color(r,g,b,a);
 		}
+		public void Serialize(IDG.ByteProtocol protocol){
+			protocol.push((int)r);
+			protocol.push((int)g);
+			protocol.push((int)b);
+			protocol.push((int)a);
+		}
+		public ColorInfo Deserialize(IDG.ByteProtocol protocol){
+			r=protocol.getInt32();
+			g=protocol.getInt32();
+			b=protocol.getInt32();
+			a=protocol.getInt32();
+			return this;
+		}
 	}
 	[System.Serializable]
 	public struct VoxelInfo{
 		public int colorIndex;
 		public V3 pos;
-		
+		public void Serialize(IDG.ByteProtocol protocol){
+			protocol.push(colorIndex);
+			protocol.push(pos.x);
+			protocol.push(pos.y);
+			protocol.push(pos.z);
+		}
+		public VoxelInfo Deserialize(IDG.ByteProtocol protocol){
+			colorIndex=protocol.getInt32();
+			pos.x=protocol.getInt32();
+			pos.y=protocol.getInt32();
+			pos.z=protocol.getInt32();
+			return this;
+		}
 	}
 	
 

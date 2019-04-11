@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IDG;
-using IDG ;
 
 public class PlayerShow : NetObjectView<PlayerData> {
     // public NetInfo net;
@@ -51,11 +50,16 @@ public class PlayerShow : NetObjectView<PlayerData> {
     }
     //float last;
     protected override void OnStart(){
+        var player=(data as PlayerData);
         (data as PlayerData).SetAnimTrigger=anim.SetTrigger;
        (data as PlayerData).SetAnimFloat=anim.SetFloat;
                // data.ClientId = clientId;
         (data as PlayerData).skillList.changeSkill=ChangeSkillAnim;
         (data as PlayerData).weaponSystem.changeWeapon=ChangeWeapon;
+        player.animRootMotion=(b)=>{
+            anim.transform.localPosition=Vector3.zero;
+            anim.applyRootMotion=b;
+        };
     }
     
 	// public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime){
@@ -108,31 +112,41 @@ public abstract class HealthData : NetData
         Debug.Log(this.name + "dead!!!");
     }
 }
-public enum AnimStatus
-{
-    none,
-    move,
-    useSkill,
+// public enum AnimStatus
+// {
+//     none,
+//     move,
+//     useSkill,
     
-}
+// }
 public class PlayerData: HealthData
 {
     public Fixed move_speed = new Fixed(3);
     public Fixed2 move_dir { get; private set; }
-    public SkillSystem skillList;
+    public SkillAction skillList;
     public WeaponSystem weaponSystem;
-    public AnimStatus status;
+   // public AnimStatus status;
+    public System.Action<bool> animRootMotion;
     public System.Action<string> SetAnimTrigger;
     public System.Action<string,float> SetAnimFloat;
-    
+    bool _canMove;
+    public bool CanMove{
+        set{
+            if(!value){
+                SetAnimFloat("Speed",0);
+            }
+            _canMove=value;
+        }
+    }
     public override void Start()
     {
         
         this.tag = "Player";
-        skillList= AddCommponent<SkillSystem>();
+        skillList= AddCommponent<SkillAction>();
         weaponSystem= AddCommponent<WeaponSystem>();
         Shap = new CircleShap(new Fixed(0.25f), 8);
         rigibody.useCheck=true;
+        CanMove=true;
         if (IsLocalPlayer)
         {
             client.localPlayer = this;
@@ -148,26 +162,22 @@ public class PlayerData: HealthData
         
    //     Debug.LogError("move"+move);
        
-        if(status==AnimStatus.none||status==AnimStatus.move){
+        if(_canMove){
             move_dir = Input.GetKey(IDG.KeyNum.MoveKey) ? Input.GetJoyStickDirection(IDG.KeyNum.MoveKey):Fixed2.zero;
             transform.Position += move_dir * deltaTime* move_speed;
             if (move_dir.x != 0 || move_dir.y != 0)
             {
                 transform.Rotation = Fixed.RotationLerp(transform.Rotation, move_dir.ToRotation(),new Fixed(0.5f));
-                status=AnimStatus.move;
+                if(SetAnimFloat!=null)
+                 SetAnimFloat("Speed",1);
                 
             }else
             {
-                status=AnimStatus.none;
-               
+                 if(SetAnimFloat!=null)
+                 SetAnimFloat("Speed",0);
             }
            
         }
-        if(SetAnimFloat!=null)
-         SetAnimFloat("Speed",status==AnimStatus.move?1:0);
-        
-      
-  
     }
 
     public override string PrefabPath()
