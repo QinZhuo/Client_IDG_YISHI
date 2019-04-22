@@ -51,7 +51,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\DataSettingManager.cs" />
+     <Compile Include="Assets\GridMap\Editor\MapCreatorInspector.cs" />
+     <Compile Include="Assets\SkillNodeEditor\Editor\AINodeEditorWindow.cs" />
+     <Compile Include="Assets\SkillNodeEditor\Editor\NodeVisual.cs" />
+     <Compile Include="Assets\SkillNodeEditor\Editor\SkillNodeEditorWindow.cs" />
+     <Compile Include="Assets\VexelRenderer\Editor\VoxelRendererEditor.cs" />
+     <None Include="Assets\VexelRenderer\Test.compute" />
+     <None Include="Assets\Shader\Billboard.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity2017_2_3/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

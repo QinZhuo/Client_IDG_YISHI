@@ -14,7 +14,7 @@ namespace IDG{
         Down = 16,//s
         MoveKey=32,
         Attack=64,
-        k1=128,
+        Drop=128,
   
     }
     /// <summary>
@@ -73,7 +73,7 @@ namespace IDG{
         /// <summary>
         /// 重置操作信息
         /// </summary>
-        protected void Reset(){
+        public void Reset(){
             lastKey=finalKey;
             midKey=finalKey;
         }
@@ -113,7 +113,7 @@ namespace IDG{
     /// <summary>
     /// 摇杆信息
     /// </summary>
-    public struct JoyStickKey
+    public class JoyStickKey
     {
         /// <summary>
         /// 摇杆对应按键或者摇杆当前状态

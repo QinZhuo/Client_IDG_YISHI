@@ -21,7 +21,11 @@ namespace IDG
         //    this.y = new Ratio(0);
         //    this.z = new Ratio(0);
         //}
-        
+        public static bool DistanceLess(Fixed2 a,Fixed2 b,Fixed len){
+            var xLen=a.x-b.x;
+            var yLen=a.y-b.y;
+            return (xLen*xLen+yLen*yLen)<len*len;
+        }
         public static Fixed2 one=new Fixed2(1,1);
         public Fixed2(float x, float y)
         {

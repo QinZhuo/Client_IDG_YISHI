@@ -20,9 +20,9 @@ public class Bullet : NetData
 {
     public NetData user;
     public Fixed startTime;
-    public override void Init(FSClient  client)
+    public override void Init(FSClient  client,int clientId=-1)
     {
-        base.Init(client);
+        base.Init(client,clientId);
         rigibody.useCheckCallBack = true;
         isTrigger = true;
         startTime = client.inputCenter.Time;

@@ -131,7 +131,7 @@ namespace IDG  {
             for (int i = 0; i < maxClient+1; i++)
             {
                 _m_inputs[i] = new InputUnit(this);
-                _m_inputs[i].Init();
+  
             }
         }
         /// <summary>
@@ -194,59 +194,19 @@ namespace IDG  {
         }
         
     }
-    /// <summary>
-    /// 客户端输入解析类
-    /// </summary>
-    public class InputUnit
-    {
-
-
-        public InputUnit(InputCenter center){
-            inputCenter=center;
-        }
-        /// <summary>
+    public class InputBase{
+         /// <summary>
         /// 帧按键信息
         /// </summary>
-        private FrameKey frameKey;
+        protected FrameKey frameKey=new FrameKey();
         
-        public InputCenter inputCenter;
 
         /// <summary>
         /// 帧摇杆信息
         /// </summary>
-        protected Dictionary<KeyNum,JoyStickKey> joySticks;
-        public void Init()
-        {
-            frameKey =new FrameKey();
-            joySticks = new Dictionary<KeyNum, JoyStickKey>();
-        }
-        /// <summary>
-        /// 解析帧信息
-        /// </summary>
-        /// <param name="message">消息</param>
-        public void ReceiveStep(ProtocolBase message)
-        {
-            
-            frameKey.Parse(message);
-            //Debug.Log(keyList[InputCenter.Instance.ServerStepIndex]);
-            byte len=message.getByte();
+        protected Dictionary<KeyNum,JoyStickKey> joySticks= new Dictionary<KeyNum, JoyStickKey>();
 
-        
-            for(byte i=0;i<len;i++){
-               
-                JoyStickKey joy=new JoyStickKey((KeyNum)(message.getByte()),message.getV2()) ;
-   //             Debug.LogError("rec+["+joy.key+"]");
-                if(joySticks.ContainsKey(joy.key)){
-                    
-                    joySticks[joy.key]=joy;
-                }else
-                {
-                    joySticks.Add(joy.key,joy);
-                }
-            }
-
-        }
-        /// <summary>
+         /// <summary>
         /// 检测按键当前帧是否处于按下按下状态
         /// </summary>
         /// <param name="key">按键</param>
@@ -278,35 +238,84 @@ namespace IDG  {
         public Fixed2 GetJoyStickDirection(KeyNum key)
         {
             if(joySticks.ContainsKey(key)){
-                 return joySticks[key].direction;
+                 return joySticks[key].direction.normalized;
             }else
             {
                 
-                string test="|||";
-                foreach (var joy in joySticks)
-                {
-                    test+="["+joy.Key+"]";
-                }
-                Debug.LogError("未同步的摇杆！！！["+key+"]"+test);
+                // string test="|||";
+                // foreach (var joy in joySticks)
+                // {
+                //     test+="["+joy.Key+"]";
+                // }
+                // Debug.LogError("未同步的摇杆！！！["+key+"]"+test);
                 
                 return Fixed2.zero;
             }
            
             
         }
-        /// <summary>
-        /// 帧调用函数
-        /// </summary>
-        public Action framUpdate
-        {
-            set {
-                inputCenter.frameUpdate=value;
-            }
-            get
-            {
-                return inputCenter.frameUpdate;
+
+    }
+    public class VirtulInput:InputBase{
+        public FrameKey Key{
+            get{
+                return frameKey;
             }
         }
+
+        public void SetJoyStickDirection(KeyNum key,Fixed2 direction){
+            
+            if(joySticks.ContainsKey(key)){
+                joySticks[key].direction=direction;
+            }else
+            {  
+                joySticks.Add(key,new JoyStickKey(key,direction));
+            }
+            Key.SetKey(true,key);
+        }
+    }
+    /// <summary>
+    /// 客户端输入解析类
+    /// </summary>
+    public class InputUnit:InputBase
+    {
+
+
+        public InputUnit(InputCenter center){
+            inputCenter=center;
+        }
+        
+        public InputCenter inputCenter;
+      
+      
+        /// <summary>
+        /// 解析帧信息
+        /// </summary>
+        /// <param name="message">消息</param>
+        public void ReceiveStep(ProtocolBase message)
+        {
+            
+            frameKey.Parse(message);
+            //Debug.Log(keyList[InputCenter.Instance.ServerStepIndex]);
+            byte len=message.getByte();
+
+        
+            for(byte i=0;i<len;i++){
+               
+                JoyStickKey joy=new JoyStickKey((KeyNum)(message.getByte()),message.getV2()) ;
+   //             Debug.LogError("rec+["+joy.key+"]");
+                if(joySticks.ContainsKey(joy.key)){
+                    
+                    joySticks[joy.key]=joy;
+                }else
+                {
+                    joySticks.Add(joy.key,joy);
+                }
+            }
+
+        }
+       
+       
     }
 
 }

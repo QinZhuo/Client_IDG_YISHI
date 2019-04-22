@@ -174,10 +174,12 @@ namespace IDG
             rigibody.Update();
            
         }
-        public virtual void Init(FSClient  client)
+        public virtual void Init(FSClient client,int clientid=-1)
         {
             this.client = client;
-            Input.framUpdate += DataFrameUpdate;
+            client.inputCenter.frameUpdate += DataFrameUpdate;
+            this.clientId=clientid;
+            Input=client.inputCenter[this.clientId];
             comList = new List<ComponentBase>();
             rigibody =new PhysicsComponent();
             rigibody.Init(OnPhysicsCheckEnter,OnPhysicsCheckStay,OnPhysicsCheckExit);
@@ -186,9 +188,11 @@ namespace IDG
             
        //     Debug.Log(name+"init");
         }
-        public T AddCommponent<T>() where T :IDG.ComponentBase ,new()
+        public T AddCommponent<T>(T cm=null) where T :IDG.ComponentBase ,new()
         {
-            T cm = new T();
+            if(cm==null){
+                cm = new T();
+            }
             cm.InitNetData(this);
             this.comList.Add(cm);
             return cm ;
@@ -223,7 +227,7 @@ namespace IDG
         public void Destory()
         {
             this.active = false;
-            Input.framUpdate -= DataFrameUpdate;
+            client.inputCenter.frameUpdate -= DataFrameUpdate;
             client.physics.Remove(this);
         }
        
@@ -268,13 +272,7 @@ namespace IDG
                 return FSClient.deltaTime;
             }
         }
-        public InputUnit Input
-        {
-            get
-            {
-                return client.inputCenter[this.clientId];
-            }
-        }
+        public InputBase Input;
        
     }
 }

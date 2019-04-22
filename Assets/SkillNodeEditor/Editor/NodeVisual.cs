@@ -41,6 +41,21 @@ public static class ViewLayout
     }
 }
 public static class ViewTool{
+    public static float Fix(this float pos,float min,float max,float fixStep){
+        while(pos>max){
+            pos-=fixStep;
+        }while (pos<min)
+        {
+            pos+=fixStep;
+        }
+        return pos;
+    }
+    public static Rect Add(this Rect rect,Vector2 v2){
+        return new Rect(rect.x+v2.x,rect.y+v2.y,rect.width,rect.height);
+    }
+    public static Rect Sub(this Rect rect,Vector2 v2){
+        return new Rect(rect.x-v2.x,rect.y-v2.y,rect.width,rect.height);
+    }
 	public static Vector3 GetPos(this Rect rect,Dir dir,float offset=0){
 		if(dir==Dir.left){
         
@@ -90,6 +105,8 @@ public abstract class NodeView<DataT> where DataT:ITreeNode<DataT>
 	public static Rect NodeRect= new Rect(0, 0, 160, 50);
 	public static Rect ConnectRect=new Rect(0,0,100,15);
     //public static Rect TitleRect=new Rect(0,0,100,20);
+    
+   
     public void Title(string title){
         ViewLayout.BeginV();
         var rect= NodeRect.LayoutV(15);
@@ -114,7 +131,16 @@ public abstract class NodeView<DataT> where DataT:ITreeNode<DataT>
     }
     
     // 在窗口中显示位置
-    public Rect windowRect;
+    public Rect windowRect{
+        get{
+            return _windowRect.Add(offset());
+        }
+        set{
+            _windowRect=value.Sub(offset());
+        }
+    }
+    public System.Func<Vector2> offset;
+    private Rect _windowRect;
 
     public DataT dataNode;
 	public Dir condition=0;
@@ -168,7 +194,7 @@ public abstract class NodeEditorWindow<T,DataT>:EditorWindow where T:NodeView<Da
     private NodeView<DataT> selectNode = null;
 
 
-
+    public Vector2 viewOffset=Vector2.one*1;
 	private float midLinePos=0.8f;
 	private Texture2D backTex=null;
 	public Event curEvent{
@@ -205,14 +231,25 @@ public abstract class NodeEditorWindow<T,DataT>:EditorWindow where T:NodeView<Da
     }
     protected abstract void RightShow(Rect rect);
 	void LeftGroup(){
-		GUI.BeginGroup(new Rect(0,0,position.width*midLinePos,position.height));
+        var leftRect=new Rect(0,0,position.width*midLinePos,position.height);
+		GUI.BeginGroup(leftRect);
 		if(backTex!=null){
-			GUI.DrawTexture (new Rect (0, 
-													0,1000,1000), 
-											backTex);
+            var xTex=leftRect.width/backTex.width;
+            var yTex=leftRect.height/backTex.height;
+            var xStart=viewOffset.x.Fix(-backTex.width,0,backTex.width);
+            var yStart=viewOffset.y.Fix(-backTex.height,0,backTex.height);
+          
+            for (int x = 0; x <= xTex+1; x++)
+            {
+                for (int y = 0; y <= yTex+1; y++)
+                {
+                    GUI.DrawTexture (new Rect (xStart+backTex.width*x, yStart+backTex.height*y,backTex.width,backTex.height), backTex);
+                }
+            }
+			
 		}else
 		{
-			Debug.LogError("background.png is null");
+			//Debug.LogError("background.png is null");
 			backTex=Resources.Load<Texture2D>("background");
 			//backTex=Resources.Load<Texture2D>("background.png");
 		}
@@ -247,7 +284,7 @@ public abstract class NodeEditorWindow<T,DataT>:EditorWindow where T:NodeView<Da
                 }
             }
         }
-
+        
         // 选择节点为空时，无法连线
         if (selectNode == null)
         {
@@ -295,11 +332,20 @@ public abstract class NodeEditorWindow<T,DataT>:EditorWindow where T:NodeView<Da
         for (int i = 0; i < nodeRootList.Count; i++)
         {
             NodeView<DataT> nodeView = nodeRootList[i];
-            nodeView.windowRect = GUI.Window(i, nodeView.windowRect, DrawNodeWindow,"");
-			
+            nodeView.windowRect = GUI.Window(i,  nodeView.windowRect, DrawNodeWindow,"");
             nodeView.DrawToChildCurve();
         }
         EndWindows();
+        if(curEvent.button==0){
+            if (curEvent.type == EventType.mouseDrag)
+            {
+                selectNode = GetMouseInNode();
+                if(selectNode==null){
+                    viewOffset+= curEvent.delta;
+                }
+            }
+        }
+
 		GUI.EndGroup();
 	}
 	public string test;
@@ -340,32 +386,42 @@ public abstract class NodeEditorWindow<T,DataT>:EditorWindow where T:NodeView<Da
         if (type == 0)
         {
             // 添加一个新节点
-            menu.AddItem(new GUIContent("Add Node"), false, AddNode);
+            CreateNodeMenu(menu);
         }
         else
         {
             // 连线子节点
-            menu.AddItem(new GUIContent("Make Transition"), false, MakeTransition);
-            menu.AddSeparator("");
-            // 删除节点
-            menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode);
+            
             NodeMenu(menu);
         }
         
         menu.ShowAsContext();
         Event.current.Use();
     }
+    protected virtual void CreateNodeMenu(GenericMenu menu){
+          menu.AddItem(new GUIContent("Add Node"), false, ()=>{AddNode();});
+    }
+    protected virtual void NodeMenu(GenericMenu menu){
+        menu.AddItem(new GUIContent("Make Transition"), false, MakeTransition);
+        menu.AddSeparator("");
+        // 删除节点
+        menu.AddItem(new GUIContent("Delete Node"), false, DeleteNode);
+    }
 
-    protected abstract void NodeMenu(GenericMenu menu);
-
-    // 添加节点
-    private void AddNode()
+    protected T GetNode()
     {
         T nodeView = new T();
         nodeView.dataNode=new DataT();
+        nodeView.offset=()=>{return viewOffset;};
+        return nodeView;
+    }
+    // 添加节点
+    protected T AddNode() 
+    {
+        var nodeView=GetNode();
         nodeView.windowRect = new Rect(mousePos.x, mousePos.y, NodeView<DataT>.NodeRect.width, NodeView<DataT>.NodeRect.height);
         nodeRootList.Add(nodeView);
-        
+        return nodeView;
     }
 
     protected void AddTree(NodeView<DataT> nodeRoot,Vector2 pos){

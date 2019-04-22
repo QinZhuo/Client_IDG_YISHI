@@ -6,7 +6,7 @@ namespace IDG
 {
     public static class ShapDebug
     {
-        public static void Draw(ShapBase shap,Color color,float time=1){
+        public static void Draw(ShapBase shap,Color color,float time=0.1f){
             for (int i = 0; i < shap.PointsCount-1; i++)
             {
                 Debug.DrawLine((shap.position+ shap.GetPoint(i)).ToVector3(),(shap.position +shap.GetPoint(i+1)).ToVector3(),color,time);

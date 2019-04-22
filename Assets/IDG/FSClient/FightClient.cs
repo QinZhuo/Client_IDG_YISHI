@@ -87,6 +87,7 @@ namespace IDG
             this.maxUserCount=maxUserCount;
             this.managers=managers;
             SkillManager.Init();
+            AiManager.Init();
      //       ServerCon.socket.Connect(serverIP, serverPort);
             ServerCon.socket.BeginConnect(serverIP,serverPort,ConnectCallback,ServerCon);
            

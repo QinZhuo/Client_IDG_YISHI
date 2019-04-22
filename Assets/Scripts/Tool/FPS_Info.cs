@@ -11,7 +11,7 @@ public class FPS_Info : MonoBehaviour {
     GUIStyle style=new GUIStyle();
     void Start()
     {
-        //Application.targetFrameRate = 90;
+        Application.targetFrameRate = 30;
         lastInterval = Time.realtimeSinceStartup;
         frames = 0;
         style.fontSize=40;

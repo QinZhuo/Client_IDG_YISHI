@@ -41,11 +41,26 @@ public class WaitForSeconds:IWait
 }
 public class CoroutineManager
 {
+    public void WaitCall(Fixed waitTime,Action func,bool loop=false){
+        StartCoroutine(WaitCallIE(waitTime,func,loop));
+    }
+    protected System.Collections.IEnumerator WaitCallIE(Fixed waitTime,Action func,bool loop=false){
+        do
+        {
+            yield return new WaitForSeconds(waitTime);
+            func();
+        } while (loop);
+    }
     private List<IEnumerator> coroutineList = new List<IEnumerator>();
     private List<IEnumerator> endList=new List<IEnumerator>();      
     public IEnumerator StartCoroutine(IEnumerator ie)
     {
-        coroutineList.Add(ie);
+        if(coroutineList.Contains(ie)){
+            UnityEngine.Debug.LogError("协程已启动");
+        }else
+        {
+            coroutineList.Add(ie);
+        }
        // UnityEngine.Debug.LogError("添加协程");
         return ie;
     }

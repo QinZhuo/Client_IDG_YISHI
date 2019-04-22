@@ -41,11 +41,16 @@ MonoBehaviour:
         nextNodes:
         - trigger: 5
           type: 5
-          nextNodes: []
+          nextNodes:
+          - trigger: 6
+            type: 6
+            nextNodes: []
+            boolParams: 
+            intParams: 64000000
           boolParams: 
           intParams: 0a0000000a0000000a000000
         boolParams: 
-        intParams: 
+        intParams: 05000000
       boolParams: 
       intParams: 
       skillId: 100
@@ -79,11 +84,16 @@ MonoBehaviour:
         nextNodes:
         - trigger: 5
           type: 5
-          nextNodes: []
+          nextNodes:
+          - trigger: 6
+            type: 6
+            nextNodes: []
+            boolParams: 
+            intParams: 64000000
           boolParams: 
-          intParams: 0a0000000a0000000a000000
+          intParams: 0a0000000d0000000a000000
         boolParams: 
-        intParams: 
+        intParams: 05000000
       boolParams: 
       intParams: 
       skillId: 101
@@ -117,7 +127,12 @@ MonoBehaviour:
         nextNodes:
         - trigger: 5
           type: 5
-          nextNodes: []
+          nextNodes:
+          - trigger: 6
+            type: 6
+            nextNodes: []
+            boolParams: 
+            intParams: 64000000
           boolParams: 
           intParams: 0a0000001400000014000000
         boolParams: 

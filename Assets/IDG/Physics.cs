@@ -132,6 +132,7 @@ namespace IDG
         }
         public List<NetData> OverlapShap(ShapBase shap)
         {
+            ShapDebug.Draw(shap,UnityEngine.Color.red);
             return tree.CheckShap(shap);
         }
         /// <summary>

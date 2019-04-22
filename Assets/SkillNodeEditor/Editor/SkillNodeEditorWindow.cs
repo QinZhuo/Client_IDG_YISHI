@@ -77,7 +77,7 @@ public class SkillNodeEditorWindow : NodeEditorWindow<SkillNodeView,SkillNode> {
 	public void ParseNode(){
 		ClearAll();
 		var skillRoot=skillAssets.skills[skillIndex].skillData;
-		var root=new SkillNodeView();
+		var root=GetNode();
 		SubParse(root,skillRoot);
 		AddTree(root,new Vector2(0,_window.position.height/2));
 	}
@@ -85,7 +85,7 @@ public class SkillNodeEditorWindow : NodeEditorWindow<SkillNodeView,SkillNode> {
 		root.dataNode=skillData;
 		foreach (var skill in skillData.nextNodes)
 		{
-			var skillView=new SkillNodeView();
+			var skillView=GetNode();
 			root.Childs.Add(skillView);
 			SubParse(skillView,skill);
 		}
@@ -102,6 +102,7 @@ public class SkillNodeEditorWindow : NodeEditorWindow<SkillNodeView,SkillNode> {
 		//GUI.Button(rect.GetRect(new Rect(0,0,rect.width,50)),"load");
 	}
 	protected override void NodeMenu(GenericMenu menu){
+		base.NodeMenu(menu);
 		menu.AddSeparator("");
 		menu.AddItem(new GUIContent("添加变量/bool"),false,AddBool);
 		menu.AddItem(new GUIContent("减少变量/bool"),false,RemoveBool);

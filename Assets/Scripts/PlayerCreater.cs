@@ -24,8 +24,8 @@ public class PlayerCreater : MonoBehaviour,IGameManager {
         {
            
             var player = new PlayerData();
-            player.Init(client);
-            player.clientId = i;
+            player.Init(client,i);
+          
 
             if(map!=null){
                  player.transform.Position =playerPos+Fixed2.left*i.ToFixed();

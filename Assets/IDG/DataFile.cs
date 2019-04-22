@@ -29,9 +29,10 @@ public class DataFile:MonoBehaviour{
 			Debug.LogWarning("WWW 加载二进制文件["+_path+"]长度"+www.bytes.Length);
 			action (www.bytes,obj);
 		}
-
+		
 		public static void SerializeToFile(string filePath,ISerializable obj)
 	     {
+			#if UNITY_EDITOR
 			UnityEditor.AssetDatabase.Refresh();
 	     	using (System.IO.FileStream fs = System.IO.File.Create( Application.streamingAssetsPath+"/"+filePath))
 			{
@@ -39,7 +40,9 @@ public class DataFile:MonoBehaviour{
 				fs.Write(bytes,0,bytes.Length);
 				fs.Close();
 	   		}
+			#endif
 		}
+		
 		public void DeserializeToData(string filePath,ISerializable obj)
 		{
 			StartCoroutine(wwwLoad( Application.streamingAssetsPath+"/"+filePath,Deserialize,obj));

@@ -16,17 +16,17 @@ public class SkillCheck{
         var otherList= player.client.physics.OverlapShap(shap);
         others=otherList;
         if(otherList.Count>0){
-            UnityEngine.Debug.LogError("碰撞数 "+otherList.Count  );
+           // UnityEngine.Debug.LogError("碰撞数 "+otherList.Count  );
             foreach (var other in otherList)
             {
                 if(other is NetData){
-                    UnityEngine.Debug.LogError("碰撞 "+other.name+" "+other.GetType()   );
+            //        UnityEngine.Debug.LogError("碰撞 "+other.name+" "+other.GetType()   );
                 }
             }
             RunNodes(node.GetNodes(SkillTrigger.Check));
         }
         
-		ShapDebug.Draw(shap,UnityEngine.Color.red);
+		
 		return this;
 	}
 
@@ -112,13 +112,7 @@ public class SkillBase:ComponentBase
          RunNodes(skillData.GetNodes(SkillTrigger.AnimOver));
     }
 
-    public System.Collections.IEnumerator WaitCall(Fixed waitTime,Action func,bool loop=false){
-        do
-        {
-            yield return new WaitForSeconds(waitTime);
-            func();
-        } while (loop);
-    }
+  
     public void CoolDown(){
         if (status==SkillStatus.CoolDown)
         {
@@ -139,7 +133,7 @@ public class SkillBase:ComponentBase
                 StartUse();
             }
             if(data.Input.GetKey(key)){
-               
+              // UnityEngine.Debug.LogError("GetKey使用技能 ["+skillId+"] ");
                 StayUse();
                 
             }
@@ -147,7 +141,7 @@ public class SkillBase:ComponentBase
             {
                 
                 UseOver();
-             //   UnityEngine.Debug.LogError("使用技能 ["+skillId+"] ");
+               // UnityEngine.Debug.LogError("GetKeyUp使用技能 ["+skillId+"] ");
                 (data as PlayerData).SetAnimTrigger("UseSkill");
                  timer = skillData.animTime;
                  status=SkillStatus.UseOver;
@@ -200,11 +194,11 @@ public class SkillBase:ComponentBase
                    player.animRootMotion(true);
                 }break;
             case SkillNodeType.WaitTime:
-                coroutine.StartCoroutine(
-                WaitCall(node.intParams[0]/10f.ToFixed(),
+              
+                coroutine.WaitCall(node.intParams[0]/10f.ToFixed(),
                     ()=>{
                         RunNodes(node.GetNodes(SkillTrigger.Time));
-                    }));
+                    });
                 break;
             case SkillNodeType.CreatCheck:
             
@@ -313,6 +307,7 @@ public class SkillAction:ComponentBase
             // }
 
             item.Value.Update();
+         //   UnityEngine.Debug.LogError(item.Key+" "+item.Value.skills.Count);
         } 
     }
 

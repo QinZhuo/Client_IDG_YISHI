@@ -130,6 +130,7 @@ public class PlayerData: HealthData
     public System.Action<string> SetAnimTrigger;
     public System.Action<string,float> SetAnimFloat;
     bool _canMove;
+    public AiEngine ai;
     public bool CanMove{
         set{
             if(!value){
@@ -152,17 +153,26 @@ public class PlayerData: HealthData
             client.localPlayer = this;
             Debug.Log("client.localPlayer");
         }
+        //  ai=new AiEngine();
+        //  ai.aiName="AI_test";
+        
+        // ai=AddCommponent<AiEngine>(ai);
+       
+        // ai.emenyTag="Zombie";
         base.Start();
          weaponSystem.AddWeapon(WeaponId.无战斗);
+         skillList.AddSkill(SkillManager.GetSkill(SkillId.拳击右直));
     }
+  
     protected override void FrameUpdate()
     {
      
        //     Debug.LogError("move"+Input.GetKey(IDG.KeyNum.MoveKey) );
         
    //     Debug.LogError("move"+move);
-       
+      
         if(_canMove){
+//             Debug.LogError("dir "+Input.GetJoyStickDirection(IDG.KeyNum.MoveKey)+" key "+ Input.GetKey(IDG.KeyNum.MoveKey) );
             move_dir = Input.GetKey(IDG.KeyNum.MoveKey) ? Input.GetJoyStickDirection(IDG.KeyNum.MoveKey):Fixed2.zero;
             transform.Position += move_dir * deltaTime* move_speed;
             if (move_dir.x != 0 || move_dir.y != 0)
