@@ -35,7 +35,7 @@ using IDG ;
             }
         }
         public AINodeStatus AiAction(AINode node){
-            UnityEngine.Debug.LogError("AI_"+(ActionType)node.intType);
+           // UnityEngine.Debug.LogError("AI_"+(ActionType)node.intType);
             vInput.Key.Reset();
             var type=(ActionType)node.intType;
             switch (type)

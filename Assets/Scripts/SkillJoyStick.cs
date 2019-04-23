@@ -62,7 +62,7 @@ public class SkillJoyStick : JoyStick {
     {
         if (skillList!=null)
         {
-            return skillList.GetCurrentSkill(key);
+            return skillList.GetSkill(key);
         }
         return null;
     }

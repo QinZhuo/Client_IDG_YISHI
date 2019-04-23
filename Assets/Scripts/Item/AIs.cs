@@ -43,11 +43,11 @@ public class AiManager:ISerializable{
         {
             var data =new AiData();
             data.Deserialize(protocol);
-            UnityEngine.Debug.LogError("初始化AI ["+data.name+"]");
+            UnityEngine.Debug.Log("初始化AI ["+data.name+"]");
             aiList.Add(data.name,data);
             
         }
-        UnityEngine.Debug.LogError("AI初始化完毕 AI数"+aiList.Count);
+        UnityEngine.Debug.Log("AI初始化完毕 AI数"+aiList.Count);
     }
     public static AiData Get(string name){
         

@@ -182,6 +182,10 @@ public class PlayerData: HealthData
             }
             _canMove=value;
         }
+        get
+        {
+            return _canMove;
+        }
     }
     public override void Start()
     {

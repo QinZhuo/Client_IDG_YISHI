@@ -95,7 +95,9 @@ namespace IDG{
         /// <returns>byte信息</returns>
         public Byte[] GetBytes(){
             var r= new byte[]{(byte)midKey,(byte)finalKey};
+           // UnityEngine.Debug.LogError(this+ " get ");
             Reset();
+        
             return r;
         }
         /// <summary>
@@ -107,7 +109,17 @@ namespace IDG{
 
             midKey = (KeyNum)message.getByte();
             finalKey = (KeyNum)message.getByte();
-           // UnityEngine.Debug.LogError("last[" + lastKey + "] mid[" + midKey + "] final[" + finalKey + "]");
+
+           // UnityEngine.Debug.LogError( this+ " parse ");
+            // UnityEngine.Debug.LogError("last[" + lastKey + "] mid[" + midKey + "] final[" + finalKey + "]");
+        }
+        //protected bool KeyDown(KeyNum testkey,KeyNum key)
+        //{
+        //    return (testkey & key) == key;
+        //}
+        public override string ToString()
+        {
+            return "[" + lastKey + "|" + midKey + "|" + finalKey + "]";
         }
     }
     /// <summary>

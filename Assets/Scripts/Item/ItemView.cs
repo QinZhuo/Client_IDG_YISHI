@@ -97,7 +97,7 @@ public class ItemData : NetData
     {
         if (other.tag=="Player" && other != user)
         {
-            UnityEngine.Debug.LogError("Exit触发Bullet！！！！");
+        //    UnityEngine.Debug.LogError("Exit触发Bullet！！！！");
             //Destory<Bullet>(this.show);
              (other as PlayerData).items.RemoveDropList(this);
         }

@@ -50,11 +50,11 @@ public class SkillManager:ISerializable{
         {
             var skilldata =new SkillData();
             skilldata.Deserialize(protocol);
-            UnityEngine.Debug.LogError("初始化技能 "+skilldata.skillId);
+            UnityEngine.Debug.Log("初始化技能 "+skilldata.skillId);
             Add(skilldata.skillId,skilldata);
             
         }
-        UnityEngine.Debug.LogError("技能初始化完毕 技能数"+skillList.Count);
+        UnityEngine.Debug.Log("技能初始化完毕 技能数"+skillList.Count);
     }
     public static SkillBase GetSkill(SkillId skillId){
       
