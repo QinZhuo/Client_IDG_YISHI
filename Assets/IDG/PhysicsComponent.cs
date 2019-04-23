@@ -11,10 +11,21 @@ namespace IDG
         public bool useCheckCallBack=false;
 
         public bool useCheck=false;
+        public NetData netdata;
      
         protected List<NetData> lastCollisonDatas = new List<NetData>();
-        public List<NetData> collisonDatas=new List<NetData>();
-
+        protected List<NetData> collisonDatas=new List<NetData>();
+        public void AddCollistionData(NetData other)
+        {
+            if (!collisonDatas.Contains(other))
+            {
+                collisonDatas.Add(other);
+            }
+        }
+        public void ClearCollistionData()
+        {
+            collisonDatas.Clear();
+        }
         public void Init(Action<NetData> enter,Action<NetData> stay, Action<NetData> exit){
             OnPhysicsCheckEnter=enter;
             OnPhysicsCheckStay=stay;
@@ -46,9 +57,16 @@ namespace IDG
             lastCollisonDatas.AddRange(collisonDatas);
 
             //  collisonDatas = ShapPhysics.CheckAll(this);
+
+            //foreach (var tree in netdata.trees)
+            //{
+            //    if (tree.collisonInfo.active)
+            //    {
+            //        collisonDatas.Clear();
+            //        break;
+            //    }
+            //} 
            
-            
-            collisonDatas.Clear();
         }
 
         public bool CheckCollision(NetData a)

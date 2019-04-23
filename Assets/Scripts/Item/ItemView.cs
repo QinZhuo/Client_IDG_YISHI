@@ -30,7 +30,6 @@ public class SkillItem:ItemData{
     public override void PickUp(NetData other){
         (other as PlayerData).skillList.AddSkill(SkillManager.GetSkill(skillId));
         base.PickUp(other);
-       
           
     }
 }
@@ -71,7 +70,7 @@ public class ItemData : NetData
 
         if (other.tag == "Player" && other != user)
         {
-            UnityEngine.Debug.Log("Stay触发Bullet！！！！");
+           UnityEngine.Debug.Log("Stay触发 "+other.name);
         
         }
     }
@@ -79,7 +78,7 @@ public class ItemData : NetData
     {
         if (other.tag == "Player" && other != user)
         {
-            UnityEngine.Debug.Log("Enter触发Bullet！！！！");
+            UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
             
             //var gun = new GunBase();
             //gun.Init(20, this);
@@ -98,7 +97,7 @@ public class ItemData : NetData
     {
         if (other.tag=="Player" && other != user)
         {
-            //UnityEngine.Debug.Log("Exit触发Bullet！！！！");
+            UnityEngine.Debug.LogError("Exit触发Bullet！！！！");
             //Destory<Bullet>(this.show);
              (other as PlayerData).items.RemoveDropList(this);
         }

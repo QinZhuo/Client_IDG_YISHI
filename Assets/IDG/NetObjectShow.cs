@@ -183,6 +183,7 @@ namespace IDG
             comList = new List<ComponentBase>();
             rigibody =new PhysicsComponent();
             rigibody.Init(OnPhysicsCheckEnter,OnPhysicsCheckStay,OnPhysicsCheckExit);
+            rigibody.netdata = this;
             transform=new TransformComponent();
             transform.Init(this);
             

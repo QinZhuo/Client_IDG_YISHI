@@ -116,14 +116,18 @@ namespace IDG
             
             int count = tree.objs.Count;
             var objs = tree.objs;
+            foreach (var obj in objs)
+            {
+                obj.rigibody.ClearCollistionData();
+            }
             for (int i = 0; i < count; i++)
             {
                 for (int j = i + 1; j < count; j++)
                 {
                     if (objs[i] != objs[j]&&(objs[i].rigibody.useCheck||objs[j].rigibody.useCheck)&& ShapPhysics.Check(objs[i].Shap, objs[j].Shap))
                     {
-                        objs[i].rigibody.collisonDatas.Add(objs[j]);
-                        objs[j].rigibody.collisonDatas.Add(objs[i]);
+                        objs[i].rigibody.AddCollistionData(objs[j]);
+                        objs[j].rigibody.AddCollistionData(objs[i]);
                     }
                 }
 
