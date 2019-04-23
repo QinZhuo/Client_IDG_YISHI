@@ -1,7 +1,5 @@
 fileFormatVersion: 2
-guid: 20182b1759c4594498fccc2814f906c2
-timeCreated: 1553180462
-licenseType: Free
+guid: d33c8f1627e784e43bfa068a164b2a38
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -9,20 +7,16 @@ ModelImporter:
     100002: //RootNode
     400000: room_door
     400002: //RootNode
+    2100000: palette
     2300000: room_door
     3300000: room_door
     4300000: room_door
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: palette
-    second: {fileID: 2100000, guid: 23f93ac08a239834d85d8600bbcb24bb, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -60,6 +54,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

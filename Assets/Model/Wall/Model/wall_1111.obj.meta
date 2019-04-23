@@ -1,7 +1,5 @@
 fileFormatVersion: 2
-guid: bcb2a8e64e66ab64c960eec061a8aa19
-timeCreated: 1553163847
-licenseType: Free
+guid: 9f014f3242f38a64f8e3f69caeb800a9
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -9,20 +7,16 @@ ModelImporter:
     100002: //RootNode
     400000: wall_1111
     400002: //RootNode
+    2100000: wall_1111Mat
     2300000: wall_1111
     3300000: wall_1111
     4300000: wall_1111
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: wall_1111Mat
-    second: {fileID: 2100000, guid: dba28ec91563859498c6fee31e3472b3, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -60,6 +54,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88

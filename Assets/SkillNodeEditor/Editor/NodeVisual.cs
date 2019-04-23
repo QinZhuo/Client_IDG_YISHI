@@ -337,7 +337,7 @@ public abstract class NodeEditorWindow<T,DataT>:EditorWindow where T:NodeView<Da
         }
         EndWindows();
         if(curEvent.button==0){
-            if (curEvent.type == EventType.mouseDrag)
+            if (curEvent.type == EventType.MouseDrag)
             {
                 selectNode = GetMouseInNode();
                 if(selectNode==null){
