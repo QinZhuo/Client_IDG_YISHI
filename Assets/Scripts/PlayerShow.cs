@@ -9,9 +9,12 @@ public class PlayerShow : NetObjectView<PlayerData> {
     public Animator anim;
     public Transform leftHand;
     public Transform rightHand;
+    public HPManager hpManager;
+    public HpView hpView;
+    PlayerData player;
     private void Start()
     {
-       
+        hpManager = data.client.GetManager<HPManager>();
        
     }
     private void ChangeSkillAnim(SkillId id){
@@ -50,37 +53,62 @@ public class PlayerShow : NetObjectView<PlayerData> {
     }
     //float last;
     protected override void OnStart(){
-        var player=(data as PlayerData);
-        (data as PlayerData).SetAnimTrigger=anim.SetTrigger;
-       (data as PlayerData).SetAnimFloat=anim.SetFloat;
-               // data.ClientId = clientId;
-        (data as PlayerData).skillList.changeSkill=ChangeSkillAnim;
-        (data as PlayerData).weaponSystem.changeWeapon=ChangeWeapon;
+        player = (data as PlayerData);
+        player.SetAnimTrigger=anim.SetTrigger;
+        player.SetAnimFloat=anim.SetFloat;
+        // data.ClientId = clientId;
+        player.skillList.changeSkill=ChangeSkillAnim;
+        player.weaponSystem.changeWeapon=ChangeWeapon;
         player.animRootMotion=(b)=>{
             anim.transform.localPosition=Vector3.zero;
             anim.applyRootMotion=b;
         };
+       // (data.client.unityClient as FightClientForUnity3D).mainCamera
     }
-    
-	// public IEnumerator _Lock(bool lockMovement, bool lockAction, bool timed, float delayTime, float lockTime){
-    //     if(delayTime > 0){
-    //         yield return new WaitForSeconds(delayTime);
-    //     }
-    //     if(lockMovement){
-    //         rpgCharacterMovementController.LockMovement();
-    //     }
-    //     if(lockAction){
-    //         LockAction();
-    //     }
-    //     if(timed){
-    //         if(lockTime > 0){
-    //             yield return new WaitForSeconds(lockTime);
-    //         }
-    //         UnLock(lockMovement, lockAction);
-    //     }
-	// }
+    override protected void Update()
+    {
+        base.Update();
+        Vector3 pos = hpManager.mainCam.WorldToViewportPoint(transform.position);
+        if (InCamera(pos))
+        {
+            if (hpView == null)
+            {
+                hpView=hpManager.GetView();
+            }
+           
+            hpView.transform.position = hpManager.mainCam.WorldToScreenPoint(transform.position + Vector3.up * 2.5f);
+            hpView.SetSlider((player.Hp / player.MaxHealth).ToFloat());
 
+        }
+        else
+        {
+            if (hpView != null)
+            {
+                hpManager.Recover(hpView);
+                hpView = null;
+            }
+        }
+       // hpView.SetSlider((player.Hp / player.MaxHealth).ToFloat());
+        
+    }
+    protected bool InCamera(Vector3 camPos)
+    {
+        if (camPos.x < 0 || camPos.x > 1 || camPos.y < 0 || camPos.y > 1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
 
+        }
+    }
+
+    private void OnDestroy()
+    {
+        hpManager.Recover(hpView);
+        hpView = null;
+    }
     // Use this for initialization
 
 
@@ -92,6 +120,21 @@ public class PlayerShow : NetObjectView<PlayerData> {
 public abstract class HealthData : NetData
 {
     protected Fixed _m_Hp=new Fixed(100);
+    protected Fixed maxHealth = 100.ToFixed();
+    public Fixed Hp
+    {
+        get
+        {
+            return _m_Hp;
+        }
+    }
+    public Fixed MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+    }
     protected bool isDead=false;
     public virtual void GetHurt(Fixed atk)
     {

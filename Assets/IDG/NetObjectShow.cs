@@ -72,7 +72,7 @@ namespace IDG
             
         }
        
-        protected void Update()
+        protected virtual void Update()
         {
             LerpNetPos(Time.deltaTime*10);
         }
