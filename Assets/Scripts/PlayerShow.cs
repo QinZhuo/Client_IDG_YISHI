@@ -131,6 +131,7 @@ public class PlayerData: HealthData
     public System.Action<string,float> SetAnimFloat;
     bool _canMove;
     public AiEngine ai;
+    public ItemEngine items;
     public bool CanMove{
         set{
             if(!value){
@@ -153,6 +154,7 @@ public class PlayerData: HealthData
             client.localPlayer = this;
             Debug.Log("client.localPlayer");
         }
+        items=AddCommponent<ItemEngine>();
         //  ai=new AiEngine();
         //  ai.aiName="AI_test";
         
@@ -187,6 +189,9 @@ public class PlayerData: HealthData
                  SetAnimFloat("Speed",0);
             }
            
+        }
+        if(Input.GetKeyUp(KeyNum.Drop)){
+            items.PickUp();
         }
     }
 

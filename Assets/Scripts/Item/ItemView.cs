@@ -29,6 +29,7 @@ public class SkillItem:ItemData{
     public SkillId skillId;
     public override void PickUp(NetData other){
         (other as PlayerData).skillList.AddSkill(SkillManager.GetSkill(skillId));
+        base.PickUp(other);
        
           
     }
@@ -41,6 +42,7 @@ public class WeaponItem:ItemData{
        var player= (other as PlayerData);
        var weapon=WeaponManager.GetWeapon(weaponId);
         player.weaponSystem.AddWeapon(weapon);
+        base.PickUp(other);
     }
 }
 public class ItemData : NetData
@@ -78,24 +80,27 @@ public class ItemData : NetData
         if (other.tag == "Player" && other != user)
         {
             UnityEngine.Debug.Log("Enter触发Bullet！！！！");
-            client.objectManager.Destory(this.view);
+            
             //var gun = new GunBase();
             //gun.Init(20, this);
             //(other as PlayerData).AddGun(gun);
-            PickUp(other);
+            
+            (other as PlayerData).items.AddDropList(this);
+            //PickUp(other);
            
 
         }
     }
     public virtual void PickUp(NetData other){
-
+        client.objectManager.Destory(this.view);
     }
     public override void OnPhysicsCheckExit(NetData other)
     {
         if (other.tag=="Player" && other != user)
         {
-            UnityEngine.Debug.Log("Exit触发Bullet！！！！");
+            //UnityEngine.Debug.Log("Exit触发Bullet！！！！");
             //Destory<Bullet>(this.show);
+             (other as PlayerData).items.RemoveDropList(this);
         }
     }
     public override string PrefabPath()

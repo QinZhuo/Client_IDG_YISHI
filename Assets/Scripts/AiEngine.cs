@@ -22,6 +22,18 @@ using IDG ;
             vInput=new VirtulInput();
             player.Input=vInput;
         }
+        public bool DontHasPath(Fixed2 dir){
+            var others= player.client.physics.OverlapShap(new ShapBase(player.Shap.GetPoints(),player.transform.Position+dir.normalized*0.5f.ToFixed(),dir.ToRotation()));
+            if(others.Contains(player)){
+               others.Remove(player);
+            }
+            if(others.Count>0){
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
         public AINodeStatus AiAction(AINode node){
             UnityEngine.Debug.LogError("AI_"+(ActionType)node.intType);
             vInput.Key.Reset();
@@ -75,8 +87,22 @@ using IDG ;
                    player.client.coroutine.WaitCall(0.5f.ToFixed(),()=>{ vInput.Key.SetKey(false,KeyNum.Skill1);});
                    return AINodeStatus.Success;
                 }
+                case ActionType.findPath:{
+                     moveDir=target.transform.Position-player.transform.Position;
+                    
+                    if(DontHasPath(moveDir)){
+                        var rot=moveDir.ToRotation();
+                        rot+=90;
+                        moveDir=Fixed2.Parse(rot);
+                        if(DontHasPath(moveDir)){
+                            rot-=180;
+                             moveDir=Fixed2.Parse(rot);
+                        }
+                    }
+                    return AINodeStatus.Success;
+                }
                 case ActionType.moveToEnemy:{
-                    moveDir=target.transform.Position-player.transform.Position;
+                   
                      vInput.SetJoyStickDirection(KeyNum.MoveKey,moveDir);
                      return AINodeStatus.Success;
                 }

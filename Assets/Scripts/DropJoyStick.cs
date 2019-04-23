@@ -20,11 +20,21 @@ public class DropJoyStick : JoyStick {
         unityClient=GetComponentInParent<FightClientForUnity3D>();
     }
 	void Update () {
-
+        DropListCheck();
         PcControl();
-       
-        ;
-      
+
+    }
+    void DropListCheck(){
+        if(unityClient.client.localPlayer==null)return;
+        var player=unityClient.client.localPlayer as PlayerData;
+        if(player.items.canDropList.Count>0){
+            group.alpha = 1;
+            group.blocksRaycasts = false;
+        }else
+        {
+            group.alpha = 0;
+            group.blocksRaycasts = true;
+        }
     }
     void PcControl()
     {

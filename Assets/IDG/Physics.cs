@@ -130,6 +130,7 @@ namespace IDG
             shap.position = position;
             return OverlapShap(shap);
         }
+
         public List<NetData> OverlapShap(ShapBase shap)
         {
             ShapDebug.Draw(shap,UnityEngine.Color.red);
@@ -290,6 +291,13 @@ namespace IDG
         public ShapBase(Fixed2[] points)
         {
             _points = points;
+            ResetSize();
+        }
+        public ShapBase(Fixed2[] points,Fixed2 position,Fixed rotation)
+        {
+            _points = points;
+            this._position=position;
+            this._rotation=rotation;
             ResetSize();
         }
         private Fixed2 SetScale(Fixed2 point){

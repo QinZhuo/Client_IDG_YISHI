@@ -200,6 +200,7 @@ public enum ActionType{
     moveToEnemy=104,
     rotateToEnemy=105,
     skill1=106,
+    findPath=107,
 }
 
 

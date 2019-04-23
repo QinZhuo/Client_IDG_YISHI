@@ -29,6 +29,10 @@ MonoBehaviour:
             childes: []
           - intType: 106
             childes: []
-        - intType: 104
-          childes: []
+        - intType: 11
+          childes:
+          - intType: 107
+            childes: []
+          - intType: 104
+            childes: []
       name: AI_test

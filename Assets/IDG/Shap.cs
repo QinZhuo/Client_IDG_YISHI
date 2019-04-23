@@ -13,8 +13,9 @@ namespace IDG
                 ps[i]=points[i].ToFixed2();
             } 
             Shap=new ShapBase( ps);
-          //  Debug.LogError("shap count "+points.Length);
+        
         }
+        
         public override void Start()
         {
         
@@ -78,11 +79,14 @@ namespace IDG
     }
     public class RayShap : ShapBase
     {
-        public static RayShap GetRay(Fixed2 origin, Fixed2 direction,Fixed length)
+        public RayShap(Fixed2 origin, Fixed2 direction,Fixed length)
         {
-            var shap = new RayShap(direction.normalized*length);
-            shap._position = origin;
-            return shap;
+           
+            Fixed2[] v2s = new Fixed2[2];
+            v2s[0] = Fixed2.zero;
+            v2s[1] = direction.normalized*length;
+            Points = v2s;
+            _position = origin;
         }
         public RayShap ResetDirection(Fixed2 origin, Fixed2 direction,Fixed length)
         {
@@ -92,12 +96,12 @@ namespace IDG
             return this;
         }
 
-        public RayShap(Fixed2 direction)
-        {
-            Fixed2[] v2s = new Fixed2[2];
-            v2s[0] = Fixed2.zero;
-            v2s[1] = direction;
-            Points = v2s;
-        }
+        // public RayShap(Fixed2 direction)
+        // {
+        //     Fixed2[] v2s = new Fixed2[2];
+        //     v2s[0] = Fixed2.zero;
+        //     v2s[1] = direction;
+        //     Points = v2s;
+        // }
     }
 }
