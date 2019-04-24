@@ -88,6 +88,7 @@ namespace IDG
             this.managers=managers;
             SkillManager.Init();
             AiManager.Init();
+            WeaponManager.Init();
      //       ServerCon.socket.Connect(serverIP, serverPort);
             ServerCon.socket.BeginConnect(serverIP,serverPort,ConnectCallback,ServerCon);
            

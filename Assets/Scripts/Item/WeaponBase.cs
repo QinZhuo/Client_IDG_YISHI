@@ -15,29 +15,37 @@ public enum WeaponType
     刀,
     剑,
 }
-public class WeaponBase:ComponentBase
+public class WeaponRuntime:ComponentBase
 {
-    public WeaponId weaponId; 
+    public WeaponId weaponId
+    {
+        get
+        {
+            return weaponData.weaponId;
+        }
+    }
     public WeaponType weaponType;
     public SkillId defalutSkillId=SkillId.none;
     public WeaponStatus status=WeaponStatus.none;
-
+    public WeaponData weaponData;
 
 }
 
 public class WeaponSystem:ComponentBase 
 {
-    public List<WeaponBase> weaponList;
+    public List<WeaponRuntime> weaponList;
     public Action<WeaponId> changeWeapon;
     public int currentId;
     public override void Init()
     {
-        weaponList=new List<WeaponBase>();
+        weaponList=new List<WeaponRuntime>();
     }
     public void AddWeapon(WeaponId weaponId){
-        AddWeapon(WeaponManager.GetWeapon(weaponId));
+        var weapon = new WeaponRuntime();
+        weapon.weaponData = WeaponManager.Get(weaponId.ToString());
+        AddWeapon(weapon);
     }
-    public void AddWeapon(WeaponBase weapon)
+    public void AddWeapon(WeaponRuntime weapon)
     {
        weaponList.Add(weapon);
        weapon.InitNetData(data);

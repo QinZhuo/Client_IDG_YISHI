@@ -11,13 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f955e4c2bb960da4e962e406c3a3be8f, type: 3}
   m_Name: SkillAssets
   m_EditorClassIdentifier: 
-  skills:
-  - skillname: 
-    skillInfo: 
-    uiIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    animation: {fileID: 7400000, guid: 0ae0bbd3bcad45d40a063a319d70a468, type: 3}
-    ItemPrefab: {fileID: 0}
-    skillData:
+  assets:
+  - data:
       trigger: 0
       type: 0
       nextNodes:
@@ -55,12 +50,12 @@ MonoBehaviour:
       intParams: 
       skillId: 100
       key: 2
-  - skillname: 
+    skillname: "\u5DE6\u62F3"
     skillInfo: 
     uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-    animation: {fileID: 7400000, guid: 501c54f0f9c76cf4d96cbabe13658b29, type: 3}
+    animation: {fileID: 7400000, guid: 0ae0bbd3bcad45d40a063a319d70a468, type: 3}
     ItemPrefab: {fileID: 0}
-    skillData:
+  - data:
       trigger: 2
       type: 0
       nextNodes:
@@ -98,12 +93,12 @@ MonoBehaviour:
       intParams: 
       skillId: 101
       key: 2
-  - skillname: 
+    skillname: 
     skillInfo: 
-    uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-    animation: {fileID: 7400000, guid: 87d38271a92e10f458f547e38776d3a1, type: 3}
+    uiIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    animation: {fileID: 7400000, guid: 501c54f0f9c76cf4d96cbabe13658b29, type: 3}
     ItemPrefab: {fileID: 0}
-    skillData:
+  - data:
       trigger: 2
       type: 0
       nextNodes:
@@ -141,3 +136,9 @@ MonoBehaviour:
       intParams: 
       skillId: 104
       key: 2
+    skillname: 
+    skillInfo: 
+    uiIcon: {fileID: 0}
+    animation: {fileID: 7400000, guid: 87d38271a92e10f458f547e38776d3a1, type: 3}
+    ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
+      type: 2}

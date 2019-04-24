@@ -76,7 +76,7 @@ public class SkillNodeEditorWindow : NodeEditorWindow<SkillNodeView,SkillNode> {
 	}
 	public void ParseNode(){
 		ClearAll();
-		var skillRoot=skillAssets.skills[skillIndex].skillData;
+		var skillRoot=skillAssets.assets[skillIndex].data;
 		var root=GetNode();
 		SubParse(root,skillRoot);
 		AddTree(root,new Vector2(0,_window.position.height/2));
@@ -133,9 +133,9 @@ public class SkillNodeEditorWindow : NodeEditorWindow<SkillNodeView,SkillNode> {
 	}
 	protected string[] SkillNames(){
 		List<string> names=new List<string>();
-		foreach (var skill in skillAssets.skills)
+		foreach (var skill in skillAssets.assets)
 		{
-			names.Add(skill.skillname!=""?skill.skillname:skill.skillData.skillId.ToString());
+			names.Add(skill.data.skillId.ToString());
 		}
 		Debug.LogError("len "+names.Count);
 		return names.ToArray();

@@ -12,67 +12,18 @@ public enum SkillId:Int32
     拳击右上勾=103,
     swordAttack=104,
 }
-public class SkillManager:ISerializable{
-    public static SkillManager instance;
-    public static Dictionary<SkillId,Func<SkillBase>> skillList;
-    public static void Init(){
-        instance=new SkillManager();
-        instance.LoadTable();
-    }
-    public void LoadTable(){
-         UnityEngine.Debug.Log("初始化技能中 ...");
-        skillList=new Dictionary<SkillId, Func<SkillBase>>();
-        DataFile.Instance.DeserializeToData("SkillsSetting.isk",this);
-        // SkillData skillData=new SkillData();
-        // skillData.animTime=1.ToFixed();
-        // skillData.coolDownTime=1.ToFixed();
-        // skillData.key=KeyNum.Skill1;
-        // var node=new SkillNode();
-        // node.trigger=SkillTrigger.结束;
-        // node.type=NodeType.RotatePlayer;
-        // skillData.nextNodes.Add(node);
-        // Add(SkillId.拳击右上勾,skillData);
-        // Add(SkillId.拳击左上勾,skillData);
-        // Add(SkillId.拳击右直,skillData);
-        // Add(SkillId.拳击左直,skillData);
-        // Add(SkillId.swordAttack,skillData);
-     
-    }
-    
-    public  void Serialize(ByteProtocol protocol){
-       
-        
-    }
-    public void Deserialize(ByteProtocol protocol){
-        skillList.Clear();
-       var len=protocol.getInt32();
-        for (int i = 0; i < len; i++)
-        {
-            var skilldata =new SkillData();
-            skilldata.Deserialize(protocol);
-            UnityEngine.Debug.Log("初始化技能 "+skilldata.skillId);
-            Add(skilldata.skillId,skilldata);
-            
-        }
-        UnityEngine.Debug.Log("技能初始化完毕 技能数"+skillList.Count);
-    }
-    public static SkillBase GetSkill(SkillId skillId){
-      
-        return skillList[skillId]();
-    }
-    public static void Add(SkillId skillId,SkillData skillData)
+public class SkillManager:DataManager<SkillManager,SkillData>{
+
+    public override string TableName()
     {
-        if(skillList.ContainsKey(skillId)){
-            UnityEngine.Debug.LogError("重复的技能"+skillData.skillId);
-            return;
-        }
-       skillList.Add(skillId,()=>{
-           var skill=new SkillBase();
-           skill.skillId=skillId;
-           skill.skillData=skillData;
-           return skill;
-           });
+        return "SkillSetting";
     }
+  
+    public static SkillRuntime GetSkill(SkillId skillId){
+
+        return new SkillRuntime(Get(skillId.ToString()));
+    }
+
 }
 
 public enum SkillTrigger:Int32
@@ -96,11 +47,19 @@ public enum SkillNodeType:Int32
     Damage=6,
 }
 [System.Serializable]
-public class SkillData:SkillNode,ISerializable{
+public class SkillData:SkillNode,IDataClass{
     public SkillId skillId;
     public Fixed coolDownTime;
     public Fixed animTime;
     public KeyNum key;
+
+    public string Id
+    {
+        get
+        {
+            return skillId.ToString();
+        }
+    }
 
     public override void Serialize(ByteProtocol protocol){
         protocol.push((Int32)skillId);

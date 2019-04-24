@@ -18,7 +18,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
        
     }
     private void ChangeSkillAnim(SkillId id){
-        var animation=GameViewAssetManager.instance.skillAssets.GetSkillAssets(id).animation;
+        var animation=GameViewAssetManager.instance.skillAssets.Get(id.ToString()).animation;
         ChangeAnim("Skill",animation);
       //  Debug.LogError("更改动画 "+animation.name);
     }
@@ -37,7 +37,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
         anim.runtimeAnimatorController=animOverride;
     }
     protected void ChangeWeapon(WeaponId id){
-        var weaponAssets=GameViewAssetManager.instance.weaponAssets.GetWeaponAssets(id);
+        var weaponAssets=GameViewAssetManager.instance.weaponAssets.Get(id.ToString());
         var weaponPrefab=weaponAssets.ItemPrefab;
         if(weaponPrefab!=null){
            

@@ -47,7 +47,7 @@ public class SkillJoyStick : JoyStick {
                 skillList = (unityClient.client.localPlayer as PlayerData).skillList;
             }
         }
-        SkillBase skill = GetSkill(key);
+        SkillRuntime skill = GetSkill(key);
 
         if (skill != null)
         {
@@ -58,7 +58,7 @@ public class SkillJoyStick : JoyStick {
 
     }
 
-    SkillBase GetSkill(KeyNum key)
+    SkillRuntime GetSkill(KeyNum key)
     {
         if (skillList!=null)
         {

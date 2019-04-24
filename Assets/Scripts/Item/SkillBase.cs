@@ -68,10 +68,20 @@ public enum SkillStatus
     UseOver,
     CoolDown,
 }
-public class SkillBase : ComponentBase
+public class SkillRuntime : ComponentBase
 {
-    public SkillId skillId;
-
+    public SkillId skillId
+    {
+        get
+        {
+            return skillData.skillId;
+        }
+    }
+    public SkillRuntime(SkillData skillData)
+    {
+        this.skillData = skillData;
+       
+    }
     public SkillStatus status = SkillStatus.CanUse;
     public KeyNum key
     {
@@ -305,17 +315,17 @@ public class SkillBase : ComponentBase
 //}
 public class SkillAction:ComponentBase
 {
-    public Dictionary<KeyNum, SkillBase> skillTable;
+    public Dictionary<KeyNum, SkillRuntime> skillTable;
     public Action<SkillId> changeSkill;
     public override void Init()
     {
-        skillTable = new Dictionary<KeyNum, SkillBase>();
+        skillTable = new Dictionary<KeyNum, SkillRuntime>();
         //skillTable.Add(KeyNum.Skill1, null);
         //skillTable.Add(KeyNum.Skill2, null);
         //skillTable.Add(KeyNum.Skill3, null);
     }
-    public SkillBase GetSkill(KeyNum key){
-        SkillBase skill=null;
+    public SkillRuntime GetSkill(KeyNum key){
+        SkillRuntime skill=null;
         if (skillTable.ContainsKey(key)){
             skill = skillTable[key];
         }
@@ -326,7 +336,7 @@ public class SkillAction:ComponentBase
         AddSkill(SkillManager.GetSkill(skillId));
        
     }
-    public void AddSkill(SkillBase skill)
+    public void AddSkill(SkillRuntime skill)
     {
         skill.InitNetData(this.data);
      

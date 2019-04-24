@@ -87,7 +87,7 @@ public class AINodeEditorWindow : NodeEditorWindow<AINodeView,AINode> {
 	}
 	public void ParseNode(){
 		ClearAll();
-		var aiRoot=aiAssets.aIAssets[aiIndex].data;
+		var aiRoot=aiAssets.assets[aiIndex].data;
 		var root=GetNode();
 		SubParse(root,aiRoot);
 		AddTree(root,new Vector2(0,_window.position.height/2));
@@ -130,7 +130,7 @@ public class AINodeEditorWindow : NodeEditorWindow<AINodeView,AINode> {
 		// menu.AddItem(new GUIContent("减少变量/int"),false,RemoveInt);
 	}
 	protected void SetRootNode(){
-		aiAssets.aIAssets[aiIndex].data=curSkillNode as AiData;
+		aiAssets.assets[aiIndex].data=curSkillNode as AiData;
 	}
 
 	// protected void AddBool(){
@@ -157,10 +157,10 @@ public class AINodeEditorWindow : NodeEditorWindow<AINodeView,AINode> {
 	protected string[] AINames(){
 		List<string> names=new List<string>();
 		int i=0;;
-		foreach (var ai in aiAssets.aIAssets)
+		foreach (var ai in aiAssets.assets)
 		{
 			i++;
-			names.Add(ai.name!=""?ai.name:"AI_"+i);
+			names.Add(ai.data.name!=""?ai.data.name:"AI_"+i);
 		}
 		Debug.LogError("len "+names.Count);
 		return names.ToArray();

@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0129d56bbbaeb4aab5e2c069e31b83, type: 3}
   m_Name: WeaponAssets
   m_EditorClassIdentifier: 
-  Weapons:
-  - WeaponId: 0
+  assets:
+  - data:
+      weaponId: 0
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
@@ -20,14 +21,16 @@ MonoBehaviour:
     animation: {fileID: 7400000, guid: b20735dd980273a419c9df0ba1443da9, type: 3}
     ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
       type: 2}
-  - WeaponId: 1
+  - data:
+      weaponId: 1
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
     idleAnim: {fileID: 7400000, guid: b4c43d46112e54a449203e7bb9f1bf86, type: 3}
     animation: {fileID: 7400000, guid: df993fc5f6360c248a632d6f4622355a, type: 3}
     ItemPrefab: {fileID: 0}
-  - WeaponId: 2
+  - data:
+      weaponId: 2
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}

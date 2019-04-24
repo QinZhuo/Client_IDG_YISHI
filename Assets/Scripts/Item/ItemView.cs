@@ -8,7 +8,7 @@ public class ItemView : NetObjectView<ItemData> {
         
         if(data is SkillItem){
             var skillItem=data as SkillItem;
-            var skillAssets=  GameViewAssetManager.instance.skillAssets.GetSkillAssets(skillItem.skillId);
+            var skillAssets=  GameViewAssetManager.instance.skillAssets.Get(skillItem.skillId.ToString());
          
             renderer.sprite=skillAssets.uiIcon;
       
@@ -16,7 +16,7 @@ public class ItemView : NetObjectView<ItemData> {
         {
             renderer.gameObject.SetActive(false);
             var weaponItem=data as WeaponItem;
-            var weaponAssets= GameViewAssetManager.instance.weaponAssets.GetWeaponAssets(weaponItem.weaponId);
+            var weaponAssets= GameViewAssetManager.instance.weaponAssets.Get(weaponItem.weaponId.ToString());
             if(weaponAssets.ItemPrefab!=null){
                 var obj= Instantiate(weaponAssets.ItemPrefab,transform.position,Quaternion.identity);
                 obj.transform.SetParent(transform);
@@ -39,8 +39,7 @@ public class WeaponItem:ItemData{
     public override void PickUp(NetData other){
        // (other as PlayerData).skillList.AddSkill(SkillManager.GetSkill(skillId));
        var player= (other as PlayerData);
-       var weapon=WeaponManager.GetWeapon(weaponId);
-        player.weaponSystem.AddWeapon(weapon);
+        player.weaponSystem.AddWeapon(weaponId);
         base.PickUp(other);
     }
 }

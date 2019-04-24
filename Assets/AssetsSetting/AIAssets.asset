@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f23bea31e423349809ee39c4df6476, type: 3}
   m_Name: AIAssets
   m_EditorClassIdentifier: 
-  aIAssets:
+  assets:
   - data:
       intType: 11
       childes:
