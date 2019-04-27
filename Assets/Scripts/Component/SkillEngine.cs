@@ -101,7 +101,7 @@ public class SkillRuntime : ComponentBase
     {
         get
         {
-            return data.client.coroutine;
+            return netData.client.coroutine;
         }
     }
 
@@ -141,18 +141,18 @@ public class SkillRuntime : ComponentBase
     }
     public override void Update()
     {
-        if (data.Input.GetKeyDown(key))
+        if (netData.Input.GetKeyDown(key))
         {
              //    UnityEngine.Debug.LogError("update " + data.client.inputCenter.Time +" "+data.view.gameObject.name);
-            UnityEngine.Debug.LogError("keyDown " + key + " " + data.view.gameObject.name);
+            UnityEngine.Debug.LogError("keyDown " + key + " " + netData.view.gameObject.name);
         }
-        if (data.Input.GetKeyUp(key))
+        if (netData.Input.GetKeyUp(key))
         {
-            UnityEngine.Debug.LogError("keyUp " + key + " " + data.view.gameObject.name);     
+            UnityEngine.Debug.LogError("keyUp " + key + " " + netData.view.gameObject.name);     
         }
         if (status == SkillStatus.CanUse)
         {
-            if (data.Input.GetKeyDown(key))
+            if (netData.Input.GetKeyDown(key))
             {
 
                 StartUse();
@@ -162,20 +162,20 @@ public class SkillRuntime : ComponentBase
         }
         if (status == SkillStatus.UseStart)
         {
-            if (data.Input.GetKey(key))
+            if (netData.Input.GetKey(key))
             {
                 // UnityEngine.Debug.LogError("GetKey使用技能 ["+skillId+"] ");
                 StayUse();
 
             }
-            if (data.Input.GetKeyUp(key))
+            if (netData.Input.GetKeyUp(key))
             {
 
                 UseOver();
                 // UnityEngine.Debug.LogError("GetKeyUp使用技能 ["+skillId+"] ");
                 if (skillData.animTime > 0)
                 {
-                    (data as PlayerData).SetAnimTrigger("UseSkill");
+                    (netData as PlayerData).SetAnimTrigger("UseSkill");
                    
                 }
                
@@ -188,7 +188,7 @@ public class SkillRuntime : ComponentBase
         {
             if (timer > 0)
             {
-                timer -= data.deltaTime;
+                timer -= netData.deltaTime;
             }
             else
             {
@@ -202,7 +202,7 @@ public class SkillRuntime : ComponentBase
         {
             if (timer > 0)
             {
-                timer -= data.deltaTime;
+                timer -= netData.deltaTime;
             }
             else
             {
@@ -215,10 +215,10 @@ public class SkillRuntime : ComponentBase
     protected void ShootBullet(Fixed2 position, Fixed rotation)
     {
         Bullet bullet = new Bullet();
-        bullet.user = data;
-        bullet.Init(data.client);
+        bullet.user = netData;
+        bullet.Init(netData.client);
         bullet.Reset(position, rotation);
-        data.client.objectManager.Instantiate(bullet);
+        netData.client.objectManager.Instantiate(bullet);
     }
     public void RunNodes(List<SkillNode> nodes)
     {
@@ -231,7 +231,7 @@ public class SkillRuntime : ComponentBase
     {
         if (player == null)
         {
-            player = data as PlayerData;
+            player = netData as PlayerData;
         }
         // UnityEngine.Debug.Log("runNode ["+node.trigger+"] "+node.type);
         switch (node.type)
@@ -239,10 +239,10 @@ public class SkillRuntime : ComponentBase
             case SkillNodeType.RotatePlayer:
                 if (player != null)
                 {
-                    var rot = data.Input.GetJoyStickDirection(key);
+                    var rot = netData.Input.GetJoyStickDirection(key);
                     if (rot.magnitude < 0.1f)
                     {
-                        rot = data.transform.forward;
+                        rot = netData.transform.forward;
                     }
                     player.transform.Rotation = rot.ToRotation();
                 }
@@ -286,7 +286,7 @@ public class SkillRuntime : ComponentBase
                 new SkillCheck().Check(player, node.fixedParams[0], node.fixedParams[1] , node.fixedParams[2] , node);
                 break;
              case SkillNodeType.CreateBullet:
-                ShootBullet(data.transform.Position, data.transform.Rotation);
+                ShootBullet(netData.transform.Position, netData.transform.Rotation);
                 break;
             default: break;
         }
@@ -371,7 +371,7 @@ public class SkillEngine:ComponentBase
     }
     public void AddSkill(SkillRuntime skill)
     {
-        skill.InitNetData(this.data);
+        skill.InitNetData(this.netData);
      
         if (skillTable.ContainsKey(skill.key))
         {

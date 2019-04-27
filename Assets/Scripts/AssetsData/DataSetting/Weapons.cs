@@ -25,6 +25,7 @@ public class WeaponManager : DataManager<WeaponManager, WeaponData>
 public class WeaponData : IDataClass
 {
     public WeaponId weaponId;
+    public WeaponType weaponType;
     public SkillId defalutSkillId = SkillId.none;
     public List<Fixed> fixedParams = new List<Fixed>();
     public string Id
@@ -38,6 +39,7 @@ public class WeaponData : IDataClass
     public void Serialize(ByteProtocol protocol)
     {
         protocol.push((int)weaponId);
+        protocol.push((int)weaponType);
         protocol.push((int)defalutSkillId);
         protocol.push(fixedParams.Count);
         foreach (var b in fixedParams)
@@ -48,6 +50,7 @@ public class WeaponData : IDataClass
     public void Deserialize(ByteProtocol protocol)
     {
         weaponId = (WeaponId)protocol.getInt32();
+        weaponType = (WeaponType)protocol.getInt32();
         defalutSkillId = (SkillId)protocol.getInt32();
         var len = protocol.getInt32();
         fixedParams.Clear();

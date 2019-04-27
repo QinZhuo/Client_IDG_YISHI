@@ -18,7 +18,7 @@ using IDG ;
         public Fixed2 moveDir;
         public override void Init(){
             aiData=AiManager.Get(aiName);
-            player=data as PlayerData;
+            player=netData as PlayerData;
             vInput=new VirtulInput();
             player.Input=vInput;
         }

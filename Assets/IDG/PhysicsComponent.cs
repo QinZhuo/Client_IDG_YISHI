@@ -17,15 +17,15 @@ namespace IDG
         public List<NetData> collisonDatas=new List<NetData>();
         public void AddCollistionData(NetData other)
         {
-            //if (!collisonDatas.Contains(other))
+            if (!collisonDatas.Contains(other))
             {
                 collisonDatas.Add(other);
             }
         }
-        public void ClearCollistionData()
-        {
-            collisonDatas.Clear();
-        }
+        //public void ClearCollistionData()
+        //{
+        //    //collisonDatas.Clear();
+        //}
         public void Init(Action<NetData> enter,Action<NetData> stay, Action<NetData> exit){
             OnPhysicsCheckEnter=enter;
             OnPhysicsCheckStay=stay;
@@ -56,17 +56,18 @@ namespace IDG
             lastCollisonDatas.Clear();
             lastCollisonDatas.AddRange(collisonDatas);
 
+           
             //  collisonDatas = ShapPhysics.CheckAll(this);
 
-            //foreach (var tree in netdata.trees)
-            //{
-            //    if (tree.collisonInfo.active)
-            //    {
-            //        collisonDatas.Clear();
-            //        break;
-            //    }
-            //} 
-           
+            foreach (var tree in netdata.trees)
+            {
+                if (tree.collisonInfo.active)
+                {
+                    collisonDatas.Clear();
+                    break;
+                }
+            }
+
         }
 
         public bool CheckCollision(NetData a)

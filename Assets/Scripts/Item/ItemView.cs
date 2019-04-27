@@ -6,16 +6,16 @@ public class ItemView : NetObjectView<ItemData> {
     public new SpriteRenderer renderer;
     protected override void OnStart(){
         
-        if(data is SkillItem){
-            var skillItem=data as SkillItem;
+        if(netData is SkillItem){
+            var skillItem=netData as SkillItem;
             var skillAssets=  GameViewAssetManager.instance.skillAssets.Get(skillItem.skillId.ToString());
          
             renderer.sprite=skillAssets.uiIcon;
       
-        }else if(data is WeaponItem)
+        }else if(netData is WeaponItem)
         {
             renderer.gameObject.SetActive(false);
-            var weaponItem=data as WeaponItem;
+            var weaponItem=netData as WeaponItem;
             var weaponAssets= GameViewAssetManager.instance.weaponAssets.Get(weaponItem.weaponId.ToString());
             if(weaponAssets.ItemPrefab!=null){
                 var obj= Instantiate(weaponAssets.ItemPrefab,transform.position,Quaternion.identity);

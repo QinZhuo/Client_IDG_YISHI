@@ -17,7 +17,7 @@ namespace IDG
             obj.transform.parent = (client.unityClient as MonoBehaviour).gameObject.transform;
             obj.transform.localScale=data.transform.Scale.ToVector3(1);
             var view =obj.GetComponent<View>();
-            view.data = data;
+            view.netData = data;
             data.view = view;
 
           
@@ -40,7 +40,7 @@ namespace IDG
         public void Destory(View view) 
         {
             if (view == null) { Debug.Log("show is Null"); }
-            view.data.Destory();
+            view.netData.Destory();
             GameObject.Destroy(view.gameObject);
         }
         public GameObject GetPrefab(NetData data)

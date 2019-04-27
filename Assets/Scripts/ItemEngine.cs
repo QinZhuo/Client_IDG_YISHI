@@ -19,7 +19,7 @@ using IDG ;
         }
         public void PickUp(int i=0){
             if(canDropList.Count>i){
-                canDropList[i].PickUp(data);
+                canDropList[i].PickUp(netData);
                 canDropList.RemoveAt(i);
             }
         }

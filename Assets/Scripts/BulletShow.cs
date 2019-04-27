@@ -49,16 +49,19 @@ public class Bullet : NetData
 
         if (other.tag == "Player" && other != user)
         {
-            UnityEngine.Debug.Log("Stay触发Bullet！！！！");
-            //Destory<Bullet>(this.show);
+            if (other is HealthData && other != user)
+            {
+             //   UnityEngine.Debug.LogError("Stay触发Bullet！！！！");
+            }
+                //Destory<Bullet>(this.show);
 
         }
     }
     public override void OnPhysicsCheckEnter(NetData other)
     {
-        if (other.tag=="Player" && other != user)
+        if (other is HealthData && other != user)
         {
-            UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
+          //  UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
 
 
             (other as HealthData).GetHurt(new Fixed(10));

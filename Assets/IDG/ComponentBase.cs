@@ -7,7 +7,7 @@ namespace IDG
 {
     public  class ComponentBase 
     {
-        public NetData data;
+        public NetData netData;
         public ComponentBase()
         {
 
@@ -18,7 +18,7 @@ namespace IDG
         }
         public void InitNetData(NetData data)
         {
-            this.data = data;
+            this.netData = data;
             Init();
         }
         public virtual  void Update()

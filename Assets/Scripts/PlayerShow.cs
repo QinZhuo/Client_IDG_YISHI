@@ -14,7 +14,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
     PlayerData player;
     private void Start()
     {
-        hpManager = data.client.GetManager<HPManager>();
+        hpManager = netData.client.GetManager<HPManager>();
        
     }
     private void ChangeSkillAnim(SkillId id){
@@ -53,7 +53,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
     }
     //float last;
     protected override void OnStart(){
-        player = (data as PlayerData);
+        player = (netData as PlayerData);
         player.SetAnimTrigger=anim.SetTrigger;
         player.SetAnimFloat=anim.SetFloat;
         // data.ClientId = clientId;

@@ -5,13 +5,13 @@ namespace IDG
 {
     abstract public class View:MonoBehaviour
     {
-        private NetData _data;
-        public NetData data{
+        private NetData _netData;
+        public NetData netData{
             get{
-                return _data;
+                return _netData;
             }
             set{
-                _data=value;
+                _netData=value;
                 Init();
             }
         }
@@ -19,8 +19,8 @@ namespace IDG
 
         }
         public void Init(){
-            transform.position=data.transform.Position.ToVector3();
-            _data.OnStart=OnStart;
+            transform.position=netData.transform.Position.ToVector3();
+            _netData.OnStart=OnStart;
         }
         public virtual System.Type GetDataType()
         {
@@ -40,7 +40,7 @@ namespace IDG
         
         public T Data{
             get{
-                 return data as T;
+                 return netData as T;
             }
         }
       
@@ -65,10 +65,10 @@ namespace IDG
         /// <param name="timer">差值同步速度</param>
         protected void LerpNetPos(float timer)
         {
-            if (data == null) return;
+            if (netData == null) return;
          
-            transform.position = Vector3.Lerp(transform.position, data.transform.Position.ToVector3(), timer);
-            transform.rotation = Quaternion.Euler(0, -data.transform.Rotation.ToFloat(), 0);
+            transform.position = Vector3.Lerp(transform.position, netData.transform.Position.ToVector3(), timer);
+            transform.rotation = Quaternion.Euler(0, -netData.transform.Rotation.ToFloat(), 0);
             
         }
        
@@ -82,18 +82,18 @@ namespace IDG
         /// </summary>
         private void OnDrawGizmos()
         {
-            if (data==null||data.Shap == null||!showGizmo) return;
+            if (netData==null||netData.Shap == null||!showGizmo) return;
             Gizmos.color = Color.white;
            // Gizmos.DrawWireCube(data.Shap.position.ToVector3(), new Vector3(data.Width.ToFloat(), 0, data.Height.ToFloat()));
              Gizmos.color = Color.blue;
             int i;
-            for ( i = 0; i < data.Shap.PointsCount-1; i++)
+            for ( i = 0; i < netData.Shap.PointsCount-1; i++)
             {
-                Gizmos.DrawSphere((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(),0.1f);
-                  Gizmos.DrawLine((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(),(data.Shap.GetPoint(i+1) + data.transform.Position).ToVector3());
+                Gizmos.DrawSphere((netData.Shap.GetPoint(i) + netData.transform.Position).ToVector3(),0.1f);
+                  Gizmos.DrawLine((netData.Shap.GetPoint(i) + netData.transform.Position).ToVector3(),(netData.Shap.GetPoint(i+1) + netData.transform.Position).ToVector3());
             }
-            if(i<data.Shap.PointsCount)
-            Gizmos.DrawSphere((data.Shap.GetPoint(i) + data.transform.Position).ToVector3(),0.1f);
+            if(i<netData.Shap.PointsCount)
+            Gizmos.DrawSphere((netData.Shap.GetPoint(i) + netData.transform.Position).ToVector3(),0.1f);
         }
         
         //public void InitClient(){
@@ -210,10 +210,7 @@ namespace IDG
         }
         public virtual void OnPhysicsCheckEnter(NetData other)
         {
-            if (other.tag == "Bullet")
-            {
-                UnityEngine.Debug.LogError("Enter触发 tag[" + tag + "]" + GetHashCode()+" bullet contain"+other.rigibody.lastCollisonDatas.Contains(this)+" c "+ other.rigibody.collisonDatas.Contains(this));
-            }
+         
         }
         public virtual void OnPhysicsCheckExit(NetData other)
         {
