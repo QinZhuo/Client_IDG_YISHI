@@ -210,7 +210,10 @@ namespace IDG
         }
         public virtual void OnPhysicsCheckEnter(NetData other)
         {
-          //  UnityEngine.Debug.Log("Enter触发");
+            if (other.tag == "Bullet")
+            {
+                UnityEngine.Debug.LogError("Enter触发 tag[" + tag + "]" + GetHashCode()+" bullet contain"+other.rigibody.lastCollisonDatas.Contains(this)+" c "+ other.rigibody.collisonDatas.Contains(this));
+            }
         }
         public virtual void OnPhysicsCheckExit(NetData other)
         {

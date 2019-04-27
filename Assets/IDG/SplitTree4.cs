@@ -122,12 +122,25 @@ namespace IDG
             }
             for (int i = 0; i < count; i++)
             {
-                for (int j = i + 1; j < count; j++)
+                for (int j = 0; j < count; j++)
                 {
-                    if (objs[i] != objs[j]&&(objs[i].rigibody.useCheck||objs[j].rigibody.useCheck)&& ShapPhysics.Check(objs[i].Shap, objs[j].Shap))
+                    
+                    if (objs[i] != objs[j]&&(objs[i].rigibody.useCheck||objs[j].rigibody.useCheck))
                     {
-                        objs[i].rigibody.AddCollistionData(objs[j]);
-                        objs[j].rigibody.AddCollistionData(objs[i]);
+                       
+                        if (ShapPhysics.Check(objs[i].Shap, objs[j].Shap))
+                        {
+                            if (objs[i].tag == "Player" && objs[j].tag == "Bullet" )
+                            {
+                                Debug.LogError(objs[i].tag + "[" + objs[i].GetHashCode() + "]" );
+                            }
+                            else if(objs[j].tag == "Player" && objs[i].tag == "Bullet")
+                            {
+                                Debug.LogError(  objs[j].tag + "[" + objs[j].GetHashCode() + "]");
+                            }
+                            objs[i].rigibody.AddCollistionData(objs[j]);
+                            objs[j].rigibody.AddCollistionData(objs[i]);
+                        }
                     }
                 }
 
@@ -213,7 +226,14 @@ namespace IDG
             foreach (var item in obj.trees)
             {
                 item.collisonInfo.active = true;
-                activeTreeList.Add(item);
+                if (!activeTreeList.Contains(item)){
+                    activeTreeList.Add(item);
+                }
+                else
+                {
+                   // Debug.LogError("多余的激活树");
+                }
+               
             }
         }
         public static void Move(NetData obj)

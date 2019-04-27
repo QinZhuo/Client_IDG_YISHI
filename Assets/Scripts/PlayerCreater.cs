@@ -60,7 +60,7 @@ public class PlayerCreater : MonoBehaviour,IGameManager {
                 var Titem = new WeaponItem();
                 item=Titem;
                 Titem.Init(client);
-                Titem.weaponId=WeaponId.白刀;
+                Titem.weaponId=WeaponId.F57;
             }
          
             

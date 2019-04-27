@@ -77,8 +77,7 @@ public class ItemData : NetData
     {
         if (other.tag == "Player" && other != user)
         {
-            UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
-            
+      
             //var gun = new GunBase();
             //gun.Init(20, this);
             //(other as PlayerData).AddGun(gun);

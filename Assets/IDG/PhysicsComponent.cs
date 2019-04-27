@@ -13,11 +13,11 @@ namespace IDG
         public bool useCheck=false;
         public NetData netdata;
      
-        protected List<NetData> lastCollisonDatas = new List<NetData>();
-        protected List<NetData> collisonDatas=new List<NetData>();
+        public List<NetData> lastCollisonDatas = new List<NetData>();
+        public List<NetData> collisonDatas=new List<NetData>();
         public void AddCollistionData(NetData other)
         {
-            if (!collisonDatas.Contains(other))
+            //if (!collisonDatas.Contains(other))
             {
                 collisonDatas.Add(other);
             }

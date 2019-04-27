@@ -11,6 +11,29 @@ public enum SkillId:Int32
     拳击左上勾=102,
     拳击右上勾=103,
     swordAttack=104,
+    全自动开火=105,
+}
+public enum SkillTrigger : Int32
+{
+    root = 0,
+    PressStart = 1,
+    PressStay = 2,
+    PressOver = 3,
+    AnimOver = 4,
+    Time = 5,
+    Check = 6,
+}
+public enum SkillNodeType : Int32
+{
+    Root = 0,
+    RotatePlayer = 1,
+    MoveCtr = 2,
+    WaitTime = 3,
+    LoopTime = 4,
+    CreatCheck = 5,
+    Damage = 6,
+    CreateBullet=7,
+    StopLoop=8,
 }
 public class SkillManager:DataManager<SkillManager,SkillData>{
 
@@ -26,26 +49,7 @@ public class SkillManager:DataManager<SkillManager,SkillData>{
 
 }
 
-public enum SkillTrigger:Int32
-{
-    root=0,
-    PressStart=1,
-    PressStay=2,
-    PressOver=3,
-    AnimOver=4,
-    Time=5,
-    Check=6,
-}
-public enum SkillNodeType:Int32
-{
-    Root=0,
-    RotatePlayer=1,
-    MoveCtr=2,
-    WaitTime=3,
-    LoopTime=4,
-    CreatCheck=5,
-    Damage=6,
-}
+
 [System.Serializable]
 public class SkillData:SkillNode,IDataClass{
     public SkillId skillId;
@@ -85,7 +89,7 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
     public SkillNodeType type=SkillNodeType.Root;
     public List<SkillNode> nextNodes=new List<SkillNode>();
     public List<bool> boolParams=new List<bool>(); 
-    public List<int> intParams=new List<int>(); 
+    public List<Fixed> fixedParams=new List<Fixed>(); 
     public List<SkillNode> childNodes{
         get{
             return nextNodes;
@@ -116,8 +120,8 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
         {
             protocol.push(b);
         }
-        protocol.push(intParams.Count);
-        foreach (var b in intParams)
+        protocol.push(fixedParams.Count);
+        foreach (var b in fixedParams)
         {
             protocol.push(b);
         }
@@ -142,10 +146,10 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
             boolParams.Add(protocol.getBoolean());
         }
         len=protocol.getInt32();
-        intParams.Clear();
+        fixedParams.Clear();
         for (int i = 0; i < len; i++)
         {
-            intParams.Add(protocol.getInt32());
+            fixedParams.Add(protocol.getRatio());
         }
     }
 }
@@ -174,9 +178,9 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //     public override void UseOver()
 //     {
 //         base.UseOver();
-        
+
 //     }
-  
+
 // }
 // class Skill_Box:Skill_CloseCombat{
 //     public override void Init(){
@@ -190,17 +194,17 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //     public override void Init()
 //     {
 //         key = KeyNum.Skill1;
-        
+
 //         time = new Fixed(0.7f);
 //         timer = new Fixed(0);
 //         overTime=0.5f.ToFixed();
-     
+
 //     }
-  
+
 //     public override void StayUse()
 //     {
-       
-             
+
+
 //        if(player!=null){
 //             rot=data.Input.GetJoyStickDirection(key);
 //             if(rot.magnitude<0.1f){
@@ -212,22 +216,22 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //     public override void UseOver()
 //     {
 //         base.UseOver();
-       
+
 //        // UnityEngine.Debug.LogError("bulletUse" + data.Input.GetJoyStickDirection(key).ToRotation());
 //         for (int i = -30; i <= 30; i += 5)
 //         {
 //             ShootBullet(data.transform.Position+data.transform.forward,rot.ToRotation() + i);
 //         }
 //     }
-//     protected void ShootBullet(Fixed2 position, Fixed rotation)
-//     {
-//         Bullet bullet = new Bullet();
-//         bullet.user = data;
-//         bullet.Init(data.client);
-//         bullet.Reset( position, rotation);
-//         data.client.objectManager.Instantiate(bullet);
-//       //  UnityEngine.Debug.LogError("bullet" + rotation);
-//     }
+//protected void ShootBullet(Fixed2 position, Fixed rotation)
+//{
+//    Bullet bullet = new Bullet();
+//    bullet.user = data;
+//    bullet.Init(data.client);
+//    bullet.Reset(position, rotation);
+//    data.client.objectManager.Instantiate(bullet);
+//    //  UnityEngine.Debug.LogError("bullet" + rotation);
+//}
 // }
 
 
@@ -242,13 +246,13 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //         time = new Fixed(0.7f);
 //         timer = new Fixed(0);
 //         overTime=0.5f.ToFixed();
-     
+
 //     }
-  
+
 //     public override void StayUse()
 //     {
-       
-             
+
+
 //        if(player!=null){
 //             rot=data.Input.GetJoyStickDirection(key);
 //             if(rot.magnitude<0.1f){
@@ -260,7 +264,7 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //     public override void UseOver()
 //     {
 //         base.UseOver();
-       
+
 //        // UnityEngine.Debug.LogError("bulletUse" + data.Input.GetJoyStickDirection(key).ToRotation());
 //         for (int i = -30; i <= 30; i += 5)
 //         {
@@ -274,7 +278,7 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //         bullet.Init(data.client);
 //         bullet.Reset( position, rotation);
 //         data.client.objectManager.Instantiate(bullet);
-  
+
 //     }
 // }
 // class SkillRay:SkillBase{
@@ -288,17 +292,17 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //         gun = new GunBase();
 //         ray = new RayShap(Fixed2.zero);
 //         gun.Init(20, data);
-    
+
 //     }
-   
-    
-   
+
+
+
 //     public override void StayUse()
 //     {
 //         var rot=data.Input.GetJoyStickDirection(key);
 //         //if(gun!=null) gun.Fire(data,rot.ToRotation() );  
 //         ShootBullet(data.transform.Position, rot);
-     
+
 //     }
 //     protected void ShootBullet(Fixed2 position, Fixed2 direction)
 //     {
@@ -319,7 +323,7 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //         //bullet.Init(data .client);
 //         //bullet.Reset(position, rotation);
 //         //data.client.objectManager.Instantiate(bullet);
-     
+
 //     }
 // }
 // class SkillGun:SkillBase
@@ -335,25 +339,25 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //         ray = new RayShap(Fixed2.zero);
 //         overTime=1.ToFixed();
 //         gun.Init(20, data);
-    
+
 //     }
 //     public override void UseOver()
 //     {
 //         base.UseOver();
-     
-    
+
+
 //     }
 //     public override void StayUse()
 //     {
 //         var rot=data.Input.GetJoyStickDirection(key);
 //         if(gun!=null) gun.Fire(data,rot.ToRotation() );  
-     
+
 //        if(player!=null){
 //         player.transform.Rotation=rot.ToRotation();
 //        }
 //     }
 
-    
+
 //     protected void ShootBullet(Fixed2 position, Fixed2 direction)
 //     {
 //        // UnityEngine.Debug.DrawRay(position.ToVector3(), direction.ToVector3()*10, UnityEngine.Color.red,0.1f);
@@ -373,6 +377,6 @@ public class SkillNode:ITreeNode<SkillNode>,ISerializable{
 //         //bullet.Init(data .client);
 //         //bullet.Reset(position, rotation);
 //         //data.client.objectManager.Instantiate(bullet);
-     
+
 //     }
 // }

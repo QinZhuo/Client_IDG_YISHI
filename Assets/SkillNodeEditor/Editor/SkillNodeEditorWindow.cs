@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using IDG;
 
 public class SkillNodeView:NodeView<SkillNode>
 {
@@ -24,10 +24,11 @@ public class SkillNodeView:NodeView<SkillNode>
 		}
 		ViewLayout.EndH();
 
-		ViewLayout.BeginH();
-		for (int i = 0; i < dataNode.intParams.Count; i++)
+
+        ViewLayout.BeginH();
+		for (int i = 0; i < dataNode.fixedParams.Count; i++)
 		{
-			dataNode.intParams[i]=EditorGUI.IntField(NodeRect.LayoutH(30,15),dataNode.intParams[i]);
+			dataNode.fixedParams[i]= EditorGUI.FloatField( NodeRect.LayoutH(30,15), dataNode.fixedParams[i].ToFloat()).ToFixed();
 		}
 		ViewLayout.EndH();
 	}
@@ -120,11 +121,11 @@ public class SkillNodeEditorWindow : NodeEditorWindow<SkillNodeView,SkillNode> {
 		
 	}
 	protected void AddInt(){
-		curSkillNode.intParams.Add(0);
+		curSkillNode.fixedParams.Add(0.ToFixed());
 	}
 	protected void RemoveInt(){
-		if(curSkillNode.intParams.Count>0){
-			curSkillNode.intParams.RemoveAt(curSkillNode.intParams.Count-1);
+		if(curSkillNode.fixedParams.Count>0){
+			curSkillNode.fixedParams.RemoveAt(curSkillNode.fixedParams.Count-1);
 		}
 		
 	}

@@ -14,6 +14,8 @@ MonoBehaviour:
   assets:
   - data:
       weaponId: 0
+      defalutSkillId: 104
+      fixedParams: []
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
@@ -23,6 +25,8 @@ MonoBehaviour:
       type: 2}
   - data:
       weaponId: 1
+      defalutSkillId: -1
+      fixedParams: []
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
@@ -31,9 +35,22 @@ MonoBehaviour:
     ItemPrefab: {fileID: 0}
   - data:
       weaponId: 2
+      defalutSkillId: -1
+      fixedParams: []
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
     idleAnim: {fileID: 7400000, guid: 854c497d2e79725419ab4dacad400815, type: 3}
     animation: {fileID: 7400000, guid: 032ded14aace03649a5de35da5936bbd, type: 3}
     ItemPrefab: {fileID: 0}
+  - data:
+      weaponId: 3
+      defalutSkillId: 105
+      fixedParams: []
+    Weaponname: 
+    WeaponInfo: 
+    uiIcon: {fileID: 0}
+    idleAnim: {fileID: 7400000, guid: 8e9e02a5da4cbcc4aa543d4cf77ec344, type: 3}
+    animation: {fileID: 7400000, guid: 032ded14aace03649a5de35da5936bbd, type: 3}
+    ItemPrefab: {fileID: 1570664041207860, guid: 1db9e34449bf67344bcf62505716e138,
+      type: 2}

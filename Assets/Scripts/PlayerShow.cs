@@ -18,7 +18,7 @@ public class PlayerShow : NetObjectView<PlayerData> {
        
     }
     private void ChangeSkillAnim(SkillId id){
-        var animation=GameViewAssetManager.instance.skillAssets.Get(id.ToString()).animation;
+        var animation=GameViewAssetManager.instance.skillAssets.Get(id.ToString()).useOverAnim;
         ChangeAnim("Skill",animation);
       //  Debug.LogError("更改动画 "+animation.name);
     }
@@ -166,8 +166,8 @@ public class PlayerData: HealthData
 {
     public Fixed move_speed = new Fixed(3);
     public Fixed2 move_dir { get; private set; }
-    public SkillAction skillList;
-    public WeaponSystem weaponSystem;
+    public SkillEngine skillList;
+    public WeaponEngine weaponSystem;
    // public AnimStatus status;
     public System.Action<bool> animRootMotion;
     public System.Action<string> SetAnimTrigger;
@@ -191,10 +191,11 @@ public class PlayerData: HealthData
     {
         
         this.tag = "Player";
-        skillList= AddCommponent<SkillAction>();
-        weaponSystem= AddCommponent<WeaponSystem>();
+        skillList= AddCommponent<SkillEngine>();
+        weaponSystem= AddCommponent<WeaponEngine>();
         Shap = new CircleShap(new Fixed(0.25f), 8);
         rigibody.useCheck=true;
+        rigibody.useCheckCallBack = true;
         CanMove=true;
         if (IsLocalPlayer)
         {

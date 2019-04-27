@@ -41,8 +41,8 @@ public class WaitForSeconds:IWait
 }
 public class CoroutineManager
 {
-    public void WaitCall(Fixed waitTime,Action func,bool loop=false){
-        StartCoroutine(WaitCallIE(waitTime,func,loop));
+    public IEnumerator WaitCall(Fixed waitTime,Action func,bool loop=false){
+        return StartCoroutine(WaitCallIE(waitTime,func,loop));
     }
     protected System.Collections.IEnumerator WaitCallIE(Fixed waitTime,Action func,bool loop=false){
         do

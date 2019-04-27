@@ -39,7 +39,7 @@ namespace IDG
         /// </summary>
         public static Fixed Zero = new Fixed(0);
         //public static Fixed one=new Fixed(1);
-        internal Int64 m_Bits;
+        public Int64 m_Bits;
 
         public Fixed(int x)
         {
@@ -224,7 +224,7 @@ namespace IDG
             Fixed tmp;
             if (p2 == Fixed.Zero)
             {
-                UnityEngine.Debug.LogError("/0");
+                UnityEngine.Debug.LogWarning("/0");
                 tmp.m_Bits = Zero.m_Bits;
             }
             else

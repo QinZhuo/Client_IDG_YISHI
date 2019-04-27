@@ -8,6 +8,8 @@ public enum WeaponId
     白刀,
     无战斗,
     拳击战斗,
+    F57,
+    F41,
 }
 
 
@@ -23,7 +25,8 @@ public class WeaponManager : DataManager<WeaponManager, WeaponData>
 public class WeaponData : IDataClass
 {
     public WeaponId weaponId;
-
+    public SkillId defalutSkillId = SkillId.none;
+    public List<Fixed> fixedParams = new List<Fixed>();
     public string Id
     {
         get
@@ -35,10 +38,22 @@ public class WeaponData : IDataClass
     public void Serialize(ByteProtocol protocol)
     {
         protocol.push((int)weaponId);
-
+        protocol.push((int)defalutSkillId);
+        protocol.push(fixedParams.Count);
+        foreach (var b in fixedParams)
+        {
+            protocol.push(b);
+        }
     }
     public void Deserialize(ByteProtocol protocol)
     {
         weaponId = (WeaponId)protocol.getInt32();
+        defalutSkillId = (SkillId)protocol.getInt32();
+        var len = protocol.getInt32();
+        fixedParams.Clear();
+        for (int i = 0; i < len; i++)
+        {
+            fixedParams.Add(protocol.getRatio());
+        }
     }
 }

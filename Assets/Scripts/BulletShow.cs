@@ -22,7 +22,9 @@ public class Bullet : NetData
     public Fixed startTime;
     public override void Init(FSClient  client,int clientId=-1)
     {
+      
         base.Init(client,clientId);
+        tag = "Bullet";
         rigibody.useCheckCallBack = true;
         isTrigger = true;
         startTime = client.inputCenter.Time;
@@ -49,20 +51,24 @@ public class Bullet : NetData
         {
             UnityEngine.Debug.Log("Stay触发Bullet！！！！");
             //Destory<Bullet>(this.show);
+
         }
     }
     public override void OnPhysicsCheckEnter(NetData other)
     {
-        if (other is HealthData && other != user)
+        if (other.tag=="Player" && other != user)
         {
-            UnityEngine.Debug.Log("Enter触发Bullet！！！！");
-            
+            UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
+
+
             (other as HealthData).GetHurt(new Fixed(10));
+            if (!(other.isTrigger))
+            {
+                client.objectManager.Destory(this.view);
+                UnityEngine.Debug.Log("destoy Bullet");
+            }
         }
-        if(!(other is Bullet)){
-             client.objectManager.Destory(this.view);
-              UnityEngine.Debug.Log("destoy Bullet");
-        }
+       
     }
     public override void OnPhysicsCheckExit(NetData other)
     {
