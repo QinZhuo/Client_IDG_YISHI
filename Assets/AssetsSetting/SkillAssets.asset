@@ -188,24 +188,11 @@ MonoBehaviour:
         nextNodes: []
         boolParams: 01
         fixedParams: []
-      - trigger: 1
-        type: 4
-        nextNodes:
-        - trigger: 5
-          type: 7
-          nextNodes: []
-          boolParams: 
-          fixedParams: []
-        boolParams: 
-        fixedParams:
-        - m_Bits: 65536
-        - m_Bits: 3276
-      - trigger: 3
-        type: 8
+      - trigger: 2
+        type: 9
         nextNodes: []
         boolParams: 
-        fixedParams:
-        - m_Bits: 65536
+        fixedParams: []
       boolParams: 
       fixedParams: []
       skillId: 105

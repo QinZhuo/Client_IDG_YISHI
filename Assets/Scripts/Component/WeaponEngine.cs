@@ -30,21 +30,21 @@ public class Gun : WeaponRuntime
     {
         get
         {
-            return weaponData.fixedParams[0];
+            return weaponData.fixedParams["shootRate"];
         }
     }
     public Fixed rotRange
     {
         get
         {
-            return weaponData.fixedParams[1];
+            return weaponData.fixedParams["rotRange"];
         }
     }
     public void Fire()
     {
         if (time - laskFireTime > shootRate)
         {
-            ShootBullet(netData.transform.Position, netData.transform.Rotation + netData.client.random.Range(rotRange.ToInt()));
+            ShootBullet(netData.transform.Position, netData.transform.Rotation + netData.client.random.Range(-rotRange.ToInt(), rotRange.ToInt()));
             laskFireTime = time;
         }
     }
@@ -58,6 +58,7 @@ public class Gun : WeaponRuntime
         netData.client.objectManager.Instantiate(bullet);
     }
 }
+
 public class WeaponRuntime:ComponentBase
 {
     public WeaponId weaponId
@@ -67,7 +68,24 @@ public class WeaponRuntime:ComponentBase
             return weaponData.weaponId;
         }
     }
-  
+
+    protected WeaponRuntime()
+    {
+    }
+    public static WeaponRuntime Parse(WeaponData weaponData)
+    {
+        WeaponRuntime runtime;
+        if (weaponData.weaponType == WeaponType.枪)
+        {
+            runtime = new Gun();
+        }
+        else
+        {
+            runtime = new WeaponRuntime();
+        }
+        runtime.weaponData = weaponData;
+        return runtime;
+    }
     public SkillId defalutSkillId { get { return weaponData.defalutSkillId; } }
     public WeaponStatus status=WeaponStatus.none;
     public WeaponData weaponData;
@@ -76,21 +94,35 @@ public class WeaponRuntime:ComponentBase
 
 public class WeaponEngine:ComponentBase 
 {
-    public List<WeaponRuntime> weaponList;
+    protected List<WeaponRuntime> weaponList;
     public Action<WeaponId> changeWeapon;
-    public int currentId;
+    protected int currentId;
+    public T curWeapon<T>() where T: WeaponRuntime
+    {
+        
+        if(currentId < weaponList.Count)
+        {
+            return weaponList[currentId] as T;
+        }
+        else
+        {
+            return null;
+        }
+       
+        
+    }
     public override void Init()
     {
         weaponList=new List<WeaponRuntime>();
+        currentId =-1;
     }
     public void AddWeapon(WeaponId weaponId){
-        var weapon = new WeaponRuntime();
-        weapon.weaponData = WeaponManager.Get(weaponId.ToString());
-        AddWeapon(weapon);
+        AddWeapon(WeaponRuntime.Parse(WeaponManager.Get(weaponId.ToString())));
     }
     public void AddWeapon(WeaponRuntime weapon)
     {
        weaponList.Add(weapon);
+       currentId++;
        weapon.InitNetData(netData);
        changeWeapon(weapon.weaponId);
        (netData as PlayerData).skillList.AddSkill(weapon.defalutSkillId);

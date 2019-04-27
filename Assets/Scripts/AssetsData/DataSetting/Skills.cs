@@ -34,6 +34,7 @@ public enum SkillNodeType : Int32
     Damage = 6,
     CreateBullet=7,
     StopLoop=8,
+    GunFire=9,
 }
 public class SkillManager:DataManager<SkillManager,SkillData>{
 

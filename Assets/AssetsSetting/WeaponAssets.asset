@@ -14,8 +14,10 @@ MonoBehaviour:
   assets:
   - data:
       weaponId: 0
+      weaponType: 1
       defalutSkillId: 104
-      fixedParams: []
+      fixedParams:
+        dic: []
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
@@ -25,8 +27,10 @@ MonoBehaviour:
       type: 2}
   - data:
       weaponId: 1
+      weaponType: 0
       defalutSkillId: -1
-      fixedParams: []
+      fixedParams:
+        dic: []
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
@@ -35,8 +39,10 @@ MonoBehaviour:
     ItemPrefab: {fileID: 0}
   - data:
       weaponId: 2
+      weaponType: 0
       defalutSkillId: -1
-      fixedParams: []
+      fixedParams:
+        dic: []
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
@@ -45,8 +51,19 @@ MonoBehaviour:
     ItemPrefab: {fileID: 0}
   - data:
       weaponId: 3
+      weaponType: 3
       defalutSkillId: 105
-      fixedParams: []
+      fixedParams:
+        dic:
+        - key: shootRate
+          value:
+            m_Bits: 13107
+        - key: rotRange
+          value:
+            m_Bits: 1310720
+        - key: mainDamage
+          value:
+            m_Bits: 1638400
     Weaponname: 
     WeaponInfo: 
     uiIcon: {fileID: 0}
