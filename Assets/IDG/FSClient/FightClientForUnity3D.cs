@@ -14,6 +14,7 @@ public class FightClientForUnity3D : MonoBehaviour {
     public string serverIp;
     //public static FightClientForUnity3D instance;
     public List<JoyStick> joySticks;
+    public List<NetButton> netButtons;
     public Camera mainCamera;
 
     
@@ -25,6 +26,8 @@ public class FightClientForUnity3D : MonoBehaviour {
     void Awake () {
         joySticks=new List<JoyStick>();
         joySticks.AddRange(GetComponentsInChildren<JoyStick>());
+        netButtons = new List<NetButton>();
+        netButtons.AddRange(GetComponentsInChildren<NetButton>());
         client = new FSClient();
    
         client.unityClient = this;
@@ -86,10 +89,12 @@ public class FightClientForUnity3D : MonoBehaviour {
         // {
         //     key |= IDG.KeyNum.Attack;
         // }
-       // InputCenter.Instance.
-        client.inputCenter.SetKey(Input.GetKey(KeyCode.J),KeyNum.Attack);
-
-
+        // InputCenter.Instance.
+        //  client.inputCenter.SetKey(Input.GetKey(KeyCode.J),KeyNum.Attack);
+        foreach (var btn in netButtons)
+        {
+            client.inputCenter.SetKey(btn.isDown, btn.key);
+        }
         foreach (var joy in joySticks)
         {
               client.inputCenter.SetJoyStick(joy.key,joy.GetInfo());

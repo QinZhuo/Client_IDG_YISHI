@@ -7,7 +7,7 @@ public class HPManager : MonoBehaviour, IGameManager
     public Camera mainCam;
     public GameObject hpViewPrefab;
 
-    public Stack<HpView> viewPool;
+    public Stack<HpView> viewPool =new Stack<HpView>();
    
     int IGameManager.InitLayer
     {
@@ -24,7 +24,7 @@ public class HPManager : MonoBehaviour, IGameManager
     }
     public void Recover(HpView view)
     {
-        viewPool.Push(view.PoolRecover());
+        if(viewPool!=null&&view!=null) viewPool.Push(view.PoolRecover());
     }
 
     public HpView GetView()

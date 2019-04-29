@@ -31,7 +31,7 @@ namespace IDG
     /// 网络物体显示类（需要渲染模型的物体的显示类）
     /// </summary>
     /// <typeparam name="T">该物体对应的数据类实现</typeparam>
-    abstract public class NetObjectView<T> : View where T:NetData,new()
+    abstract public class NetObjectView<T> : View where T:NetData
     {
         public bool showGizmo=true;
         // /// <summary>

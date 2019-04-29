@@ -40,18 +40,28 @@ public class Gun : WeaponRuntime
             return weaponData.fixedParams["rotRange"];
         }
     }
-    public void Fire()
+    public Fixed mainDamage
+    {
+        get
+        {
+            return weaponData.fixedParams["mainDamage"];
+        }
+    }
+    public void Fire(SkillNode skinode,ISkillNodeRun run)
     {
         if (time - laskFireTime > shootRate)
         {
-            ShootBullet(netData.transform.Position, netData.transform.Rotation + netData.client.random.Range(-rotRange.ToInt(), rotRange.ToInt()));
+            ShootBullet(netData.transform.Position, netData.transform.Rotation + netData.client.random.Range(-rotRange.ToInt(), rotRange.ToInt()), skinode, run);
             laskFireTime = time;
         }
     }
 
-    protected void ShootBullet(Fixed2 position, Fixed rotation)
+    protected void ShootBullet(Fixed2 position, Fixed rotation,SkillNode skillnode,ISkillNodeRun run)
     {
         Bullet bullet = new Bullet();
+      
+        bullet.skillNode = skillnode;
+        bullet.skill = run.skill;
         bullet.user = netData;
         bullet.Init(netData.client);
         bullet.Reset(position, rotation);

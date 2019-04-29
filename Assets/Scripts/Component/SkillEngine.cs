@@ -6,9 +6,7 @@ using System.Text;
 using IDG;
 public interface ISkillNodeRun
 {
-    PlayerData player { get; }
-    KeyNum key { get; }
-    List<NetData> others { get; }
+    SkillRuntime skill { get; set; }
 }
 public static class SkillNodeRun
 {
@@ -20,6 +18,7 @@ public static class SkillNodeRun
         bullet.Reset(position, rotation);
         netData.client.objectManager.Instantiate(bullet);
     }
+ 
     public static void SetTrigger(this SkillNode node, SkillTrigger trigger,ISkillNodeRun run)
     {
         RunNodes(run, node.GetNodes(trigger));
@@ -37,31 +36,31 @@ public static class SkillNodeRun
         switch (node.type)
         {
             case SkillNodeType.RotatePlayer:
-                if (run.player != null)
+                if (run.skill.player != null)
                 {
-                    var rot = run.player.Input.GetJoyStickDirection(run.key);
+                    var rot = run.skill.player.Input.GetJoyStickDirection(run.skill.key);
                     if (rot.magnitude < 0.1f)
                     {
-                        rot = run.player.transform.forward;
+                        rot = run.skill.player.transform.forward;
                     }
-                    run.player.transform.Rotation = rot.ToRotation();
+                    run.skill.player.transform.Rotation = rot.ToRotation();
                 }
                 break;
             case SkillNodeType.MoveCtr:
                 if (node.boolParams[0])
                 {
-                    run.player.CanMove = true;
-                    run.player.animRootMotion(false);
+                    run.skill.player.CanMove = true;
+                    run.skill.player.animRootMotion(false);
                 }
                 else
                 {
-                    run.player.CanMove = false;
-                    run.player.animRootMotion(true);
+                    run.skill.player.CanMove = false;
+                    run.skill.player.animRootMotion(true);
                 }
                 break;
             case SkillNodeType.WaitTime:
 
-                run.player.client.coroutine.WaitCall(node.fixedParams[0],
+                run.skill.player.client.coroutine.WaitCall(node.fixedParams[0],
                     () =>
                     {
                         RunNodes(run,node.GetNodes(SkillTrigger.Time));
@@ -78,14 +77,15 @@ public static class SkillNodeRun
                 //times.Add(node.fixedParams[0], c);
                 break;
             case SkillNodeType.Damage:
-                foreach (var other in run.others)
+                foreach (var other in run.skill.others)
                 {
                     if (other is HealthData)
                     {
-                        if (other != run.player)
+                        if (other != run.skill.player)
                         {
                             var enemy = other as HealthData;
-                            enemy.GetHurt(node.fixedParams[0]);
+                            Debug.LogError("damage " + run.skill.weapon.weaponData.fixedParams["mainDamage"]);
+                            enemy.GetHurt(node.fixedParams[0]+run.skill.weapon.weaponData.fixedParams["mainDamage"]);
                         }
                     }
                 }
@@ -95,14 +95,15 @@ public static class SkillNodeRun
                 //times.Remove(node.fixedParams[0]);
                 break;
             case SkillNodeType.GunFire:
-                run.player.weaponSystem.curWeapon<Gun>().Fire();
+                run.skill.player.weaponSystem.curWeapon<Gun>().Fire(node, run);
                 break;
             case SkillNodeType.CreatCheck:
-
-                new SkillCheck().Check(run. player, node.fixedParams[0], node.fixedParams[1], node.fixedParams[2], node);
+                var check = new SkillCheck();
+                check.skill = run.skill;
+                check.Check(run.skill.player, node.fixedParams[0], node.fixedParams[1], node.fixedParams[2], node);
                 break;
             case SkillNodeType.CreateBullet:
-                ShootBullet(run.player,run.player.transform.Position, run.player.transform.Rotation);
+                ShootBullet(run.skill.player,run.skill.player.transform.Position, run.skill.player.transform.Rotation);
                 break;
             default: break;
         }
@@ -112,29 +113,18 @@ public class SkillCheck:ISkillNodeRun{
     
     PlayerData player;
     SkillNode node;
-    List<NetData> others;
 
-    PlayerData ISkillNodeRun.player
+    SkillRuntime _skill;
+    public SkillRuntime skill
     {
         get
         {
-            return player;
+            return _skill;
         }
-    }
 
-    public KeyNum key
-    {
-        get
+        set
         {
-            return KeyNum.Skill1;
-        }
-    }
-
-    List<NetData> ISkillNodeRun.others
-    {
-        get
-        {
-            return others;
+            _skill = value;
         }
     }
 
@@ -143,7 +133,8 @@ public class SkillCheck:ISkillNodeRun{
         this.player=player;
 		var shap= new BoxShap(height,width,player.transform.forward*forwardOffset+player.transform.Position,player.transform.Rotation);
         var otherList= player.client.physics.OverlapShap(shap);
-        others=otherList;
+        skill.others = otherList;
+       
         if(otherList.Count>0){
            // UnityEngine.Debug.LogError("碰撞数 "+otherList.Count  );
             foreach (var other in otherList)
@@ -201,9 +192,14 @@ public class SkillRuntime : ComponentBase,ISkillNodeRun
         this.skillData = skillData;
        
     }
+    public List<NetData> _others=new List<NetData>();
     public List<NetData> others
     {
-        get { return null; }
+        get {  return _others; }
+        set
+        {
+            _others = value;
+        }
     }
     public Dictionary<Fixed, IEnumerator> times=new Dictionary<Fixed, IEnumerator>();
     public SkillStatus status = SkillStatus.CanUse;
@@ -233,8 +229,21 @@ public class SkillRuntime : ComponentBase,ISkillNodeRun
         }
     }
 
+    public SkillRuntime skill
+    {
+        get
+        {
+            return this;
+        }
+        set
+        {
+            
+        }
+    }
+    public WeaponRuntime weapon;
     public void StartUse()
     {
+        weapon = player.weaponSystem.curWeapon<WeaponRuntime>();
         skillData.SetTrigger(SkillTrigger.PressStart, this);
         
 

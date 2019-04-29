@@ -16,10 +16,25 @@ public class BulletShow : NetObjectView<Bullet> {
 
     //}
 }
-public class Bullet : NetData
+public class Bullet : NetData,ISkillNodeRun
 {
     public NetData user;
     public Fixed startTime;
+    public SkillRuntime _skill;
+    public SkillNode skillNode;
+    public SkillRuntime skill
+    {
+        get
+        {
+            return _skill;
+        }
+
+        set
+        {
+            _skill = value;
+        }
+    }
+   
     public override void Init(FSClient  client,int clientId=-1)
     {
       
@@ -61,10 +76,12 @@ public class Bullet : NetData
     {
         if (other is HealthData && other != user)
         {
-          //  UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
-
-
-            (other as HealthData).GetHurt(new Fixed(10));
+            //  UnityEngine.Debug.LogError("Enter触发Bullet！！！！");
+            skill.others.Clear();
+            skill.others.Add(other);
+            skillNode.SetTrigger(SkillTrigger.Check, this);
+           
+            //(other as HealthData).GetHurt(new Fixed(10));
             if (!(other.isTrigger))
             {
                 client.objectManager.Destory(this.view);
