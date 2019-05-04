@@ -14,7 +14,7 @@ public class SkillAssets : AssetsDataManager<SkillAssetsData,SkillData>
     public void Compute(){
         for (int i = 0; i < assets.Count; i++)
         {
-            assets[i].data.animTime=assets[i].useOverAnim!=null? assets[i].useOverAnim.length.ToFixed():0.ToFixed();
+            assets[i].data.animTime=assets[i].useOverAnim!=null?( assets[i].useOverAnim.length.ToFixed()*(1 / assets[i].useOverAnimSspeed)):0.ToFixed();
         }
     }
 
@@ -37,6 +37,7 @@ public class SkillAssetsData:AssetsData<SkillData>{
     public string skillInfo;
     public Sprite uiIcon;
     public AnimationClip useOverAnim;
+    public float useOverAnimSspeed=1;
     public GameObject ItemPrefab;
    
     public override void Serialize(ByteProtocol protocol)
@@ -45,6 +46,7 @@ public class SkillAssetsData:AssetsData<SkillData>{
         protocol.push(skillInfo);
         protocol.push(ObjToId(uiIcon));
         protocol.push(ObjToId(useOverAnim));
+        protocol.push(useOverAnimSspeed.ToFixed());
         protocol.push(ObjToId(ItemPrefab));
         
     }
@@ -54,6 +56,7 @@ public class SkillAssetsData:AssetsData<SkillData>{
         skillInfo = protocol.getString();
         uiIcon = IdToObj<Sprite>(protocol.getInt32());
         useOverAnim = IdToObj<AnimationClip>(protocol.getInt32());
+        useOverAnimSspeed= protocol.getRatio().ToFloat();
         ItemPrefab = IdToObj<GameObject>(protocol.getInt32());
        
     }

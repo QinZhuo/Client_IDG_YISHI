@@ -84,8 +84,12 @@ public static class SkillNodeRun
                         if (other != run.skill.player)
                         {
                             var enemy = other as HealthData;
-                            Debug.LogError("damage " + run.skill.weapon.weaponData.fixedParams["mainDamage"]);
-                            enemy.GetHurt(node.fixedParams[0]+run.skill.weapon.weaponData.fixedParams["mainDamage"]);
+                            //Debug.LogError("damage " + run.skill.weapon.weaponData.fixedParams["mainDamage"]);
+                            if(run.skill.player.client.GetManager<TeamManager>().IsEnemy(enemy, run.skill.player))
+                            {
+                                enemy.GetHurt(node.fixedParams[0] + run.skill.weapon.weaponData.fixedParams["mainDamage"]);
+                            }
+                            
                         }
                     }
                 }

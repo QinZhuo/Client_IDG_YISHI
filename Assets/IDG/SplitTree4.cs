@@ -83,7 +83,7 @@ namespace IDG
            {
                 for (int i = 0; i < tree.objs.Count; i++)
                 {
-                    if (ShapPhysics.Check(shap, tree.objs[i].Shap)){
+                    if (!tree.objs[i].isTrigger&& ShapPhysics.Check(shap, tree.objs[i].Shap)){
                         //当物体处于四叉树交界处 可能会添加多次
                         if(!objs.Contains(tree.objs[i])){
                             objs.Add(tree.objs[i]);

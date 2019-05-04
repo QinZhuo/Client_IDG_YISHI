@@ -10,6 +10,7 @@ public enum WeaponId
     拳击战斗,
     F57,
     F41,
+    丧尸,
 }
 
 

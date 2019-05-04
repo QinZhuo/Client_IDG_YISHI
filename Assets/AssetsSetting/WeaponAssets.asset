@@ -60,7 +60,7 @@ MonoBehaviour:
             m_Bits: 13107
         - key: rotRange
           value:
-            m_Bits: 1310720
+            m_Bits: 327680
         - key: mainDamage
           value:
             m_Bits: 1638400
@@ -71,3 +71,24 @@ MonoBehaviour:
     animation: {fileID: 7400000, guid: 032ded14aace03649a5de35da5936bbd, type: 3}
     ItemPrefab: {fileID: 1570664041207860, guid: 1db9e34449bf67344bcf62505716e138,
       type: 2}
+  - data:
+      weaponId: 5
+      weaponType: 0
+      defalutSkillId: 106
+      fixedParams:
+        dic:
+        - key: shootRate
+          value:
+            m_Bits: 13107
+        - key: rotRange
+          value:
+            m_Bits: 1310720
+        - key: mainDamage
+          value:
+            m_Bits: 1638400
+    Weaponname: 
+    WeaponInfo: 
+    uiIcon: {fileID: 0}
+    idleAnim: {fileID: 7400000, guid: c1ada3457230a64429ffbcafe2075ba9, type: 3}
+    animation: {fileID: 7400000, guid: 338e08997b5e534479232ea9bce9596d, type: 3}
+    ItemPrefab: {fileID: 0}

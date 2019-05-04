@@ -16,9 +16,11 @@ public class ZombieData : PlayerData
     public override void Start()
     {
         base.Start();
+        maxHealth = 300.ToFixed();
+        _m_Hp = 300.ToFixed();
         this.tag = "Zombie";
         if(ai!=null){
-            ai.emenyTag="Player";
+       
         }
         else
         {
@@ -26,8 +28,11 @@ public class ZombieData : PlayerData
             ai=new AiEngine();
             ai.aiName="AI_test";
             ai=AddCommponent<AiEngine>(ai);
-            ai.emenyTag="Player";
+          
         }
+        team = 2;
+        move_speed =0.7f.ToFixed();
+        weaponSystem.AddWeapon(WeaponId.丧尸);
        
         // gun = new GunBase();
         // rigibody.useCheck=true;

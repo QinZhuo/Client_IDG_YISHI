@@ -19,7 +19,19 @@ namespace IDG {
         }
 
          public int Range(int min, int max){
-            return min+next()%max;
+            return min + Range(max - min);
+        }
+        public Fixed RangeFixed()
+        {
+            return Range(0, 10000).ToFixed() / 10000;
+        }
+        public Fixed RangeFixed(Fixed max)
+        {
+            return RangeFixed() * max;
+        }
+        public Fixed RangeFixed(Fixed min,Fixed max)
+        {
+            return min + RangeFixed(max - min);
         }
     }
 }

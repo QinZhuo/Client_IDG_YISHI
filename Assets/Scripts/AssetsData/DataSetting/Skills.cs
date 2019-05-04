@@ -12,6 +12,7 @@ public enum SkillId:Int32
     拳击右上勾=103,
     swordAttack=104,
     全自动开火=105,
+    丧尸攻击=106,
 }
 public enum SkillTrigger : Int32
 {

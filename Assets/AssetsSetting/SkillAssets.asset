@@ -63,6 +63,7 @@ MonoBehaviour:
     skillInfo: 
     uiIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
     useOverAnim: {fileID: 7400000, guid: 0ae0bbd3bcad45d40a063a319d70a468, type: 3}
+    useOverAnimSspeed: 1
     ItemPrefab: {fileID: 0}
   - data:
       trigger: 2
@@ -115,6 +116,7 @@ MonoBehaviour:
     skillInfo: 
     uiIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     useOverAnim: {fileID: 7400000, guid: 501c54f0f9c76cf4d96cbabe13658b29, type: 3}
+    useOverAnimSspeed: 1
     ItemPrefab: {fileID: 0}
   - data:
       trigger: 2
@@ -167,6 +169,7 @@ MonoBehaviour:
     skillInfo: 
     uiIcon: {fileID: 0}
     useOverAnim: {fileID: 7400000, guid: 87d38271a92e10f458f547e38776d3a1, type: 3}
+    useOverAnimSspeed: 1
     ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
       type: 2}
   - data:
@@ -190,7 +193,13 @@ MonoBehaviour:
         fixedParams: []
       - trigger: 2
         type: 9
-        nextNodes: []
+        nextNodes:
+        - trigger: 6
+          type: 6
+          nextNodes: []
+          boolParams: 
+          fixedParams:
+          - m_Bits: 0
         boolParams: 
         fixedParams: []
       boolParams: 
@@ -205,5 +214,60 @@ MonoBehaviour:
     skillInfo: 
     uiIcon: {fileID: 0}
     useOverAnim: {fileID: 0}
+    useOverAnimSspeed: 1
+    ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
+      type: 2}
+  - data:
+      trigger: 2
+      type: 0
+      nextNodes:
+      - trigger: 2
+        type: 1
+        nextNodes: []
+        boolParams: 
+        fixedParams: []
+      - trigger: 1
+        type: 2
+        nextNodes: []
+        boolParams: 00
+        fixedParams: []
+      - trigger: 4
+        type: 2
+        nextNodes: []
+        boolParams: 01
+        fixedParams: []
+      - trigger: 3
+        type: 3
+        nextNodes:
+        - trigger: 5
+          type: 5
+          nextNodes:
+          - trigger: 6
+            type: 6
+            nextNodes: []
+            boolParams: 
+            fixedParams:
+            - m_Bits: 655360
+          boolParams: 
+          fixedParams:
+          - m_Bits: 65536
+          - m_Bits: 98304
+          - m_Bits: 65536
+        boolParams: 
+        fixedParams:
+        - m_Bits: 19660
+      boolParams: 
+      fixedParams: []
+      skillId: 106
+      coolDownTime:
+        m_Bits: 0
+      animTime:
+        m_Bits: 72089
+      key: 2
+    skillname: 
+    skillInfo: 
+    uiIcon: {fileID: 0}
+    useOverAnim: {fileID: 7400000, guid: 47d9c45e990c3aa458ef4ab018fc4574, type: 3}
+    useOverAnimSspeed: 3
     ItemPrefab: {fileID: 1798971769844398, guid: 618d92bd4dd58224ebe759bf4745a599,
       type: 2}

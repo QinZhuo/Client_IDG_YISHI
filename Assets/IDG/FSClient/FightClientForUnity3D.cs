@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class FightClientForUnity3D : MonoBehaviour {
     
     public FSClient client;
-    public string serverIp;
+   // public string serverIp;
     //public static FightClientForUnity3D instance;
     public List<JoyStick> joySticks;
     public List<NetButton> netButtons;
@@ -32,7 +32,7 @@ public class FightClientForUnity3D : MonoBehaviour {
    
         client.unityClient = this;
       //   client.Connect("127.0.0.1", 12345,10);
-        client.Connect(serverIp, 12345,10,GetComponentsInChildren<IGameManager>());
+        client.Connect(GameUser.user.fightRoom.ip, int.Parse(GameUser.user.fightRoom.port),10,GetComponentsInChildren<IGameManager>());
       //  client.Connect("172.16.252.231", 12345,10);
         // foreach (JoyStick joyStick in joySticks)
         // {

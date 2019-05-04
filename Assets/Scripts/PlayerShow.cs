@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IDG;
-
+public struct AnimData
+{
+    public string name;
+    public AnimationClip clip;
+    public float speed;
+    public AnimData(string name,AnimationClip clip,float speed = 1)
+    {
+        this.name = name;
+        this.clip = clip;
+        this.speed = speed;
+    }
+}
 public class PlayerShow : NetObjectView<PlayerData> {
     // public NetInfo net;
    // public int clientId = -1;
@@ -18,22 +29,25 @@ public class PlayerShow : NetObjectView<PlayerData> {
        
     }
     private void ChangeSkillAnim(SkillId id){
-        var animation=GameViewAssetManager.instance.skillAssets.Get(id.ToString()).useOverAnim;
-        ChangeAnim("Skill",animation);
+        var skill=GameViewAssetManager.instance.skillAssets.Get(id.ToString());
+        ChangeAnim(new AnimData( "Skill",skill.useOverAnim,skill.useOverAnimSspeed));
       //  Debug.LogError("更改动画 "+animation.name);
     }
 
-    protected void ChangeAnim(string nameArry,params AnimationClip[] anims){
+    protected void ChangeAnim(params AnimData[] anims){
         var animOverride=anim.runtimeAnimatorController as AnimatorOverrideController;
         if(animOverride==null){
             animOverride=new AnimatorOverrideController();
             animOverride.runtimeAnimatorController=anim.runtimeAnimatorController;
         }
-        string[] animNames=nameArry.Split('|');
-        for (int i = 0; i < animNames.Length; i++)
+        
+        for (int i = 0; i < anims.Length; i++)
         {
-             animOverride[animNames[i]]=anims[i];
+             animOverride[anims[i].name]=anims[i].clip;
+            anim.SetFloat(anims[i].name + "_Speed", anims[i].speed);
+
         }
+        
         anim.runtimeAnimatorController=animOverride;
     }
     protected void ChangeWeapon(WeaponId id){
@@ -49,7 +63,8 @@ public class PlayerShow : NetObjectView<PlayerData> {
         {
              Debug.LogWarning("WeaponId "+id+" itemPrefab Is Null");
         }
-        ChangeAnim("Idle|Walk",weaponAssets.idleAnim,weaponAssets.animation);
+
+        ChangeAnim(new AnimData("Idle", weaponAssets.idleAnim), new AnimData("Walk", weaponAssets.animation));
     }
     //float last;
     protected override void OnStart(){
@@ -117,10 +132,18 @@ public class PlayerShow : NetObjectView<PlayerData> {
 
     //}
 }
-public abstract class HealthData : NetData
+public abstract class HealthData : NetData, ITeam
 {
     protected Fixed _m_Hp=new Fixed(100);
     protected Fixed maxHealth = 100.ToFixed();
+    public int team;
+    int ITeam.team
+    {
+        get
+        {
+            return team;
+        }
+    }
     public Fixed Hp
     {
         get
@@ -155,6 +178,7 @@ public abstract class HealthData : NetData
         Debug.Log(this.name + "dead!!!");
     }
 }
+
 // public enum AnimStatus
 // {
 //     none,
@@ -164,7 +188,7 @@ public abstract class HealthData : NetData
 // }
 public class PlayerData: HealthData
 {
-    public Fixed move_speed = new Fixed(3);
+    public Fixed move_speed = new Fixed(2);
     public Fixed2 move_dir { get; private set; }
     public SkillEngine skillList;
     public WeaponEngine weaponSystem;
@@ -187,6 +211,8 @@ public class PlayerData: HealthData
             return _canMove;
         }
     }
+  
+
     public override void Start()
     {
         
@@ -202,7 +228,8 @@ public class PlayerData: HealthData
             client.localPlayer = this;
             Debug.Log("client.localPlayer");
         }
-        items=AddCommponent<ItemEngine>();
+        team = 1;
+        items =AddCommponent<ItemEngine>();
         //  ai=new AiEngine();
         //  ai.aiName="AI_test";
         

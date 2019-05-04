@@ -105,6 +105,7 @@ namespace IDG
             gameManagers=new List<IGameManager>();
             coroutine=new CoroutineManager();
             gameManagers.AddRange(managers);
+            gameManagers.Add(new TeamManager());
             gameManagers.Sort((a,b)=>{if(a.InitLayer>b.InitLayer){return 1;}else{ return -1;}});
         }
         Dictionary<Connection, byte[]> lastBytesList = new Dictionary<Connection, byte[]>();
